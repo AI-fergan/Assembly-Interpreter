@@ -1,5 +1,6 @@
 #pragma once
 #include "Pch.h"
+#include <unordered_map>
 
 #define OPCODES 100
 #define OPERATORS 200
@@ -14,17 +15,18 @@ enum Operators {
 	sub = OPERATORS,
 	add,
 	mul,
-	div,
-	dot,
 	comma
 };
 
 map<Opcodes, string> OpcodesChars = {
-	"mov", Opcodes::mov,
-	"sub", Opcodes::sub,
-	"add", Opcodes::add };
+	{Opcodes::mov, "mov"},
+	{Opcodes::sub, "sub"},
+	{Opcodes::add, "add"}
 };
 
 map<Operators, char> OperatorsChars = {
-
+	{Operators::sub, '-'},
+	{Operators::add, '+'},
+	{Operators::mul, '*'},
+	{Operators::comma, ','}
 };
