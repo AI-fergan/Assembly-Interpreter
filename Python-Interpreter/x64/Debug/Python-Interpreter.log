@@ -1,4 +1,0 @@
-﻿  Source.cpp
-C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Python-Interpreter\Python-Interpreter\Source.cpp(40,5): error C2365: 'IDENTIFIER': redefinition; previous definition was 'enumerator'
-C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Python-Interpreter\Python-Interpreter\Source.cpp(18): message : see declaration of 'IDENTIFIER'
-C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Python-Interpreter\Python-Interpreter\Source.cpp(166): fatal  error C1075: '{': no matching token found
