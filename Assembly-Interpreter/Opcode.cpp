@@ -148,12 +148,32 @@ void Opcode::Dec() {
 	}
 }
 
-void Opcode::Or()
-{
+void Opcode::Or(){
+	int old_value = 0;
+
+	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value | value->handler());
+
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
 }
 
-void Opcode::And()
-{
+void Opcode::And() {
+	int old_value = 0;
+
+	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value & value->handler());
+
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
 }
 
 void Opcode::Xor()
