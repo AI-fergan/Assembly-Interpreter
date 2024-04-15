@@ -20,25 +20,34 @@ Opcode::Opcode(AstNode* opcode) {
 }
 
 void Opcode::mov() {
-	if (_opcode->getBranches().size() == 1) {
-		if (_opcode->getBranches()[0]->getBranches().size() == 2) {
+	Utilities utilities;
+
+	if(utilities.validOperators(_opcode, 1) && utilities.validparams(_opcode, 2)) {
 			cout << "*mov*\n";
-		}
+	}
+	else {
+		throw SyntaxError("Opcode Error: opcode syntax not valid.");
 	}
 }
 
 void Opcode::add() {
-	if (_opcode->getBranches().size() == 1) {
-		if (_opcode->getBranches()[0]->getBranches().size() == 2) {
-			cout << "*add*\n";
-		}
+	Utilities utilities;
+
+	if (utilities.validOperators(_opcode, 1) && utilities.validparams(_opcode, 2)) {
+		cout << "*add*\n";
+	}
+	else {
+		throw SyntaxError("Opcode Error: opcode syntax not valid.");
 	}
 }
 
 void Opcode::sub() {
-	if (_opcode->getBranches().size() == 1) {
-		if (_opcode->getBranches()[0]->getBranches().size() == 2) {
-			cout << "*sub*\n";
-		}
+	Utilities utilities;
+
+	if (utilities.validOperators(_opcode, 1) && utilities.validparams(_opcode, 2)) {
+		cout << "*sub*\n";
+	}
+	else {
+		throw SyntaxError("Opcode Error: opcode syntax not valid.");
 	}
 }

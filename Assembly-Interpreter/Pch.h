@@ -19,6 +19,9 @@ using std::replace;
 using std::cerr;
 using std::endl;
 
+#define OPCODES 100
+#define OPERATORS 200
+
 #define END_OF_LINE ';'
 
 #define TOKEN 0

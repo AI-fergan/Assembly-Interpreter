@@ -89,3 +89,15 @@ void Utilities::cleanString(string& str)
 
     str = clean;
 }
+
+bool Utilities::validparams(AstNode* opcode, int params) {
+    if (opcode->getBranches()[0]->getBranches().size() == params)
+        return true;    
+    return false;
+}
+
+bool Utilities::validOperators(AstNode* opcode, int operators) {
+    if (opcode->getBranches().size() == operators)
+        return true;
+    return false;
+}

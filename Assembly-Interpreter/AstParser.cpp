@@ -24,7 +24,7 @@ AstParser::AstParser(queue<string> tokens) {
 			AstNode* node = new AstNode(tokens.front(), TOKEN);
 			if (this->_branches[0]->getBranches().size() > 0) {
 				if (Utilities::isOperator(this->_branches[0]->getBranches()[0]->getData()[0])) {					
-					if (node) {
+					if (tmp) {
 						this->_branches[0]->getBranches()[0]->add(tmp);
 						tmp = nullptr;
 					}

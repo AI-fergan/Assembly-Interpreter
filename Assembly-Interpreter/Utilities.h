@@ -1,9 +1,9 @@
 #pragma once
 #include "Pch.h"
 #include <unordered_map>
+#include "AstNode.h"
 
-#define OPCODES 100
-#define OPERATORS 200
+class AstNode;
 
 enum class Opcodes {
 	none = -1,
@@ -36,6 +36,9 @@ public:
 	static int binaryStringToDec(string num);
 
 	static void cleanString(string& str);
+
+	bool validparams(AstNode* opcode, int params);
+	bool validOperators(AstNode* opcode, int operators);
 
 	static map<string, Opcodes> OpcodesChars;
 	static map<char, Operators> OperatorsChars;

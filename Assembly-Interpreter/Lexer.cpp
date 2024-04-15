@@ -6,10 +6,12 @@ Lexer::Lexer(string input) : _input(input) {
 
     for (i = 0; i < input.size(); i++) {
         if (input[i] == END_OF_LINE) {
-            break;
+            return;
         }
         else if (Utilities::isOperator(input[i])) {
-            this -> _tokens.push(token);
+            if (token.size() > 0) {
+                this->_tokens.push(token);
+            }
             token = input[i];
             this -> _tokens.push(token);
             token = "";

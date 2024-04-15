@@ -2,6 +2,7 @@
 #include "Utilities.h"
 #include "Pch.h"
 #include "AstNode.h"
+#include "SyntaxError.h"
 
 class Opcode
 {
