@@ -12,7 +12,7 @@ void MemStore::setRegister(string reg, int value) {
 	utilities.toLower(reg);
 
 	if (_registers.find(reg) == _registers.end())
-		throw RegisterError("MemoryError: Register not exists");
+		throw RegisterError("MemoryError - Register not exists");
 
 	_registers[reg] = value;
 }
@@ -22,7 +22,7 @@ int MemStore::getRegister(string reg) {
 	Utilities::toLower(reg);
 
 	if (_registers.find(reg) == _registers.end())
-		throw RegisterError("MemoryError: Register not exists");
+		throw RegisterError("MemoryError - Register not exists");
 
 	return _registers[reg];
 }

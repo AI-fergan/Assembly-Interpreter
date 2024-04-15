@@ -28,7 +28,7 @@ void Opcode::mov() {
 		_mem->setRegister(utilities.getParam(_opcode, 0), value->handler());
 	}
 	else {
-		throw SyntaxError("Opcode Error: opcode syntax not valid.");
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
 	}
 }
 
@@ -43,7 +43,7 @@ void Opcode::add() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error: opcode syntax not valid.");
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
 	}
 }
 
@@ -58,6 +58,6 @@ void Opcode::sub() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error: opcode syntax not valid.");
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
 	}
 }

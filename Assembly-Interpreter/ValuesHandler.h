@@ -1,6 +1,7 @@
 #pragma once
 #include "Pch.h"
 #include "MemStore.h"
+#include "ValueError.h"
 
 class ValuesHandler {
 public:

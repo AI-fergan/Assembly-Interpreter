@@ -17,6 +17,8 @@ int ValuesHandler::handler() {
     else if (isReg())
         return _mem->getRegister(_value);
 
+    throw ValueError("TypeError - Value type not valid.");
+
     return 0;
 }
 
