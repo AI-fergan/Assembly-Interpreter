@@ -50,7 +50,7 @@ void Commands::printMemory() {
 */
 void Commands::CommandsHelp() {
 	cout << "Commands:" << endl;
-	cout << "help, inst (instructions), mem" << endl;
+	cout << "help, inst (instructions), mem, exit" << endl;
 }
 
 /*

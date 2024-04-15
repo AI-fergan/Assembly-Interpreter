@@ -28,6 +28,10 @@ int main() {
 		if (commands->commandsHandler(input))
 			continue;		
 
+		//exit
+		if (input == "exit")
+			return 0;
+
 		//run Lexer the line
 		lexer = new Lexer(input);
 
