@@ -127,8 +127,6 @@ void Opcode::Div() {
 }
 
 void Opcode::Inc() {
-	int old_value = 0;
-
 	if (Utilities::validOperators(_opcode, 1)) {		
 		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->getRegister(_opcode->getBranches()[0]->getData()) + 1);
 	}
@@ -138,8 +136,6 @@ void Opcode::Inc() {
 }
 
 void Opcode::Dec() {
-	int old_value = 0;
-
 	if (Utilities::validOperators(_opcode, 1)) {
 		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->getRegister(_opcode->getBranches()[0]->getData()) - 1);
 	}
@@ -191,8 +187,6 @@ void Opcode::Xor() {
 }
 
 void Opcode::Not() {
-	int old_value = 0;
-
 	if (Utilities::validOperators(_opcode, 1)) {
 		_mem->setRegister(_opcode->getBranches()[0]->getData(), ~_mem->getRegister(_opcode->getBranches()[0]->getData()));
 	}
@@ -201,22 +195,63 @@ void Opcode::Not() {
 	}
 }
 
-void Opcode::Nop()
-{
+void Opcode::Nop() {
+if (!Utilities::validOperators(_opcode, 0))
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");	
 }
 
-void Opcode::Shl()
-{
+void Opcode::Shl() {
+	int old_value = 0;
+
+	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value << value->handler());
+
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
 }
 
-void Opcode::Shr()
-{
+void Opcode::Shr() {
+	int old_value = 0;
+
+	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value >> value->handler());
+
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
 }
 
-void Opcode::Rol()
-{
+void Opcode::Rol() {
+	int old_value = 0;
+
+	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value << value->handler());
+
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
 }
 
-void Opcode::Ror()
-{
+void Opcode::Ror() {
+	int old_value = 0;
+
+	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value >> value->handler());
+
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
 }
