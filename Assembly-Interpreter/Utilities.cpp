@@ -70,17 +70,17 @@ int Utilities::StringToDec(string num)
 
 int Utilities::HexStringToDec(string num)
 {
-    return 0;
+    return stoi(num, nullptr, 16);
 }
 
 int Utilities::BinStringToDec(string num)
 {
-    return 0;
+    return stoi(num, nullptr, 2);
 }
 
 int Utilities::OctStringToDec(string num)
 {
-    return 0;
+    return stoi(num, nullptr, 8);
 }
 
 void Utilities::cleanString(string& str)
