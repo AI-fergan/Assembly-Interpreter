@@ -36,12 +36,6 @@
     <ClCompile Include="AstNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OperatorsNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OpcodesNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Opcode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,12 +63,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Opcode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OpcodesNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OperatorsNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

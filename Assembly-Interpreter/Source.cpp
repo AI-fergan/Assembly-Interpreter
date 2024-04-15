@@ -14,15 +14,18 @@ int main() {
 		getline(cin, input);
 
 		lexer = new Lexer(input);
-		lexer->printLexer();
-		parser = new AstParser(lexer->getTokens());
+		try {
+			parser = new AstParser(lexer->getTokens());
+			Opcode* opcode = new Opcode(parser->getBranches()[0]);
+			delete parser;
+			delete opcode;
+		}
+		catch(string error) {
+			cout << error << endl;
+		}
 		
-		Opcodes id = parser->getBranches()[0]->getBranches()[0]->getID().opcode;
-		string data = parser->getBranches()[0]->getBranches()[0]->getData();
-		data = parser->getBranches()[0]->getBranches()[0]->getData();
 		delete lexer;
-		delete parser;
-		delete lexer;
+		
 	}
 
 	return 0;

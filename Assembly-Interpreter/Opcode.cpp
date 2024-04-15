@@ -1,10 +1,9 @@
 #include "Opcode.h"
 
-Opcode::Opcode(OpcodesNode* opcode) {
+Opcode::Opcode(AstNode* opcode) {
 	this->_opcode = opcode;
-	Opcodes id = opcode->getID().opcode;
 
-	switch (id) {
+	switch (Utilities::getOpcode(opcode->getData())) {
 	case Opcodes::mov:
 		mov();
 		break;

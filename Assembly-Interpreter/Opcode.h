@@ -1,15 +1,15 @@
 #pragma once
 #include "Utilities.h"
 #include "Pch.h"
-#include "OpcodesNode.h"
+#include "AstNode.h"
 
 class Opcode
 {
 public:
-	Opcode(OpcodesNode* opcode);
+	Opcode(AstNode* opcode);
 
 private:
-	OpcodesNode* _opcode;
+	AstNode* _opcode;
 
 	void mov();
 	void add();

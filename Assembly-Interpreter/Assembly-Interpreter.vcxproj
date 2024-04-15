@@ -132,8 +132,6 @@
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="Opcode.cpp" />
-    <ClCompile Include="OpcodesNode.cpp" />
-    <ClCompile Include="OperatorsNode.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SyntaxError.cpp" />
     <ClCompile Include="Utilities.cpp" />
@@ -144,8 +142,6 @@
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="Opcode.h" />
-    <ClInclude Include="OpcodesNode.h" />
-    <ClInclude Include="OperatorsNode.h" />
     <ClInclude Include="Pch.h" />
     <ClInclude Include="SyntaxError.h" />
     <ClInclude Include="Utilities.h" />

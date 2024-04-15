@@ -2,20 +2,16 @@
 #include "Pch.h"
 #include "Utilities.h"
 
-union IDs {
-	Opcodes opcode;
-	Operators oper;
-};
-
 class AstNode {
 public:
-	AstNode(string data);
+	AstNode(string data, int type);
 	string getData();
 	vector<AstNode*> getBranches();
 	void add(AstNode* node);
-	virtual IDs getID() = 0;
+	int getType();
 
 private:
 	vector<AstNode*> _branches;
 	string _Data;
+	int _type;
 };

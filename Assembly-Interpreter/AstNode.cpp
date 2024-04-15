@@ -1,7 +1,8 @@
 #include "AstNode.h"
 
-AstNode::AstNode(string data) { 
+AstNode::AstNode(string data, int type) { 
 	_Data = data;
+	_type = type;
 }
 
 string AstNode::getData() {
@@ -14,4 +15,9 @@ vector<AstNode*> AstNode::getBranches() {
 
 void AstNode::add(AstNode* node) {
 	this->_branches.push_back(node);
+}
+
+int AstNode::getType()
+{
+	return _type;
 }

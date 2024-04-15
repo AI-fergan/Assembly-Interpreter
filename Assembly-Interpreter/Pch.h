@@ -17,5 +17,10 @@ using std::tuple;
 using std::cout;
 using std::replace;
 using std::cerr;
+using std::endl;
 
 #define END_OF_LINE ';'
+
+#define TOKEN 0
+#define OPCODE 1
+#define OPERATOR 2

@@ -40,6 +40,7 @@ void Lexer::printLexer() {
         cout << _tokens.front() << "#";
         _tokens.pop();
     }
+
     cout << std::endl;
 }
 
