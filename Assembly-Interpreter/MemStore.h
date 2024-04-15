@@ -8,7 +8,8 @@ public:
 	MemStore();
 	void setRegister(string reg, int value);
 	int getRegister(string reg);
-	
+	bool isRegister(string reg);
+
 	void printMemory();
 private:
 	map<string, int> _registers;

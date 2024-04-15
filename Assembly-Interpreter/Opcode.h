@@ -4,6 +4,7 @@
 #include "AstNode.h"
 #include "SyntaxError.h"
 #include "MemStore.h"
+#include "ValuesHandler.h"
 
 class Opcode
 {

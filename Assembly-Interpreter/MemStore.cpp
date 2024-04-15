@@ -19,13 +19,22 @@ void MemStore::setRegister(string reg, int value) {
 
 
 int MemStore::getRegister(string reg) {
-	Utilities utilities;
-	utilities.toLower(reg);
+	Utilities::toLower(reg);
 
 	if (_registers.find(reg) == _registers.end())
 		throw RegisterError("MemoryError: Register not exists");
 
 	return _registers[reg];
+}
+
+bool MemStore::isRegister(string reg)
+{
+	Utilities::toLower(reg);
+
+	if (_registers.find(reg) == _registers.end())
+		return false;
+
+	return true;
 }
 
 void MemStore::printMemory(){

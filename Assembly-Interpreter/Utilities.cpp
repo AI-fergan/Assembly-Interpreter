@@ -73,7 +73,12 @@ int Utilities::HexStringToDec(string num)
     return 0;
 }
 
-int Utilities::binaryStringToDec(string num)
+int Utilities::BinStringToDec(string num)
+{
+    return 0;
+}
+
+int Utilities::OctStringToDec(string num)
 {
     return 0;
 }

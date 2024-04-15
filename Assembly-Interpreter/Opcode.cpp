@@ -24,7 +24,8 @@ void Opcode::mov() {
 	Utilities utilities;
 
 	if(utilities.validOperators(_opcode, 1) && utilities.validparams(_opcode, 2)) {
-		_mem->setRegister(utilities.getParam(_opcode, 0), utilities.StringToDec(utilities.getParam(_opcode, 1)));
+		ValuesHandler* value = new ValuesHandler(utilities.getParam(_opcode, 1), _mem);		
+		_mem->setRegister(utilities.getParam(_opcode, 0), value->handler());
 	}
 	else {
 		throw SyntaxError("Opcode Error: opcode syntax not valid.");
@@ -37,7 +38,8 @@ void Opcode::add() {
 
 	if (utilities.validOperators(_opcode, 1) && utilities.validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(utilities.getParam(_opcode, 0));
-		_mem->setRegister(utilities.getParam(_opcode, 0), old_value + utilities.StringToDec(utilities.getParam(_opcode, 1)));
+		ValuesHandler* value = new ValuesHandler(utilities.getParam(_opcode, 1), _mem);
+		_mem->setRegister(utilities.getParam(_opcode, 0), old_value + value->handler());
 
 	}
 	else {
@@ -51,7 +53,8 @@ void Opcode::sub() {
 
 	if (utilities.validOperators(_opcode, 1) && utilities.validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(utilities.getParam(_opcode, 0));
-		_mem->setRegister(utilities.getParam(_opcode, 0), old_value - utilities.StringToDec(utilities.getParam(_opcode, 1)));
+		ValuesHandler* value = new ValuesHandler(utilities.getParam(_opcode, 1), _mem);
+		_mem->setRegister(utilities.getParam(_opcode, 0), old_value - value->handler());
 
 	}
 	else {

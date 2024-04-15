@@ -45,6 +45,9 @@
     <ClCompile Include="RegisterError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ValuesHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Exceptions.h">

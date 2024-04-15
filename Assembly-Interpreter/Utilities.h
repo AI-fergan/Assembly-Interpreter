@@ -33,15 +33,15 @@ public:
 
 	static int StringToDec(string num);
 	static int HexStringToDec(string num);
-	static int binaryStringToDec(string num);
-
+	static int BinStringToDec(string num);
+	static int OctStringToDec(string num);
 	static void cleanString(string& str);
 
-	bool validparams(AstNode* opcode, int params);
-	bool validOperators(AstNode* opcode, int operators);
-	string getParam(AstNode* opcode, int param);
+	static bool validparams(AstNode* opcode, int params);
+	static bool validOperators(AstNode* opcode, int operators);
+	static string getParam(AstNode* opcode, int param);
 
-	void toLower(string& str);
+	static void toLower(string& str);
 
 
 	static map<string, Opcodes> OpcodesChars;
