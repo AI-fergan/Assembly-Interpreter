@@ -26,9 +26,8 @@ int main() {
 		{
 			cout << e.what() << e.getError() << endl;
 		}
-	
-		delete lexer;
-		
+		memory->printMemory();
+		delete lexer;		
 	}
 
 	return 0;

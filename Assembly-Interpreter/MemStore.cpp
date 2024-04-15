@@ -7,19 +7,29 @@ MemStore::MemStore() {
 	_registers[EDX] = 0;
 }
 
-bool MemStore::setRegister(string reg, int value) {
+void MemStore::setRegister(string reg, int value) {
 	Utilities utilities;
 	utilities.toLower(reg);
 
 	if (_registers.find(reg) == _registers.end())
-		return false;
+		throw RegisterError("MemoryError: Register not exists");
 
 	_registers[reg] = value;
-
-	return true;
 }
 
 
 int MemStore::getRegister(string reg) {
+	Utilities utilities;
+	utilities.toLower(reg);
+
+	if (_registers.find(reg) == _registers.end())
+		throw RegisterError("MemoryError: Register not exists");
+
 	return _registers[reg];
+}
+
+void MemStore::printMemory(){
+	for (const auto entry : _registers) {
+		cout << entry.first << ": " << entry.second << endl;
+	}
 }

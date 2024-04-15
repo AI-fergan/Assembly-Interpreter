@@ -24,7 +24,6 @@ void Opcode::mov() {
 	Utilities utilities;
 
 	if(utilities.validOperators(_opcode, 1) && utilities.validparams(_opcode, 2)) {
-		cout << "*mov*\n";
 		_mem->setRegister(utilities.getParam(_opcode, 0), utilities.StringToDec(utilities.getParam(_opcode, 1)));
 	}
 	else {
@@ -34,9 +33,12 @@ void Opcode::mov() {
 
 void Opcode::add() {
 	Utilities utilities;
+	int old_value = 0;
 
 	if (utilities.validOperators(_opcode, 1) && utilities.validparams(_opcode, 2)) {
-		cout << "*add*\n";
+		old_value = _mem->getRegister(utilities.getParam(_opcode, 0));
+		_mem->setRegister(utilities.getParam(_opcode, 0), old_value + utilities.StringToDec(utilities.getParam(_opcode, 1)));
+
 	}
 	else {
 		throw SyntaxError("Opcode Error: opcode syntax not valid.");
@@ -45,9 +47,12 @@ void Opcode::add() {
 
 void Opcode::sub() {
 	Utilities utilities;
+	int old_value = 0;
 
 	if (utilities.validOperators(_opcode, 1) && utilities.validparams(_opcode, 2)) {
-		cout << "*sub*\n";
+		old_value = _mem->getRegister(utilities.getParam(_opcode, 0));
+		_mem->setRegister(utilities.getParam(_opcode, 0), old_value - utilities.StringToDec(utilities.getParam(_opcode, 1)));
+
 	}
 	else {
 		throw SyntaxError("Opcode Error: opcode syntax not valid.");
