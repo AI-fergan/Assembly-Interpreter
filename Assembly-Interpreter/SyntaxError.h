@@ -5,8 +5,8 @@
 class SyntaxError : public Exceptions
 {
 public:
-	SyntaxError();
+	SyntaxError(string error);
 
 private:
-
+	string _error;
 };

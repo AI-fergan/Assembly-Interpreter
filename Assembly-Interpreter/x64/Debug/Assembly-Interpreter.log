@@ -1,0 +1,3 @@
+﻿  Source.cpp
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\tmp\Assembly-Interpreter\Utilities.h(43,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  Assembly-Interpreter.vcxproj -> C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\tmp\Assembly-Interpreter\x64\Debug\Assembly-Interpreter.exe

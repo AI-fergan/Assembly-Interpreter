@@ -127,14 +127,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AstNode.cpp" />
+    <ClCompile Include="AstParser.cpp" />
+    <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="Opcode.cpp" />
+    <ClCompile Include="OpcodesNode.cpp" />
+    <ClCompile Include="OperatorsNode.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="SyntaxError.cpp" />
+    <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AST.h" />
+    <ClInclude Include="AstNode.h" />
+    <ClInclude Include="AstParser.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="Lexer.h" />
-    <ClInclude Include="Parser.h" />
+    <ClInclude Include="Opcode.h" />
+    <ClInclude Include="OpcodesNode.h" />
+    <ClInclude Include="OperatorsNode.h" />
     <ClInclude Include="Pch.h" />
     <ClInclude Include="SyntaxError.h" />
     <ClInclude Include="Utilities.h" />
