@@ -17,7 +17,7 @@ AstParser::AstParser(queue<string> tokens) {
 		tokens.pop();
 	}
 	else {
-		//if the first token isnt opcode the line is not valid and the parser throw execption
+		//if the first token isnt opcode the line is not valid and the parser throw exception
 		throw SyntaxError("Parser ERROR - Opcode not found");
 	}
 	

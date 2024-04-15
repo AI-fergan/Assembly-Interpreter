@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="AstNode.cpp" />
     <ClCompile Include="AstParser.cpp" />
+    <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="MemStore.cpp" />
@@ -143,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="AstNode.h" />
     <ClInclude Include="AstParser.h" />
+    <ClInclude Include="Commands.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="Lexer.h" />
     <ClInclude Include="MemStore.h" />
