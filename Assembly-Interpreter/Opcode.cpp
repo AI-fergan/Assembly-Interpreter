@@ -126,12 +126,26 @@ void Opcode::Div() {
 	}
 }
 
-void Opcode::Inc()
-{
+void Opcode::Inc() {
+	int old_value = 0;
+
+	if (Utilities::validOperators(_opcode, 1)) {		
+		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->getRegister(_opcode->getBranches()[0]->getData()) + 1);
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
 }
 
-void Opcode::Dec()
-{
+void Opcode::Dec() {
+	int old_value = 0;
+
+	if (Utilities::validOperators(_opcode, 1)) {
+		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->getRegister(_opcode->getBranches()[0]->getData()) - 1);
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
 }
 
 void Opcode::Or()
