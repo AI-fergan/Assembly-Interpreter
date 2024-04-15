@@ -3,14 +3,16 @@
 #include "Pch.h"
 #include "AstNode.h"
 #include "SyntaxError.h"
+#include "MemStore.h"
 
 class Opcode
 {
 public:
-	Opcode(AstNode* opcode);
+	Opcode(AstNode* opcode, MemStore* mem);
 
 private:
 	AstNode* _opcode;
+	MemStore* _mem;
 
 	void mov();
 	void add();

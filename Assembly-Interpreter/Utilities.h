@@ -39,6 +39,10 @@ public:
 
 	bool validparams(AstNode* opcode, int params);
 	bool validOperators(AstNode* opcode, int operators);
+	string getParam(AstNode* opcode, int param);
+
+	void toLower(string& str);
+
 
 	static map<string, Opcodes> OpcodesChars;
 	static map<char, Operators> OperatorsChars;

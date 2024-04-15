@@ -131,6 +131,7 @@
     <ClCompile Include="AstParser.cpp" />
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="MemStore.cpp" />
     <ClCompile Include="Opcode.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SyntaxError.cpp" />
@@ -141,6 +142,8 @@
     <ClInclude Include="AstParser.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="Lexer.h" />
+    <ClInclude Include="Memory.h" />
+    <ClInclude Include="MemStore.h" />
     <ClInclude Include="Opcode.h" />
     <ClInclude Include="Pch.h" />
     <ClInclude Include="SyntaxError.h" />

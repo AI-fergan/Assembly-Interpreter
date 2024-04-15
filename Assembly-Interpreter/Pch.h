@@ -18,6 +18,7 @@ using std::cout;
 using std::replace;
 using std::cerr;
 using std::endl;
+using std::stoi;
 
 #define OPCODES 100
 #define OPERATORS 200
@@ -27,3 +28,8 @@ using std::endl;
 #define TOKEN 0
 #define OPCODE 1
 #define OPERATOR 2
+
+#define EAX "eax"
+#define EBX "ebx" 
+#define ECX "ecx"
+#define EDX "edx"

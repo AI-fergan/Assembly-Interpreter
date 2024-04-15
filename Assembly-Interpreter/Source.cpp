@@ -2,12 +2,13 @@
 #include "Lexer.h"
 #include "AstParser.h"
 #include "Opcode.h"
-
+#include "MemStore.h"
 
 int main() {
 	string input;
 	Lexer* lexer = nullptr;
 	AstParser* parser = nullptr;
+	MemStore* memory = new MemStore();
 
 	while (true) {
 		cout << ">>>";
@@ -17,7 +18,7 @@ int main() {
 
 		try {
 			parser = new AstParser(lexer->getTokens());
-			Opcode* opcode = new Opcode(parser->getBranches()[0]);
+			Opcode* opcode = new Opcode(parser->getBranches()[0], memory);
 			delete parser;
 			delete opcode;
 		}
@@ -25,7 +26,7 @@ int main() {
 		{
 			cout << e.what() << e.getError() << endl;
 		}
-		
+	
 		delete lexer;
 		
 	}

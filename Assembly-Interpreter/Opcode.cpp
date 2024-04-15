@@ -1,7 +1,8 @@
 #include "Opcode.h"
 
-Opcode::Opcode(AstNode* opcode) {
+Opcode::Opcode(AstNode* opcode, MemStore* mem) {
 	this->_opcode = opcode;
+	this->_mem = mem;
 
 	switch (Utilities::getOpcode(opcode->getData())) {
 	case Opcodes::mov:
@@ -23,7 +24,8 @@ void Opcode::mov() {
 	Utilities utilities;
 
 	if(utilities.validOperators(_opcode, 1) && utilities.validparams(_opcode, 2)) {
-			cout << "*mov*\n";
+		cout << "*mov*\n";
+		_mem->setRegister(utilities.getParam(_opcode, 0), utilities.StringToDec(utilities.getParam(_opcode, 1)));
 	}
 	else {
 		throw SyntaxError("Opcode Error: opcode syntax not valid.");

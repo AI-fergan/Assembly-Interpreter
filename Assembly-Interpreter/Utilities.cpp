@@ -65,7 +65,7 @@ Operators Utilities::getOperator(char ch)
 
 int Utilities::StringToDec(string num)
 {
-    return 0;
+    return stoi(num);
 }
 
 int Utilities::HexStringToDec(string num)
@@ -100,4 +100,18 @@ bool Utilities::validOperators(AstNode* opcode, int operators) {
     if (opcode->getBranches().size() == operators)
         return true;
     return false;
+}
+
+string Utilities::getParam(AstNode* opcode, int param) {
+    return opcode->getBranches()[0]->getBranches()[param]->getData();
+}
+
+void Utilities::toLower(string& str) {
+    string result = "";
+
+    for (char ch : str) {
+        result += tolower(ch);
+    }
+
+    str = result;
 }
