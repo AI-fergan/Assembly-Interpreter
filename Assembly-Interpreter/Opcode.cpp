@@ -20,13 +20,25 @@ Opcode::Opcode(AstNode* opcode) {
 }
 
 void Opcode::mov() {
-	cout << "*mov*\n";
+	if (_opcode->getBranches().size() == 1) {
+		if (_opcode->getBranches()[0]->getBranches().size() == 2) {
+			cout << "*mov*\n";
+		}
+	}
 }
 
 void Opcode::add() {
-	cout << "*add*\n";
+	if (_opcode->getBranches().size() == 1) {
+		if (_opcode->getBranches()[0]->getBranches().size() == 2) {
+			cout << "*add*\n";
+		}
+	}
 }
 
 void Opcode::sub() {
-	cout << "*sub*\n";
+	if (_opcode->getBranches().size() == 1) {
+		if (_opcode->getBranches()[0]->getBranches().size() == 2) {
+			cout << "*sub*\n";
+		}
+	}
 }

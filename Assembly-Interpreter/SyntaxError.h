@@ -7,6 +7,5 @@ class SyntaxError : public Exceptions
 public:
 	SyntaxError(string error);
 
-private:
-	string _error;
+	const char* what() override;
 };

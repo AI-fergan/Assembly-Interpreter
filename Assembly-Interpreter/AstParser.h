@@ -2,6 +2,7 @@
 #include "Pch.h"
 #include "Utilities.h"
 #include "AstNode.h"
+#include "SyntaxError.h"
 
 class AstParser
 {

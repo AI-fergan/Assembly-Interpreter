@@ -11,8 +11,7 @@ AstParser::AstParser(queue<string> tokens) {
 		tokens.pop();
 	}
 	else {
-		string a = "Parser ERROR: Opcode not found";
-		throw a;		
+		throw SyntaxError("Parser ERROR: Opcode not found");
 	}
 	
 	while (!tokens.empty()) {
@@ -33,16 +32,12 @@ AstParser::AstParser(queue<string> tokens) {
 					param = 0;
 				}
 				else {
-					string a = "Parser ERROR: Operator not found";
-					throw a;
-					break;
+					throw SyntaxError("Parser ERROR: Operator not found");
 				}
 			}
 			else {
 				if (param != 0) {
-					string a = "Parser ERROR: Operator not found";
-					throw a;
-					break;
+					throw SyntaxError("Parser ERROR: Operator not found");
 				}
 				tmp = node;
 				param++;

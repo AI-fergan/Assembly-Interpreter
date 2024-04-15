@@ -4,8 +4,11 @@
 class Exceptions : public exception
 {
 public:
-	Exceptions();
+	Exceptions(string error);
 
-private:
+	virtual const char* what() = 0;
+	string getError();
 
+protected:
+	string _error;
 };
