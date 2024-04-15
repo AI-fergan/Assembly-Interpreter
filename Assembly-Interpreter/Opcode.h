@@ -15,7 +15,20 @@ private:
 	AstNode* _opcode;
 	MemStore* _mem;
 
-	void mov();
-	void add();
-	void sub();
+	void Mov();
+	void Add();
+	void Sub();
+	void Mul();
+	void Div();
+	void Inc();
+	void Dec();
+	void Or();
+	void And();
+	void Xor();
+	void Not();
+	void Nop();
+	void Shl();
+	void Shr();
+	void Rol();
+	void Ror();
 };

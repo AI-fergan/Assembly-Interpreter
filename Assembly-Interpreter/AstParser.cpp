@@ -46,6 +46,9 @@ AstParser::AstParser(queue<string> tokens) {
 
 		tokens.pop();
 	}
+
+	if (this->_branches[0]->getBranches().size() == 0 && tmp)
+		this->_branches[0]->add(tmp);
 }
 
 std::vector<AstNode*>AstParser::getBranches() {

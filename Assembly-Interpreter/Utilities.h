@@ -6,10 +6,24 @@
 class AstNode;
 
 enum class Opcodes {
-	none = -1,
-	mov = OPCODES,
-	sub,
-	add
+	None = -1,
+	Mov = OPCODES,
+	Sub,
+	Add,
+	Mul,
+	Div,
+	Inc,
+	Dec,
+	Or,
+	And,
+	Xor,
+	Not,
+	Nop,
+	Shl,
+	Shr,
+	Rol,
+	Ror
+
 };
 
 enum class Operators {

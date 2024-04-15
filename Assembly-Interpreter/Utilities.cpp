@@ -1,9 +1,24 @@
 #include "Utilities.h"
 
+
+
 map<string, Opcodes> Utilities::OpcodesChars = {
-    {"mov", Opcodes::mov},
-    {"sub", Opcodes::sub},
-    {"add", Opcodes::add}
+    {"mov", Opcodes::Mov},
+    {"sub", Opcodes::Sub},
+    {"add", Opcodes::Add},
+    {"mul", Opcodes::Mul},
+    {"div", Opcodes::Div},
+    {"inc", Opcodes::Inc},
+    {"dec", Opcodes::Dec},
+    {"or", Opcodes::Or},
+    {"and", Opcodes::And},
+    {"xor", Opcodes::Xor},
+    {"not", Opcodes::Not},
+    {"nop", Opcodes::Nop},
+    {"shl", Opcodes::Shl},
+    {"shr", Opcodes::Shr},
+    {"rol", Opcodes::Rol},
+    {"ror", Opcodes::Ror}
 };
 
 map<char, Operators> Utilities::OperatorsChars = {
@@ -52,7 +67,7 @@ Opcodes Utilities::getOpcode(string op)
 {
     if(isOpcode(op))
         return (*OpcodesChars.find(op)).second;
-    return Opcodes::none;
+    return Opcodes::None;
 }
 
 Operators Utilities::getOperator(char ch)
