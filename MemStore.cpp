@@ -102,6 +102,34 @@ bool MemStore::isRegister(string reg)
 }
 
 /*
+* This function used to push values into the stack.
+* Input:
+* value - the value to push.
+* Output: NULL.
+*/
+void MemStore::push(int value) {
+	_stack.push_back(value);
+}
+
+/*
+* This function used to pop values from the stack.
+* Output: the last value that push into the stack.
+*/
+int MemStore::pop() {
+
+	//check if the stack has values to pop
+	if (!_stack.empty()) {
+		int value = _stack.back();
+		_stack.pop_back();
+		return value;
+	}
+	//error when the stack is empty
+	else {
+		cout << "Underflow" << endl;
+	}
+}
+
+/*
 * This function print the memory to the screen.
 * Output: NULL.
 */

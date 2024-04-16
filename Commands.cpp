@@ -21,9 +21,9 @@ bool Commands::commandsHandler(string command) {
 		CommandsHelp();
 		return true;
 	}
-	//Help with exists instructions
-	else if (command == "inst" || command == "instructions") {
-		InstructionsHelp();
+	//Help with exists opcodes
+	else if (command == "inst" || command == "opcodes") {
+		opcodesHelp();
 		return true;
 	}
 	//Print the memory data
@@ -50,14 +50,18 @@ void Commands::printMemory() {
 */
 void Commands::CommandsHelp() {
 	cout << "Commands:" << endl;
-	cout << "help, inst (instructions), mem, exit" << endl;
+	cout << "help, inst (opcodes), mem, exit" << endl;
 }
 
 /*
-* This function print all the exists Instructions in the Interpreter.
+* This function print all the exists 
+
+
+
+s in the Interpreter.
 * Output: NULL.
 */
-void Commands::InstructionsHelp() {
+void Commands::opcodesHelp() {
 	cout << "MOV, SUB, MUL, DIV, INC, DEC, OR, AND," << endl;
 	cout << "XOR, NOT, NOP, SHL, SHR, ROL, ROR" << endl;
 }

@@ -16,7 +16,9 @@ map<string, Opcodes> Utilities::OpcodesChars = {
     {"shl", Opcodes::Shl},
     {"shr", Opcodes::Shr},
     {"rol", Opcodes::Rol},
-    {"ror", Opcodes::Ror}
+    {"ror", Opcodes::Ror},
+    {"pop", Opcodes::Pop},
+    {"push", Opcodes::Push}
 };
 
 map<char, Operators> Utilities::OperatorsChars = {

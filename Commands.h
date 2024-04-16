@@ -12,7 +12,7 @@ public:
 
 	void printMemory();
 	void CommandsHelp();
-	void InstructionsHelp();
+	void opcodesHelp();
 
 private:
 	MemStore* _mem;

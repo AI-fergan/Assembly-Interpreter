@@ -152,6 +152,7 @@
     <ClInclude Include="Opcode.h" />
     <ClInclude Include="Pch.h" />
     <ClInclude Include="RegisterError.h" />
+    <ClInclude Include="StackError.h" />
     <ClInclude Include="SyntaxError.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="ValueError.h" />

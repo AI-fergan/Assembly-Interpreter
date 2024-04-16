@@ -34,4 +34,6 @@ private:
 	void Shr();
 	void Rol();
 	void Ror();
+	void Push();
+	void Pop();
 };

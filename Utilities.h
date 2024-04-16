@@ -22,7 +22,9 @@ enum class Opcodes {
 	Shl,
 	Shr,
 	Rol,
-	Ror
+	Ror,
+	Push,
+	Pop
 
 };
 

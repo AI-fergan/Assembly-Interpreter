@@ -1,3 +1,25 @@
-﻿  MemStore.cpp
-C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(66,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+﻿  AstNode.cpp
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(68,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  AstParser.cpp
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(68,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  Commands.cpp
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(68,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  Exceptions.cpp
+  Lexer.cpp
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(68,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  MemStore.cpp
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(68,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  Opcode.cpp
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(68,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  RegisterError.cpp
+  Source.cpp
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(68,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  SyntaxError.cpp
+  Utilities.cpp
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(68,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  ValueError.cpp
+  ValuesHandler.cpp
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(68,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  Generating Code...
+C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\MemStore.cpp(130): warning C4715: 'MemStore::pop': not all control paths return a value
   Assembly-Interpreter.vcxproj -> C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\x64\Debug\Assembly-Interpreter.exe
