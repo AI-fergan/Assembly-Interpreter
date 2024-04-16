@@ -137,6 +137,7 @@
     <ClCompile Include="Opcode.cpp" />
     <ClCompile Include="RegisterError.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="StackError.cpp" />
     <ClCompile Include="SyntaxError.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="ValueError.cpp" />

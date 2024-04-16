@@ -22,7 +22,7 @@ bool Commands::commandsHandler(string command) {
 		return true;
 	}
 	//Help with exists opcodes
-	else if (command == "inst" || command == "opcodes") {
+	else if (command == "opc" || command == "opcodes") {
 		opcodesHelp();
 		return true;
 	}
@@ -50,7 +50,7 @@ void Commands::printMemory() {
 */
 void Commands::CommandsHelp() {
 	cout << "Commands:" << endl;
-	cout << "help, inst (opcodes), mem, exit" << endl;
+	cout << "help, opc \ opcodes, mem, exit" << endl;
 }
 
 /*

@@ -2,6 +2,7 @@
 #include "Pch.h"
 #include "Utilities.h"
 #include "RegisterError.h"
+#include "StackError.h"
 
 /*
 * This class managed all the Interpreter memory, such as Registers etc...
@@ -16,6 +17,7 @@ public:
 	int pop();
 
 	void printMemory();
+
 private:
 	map<tuple<string, string, string>, int> _registers;
 	vector<int> _stack;
