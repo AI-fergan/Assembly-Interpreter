@@ -6,12 +6,12 @@ The interpreter is very friendly and suitable for beginners who want to feel ass
 # Commands 
 ### Available commands:
 - help - print the commands
-- inst \ instructions - print all the available instructions
+- opc \ opcodes - print all the available instructions
 - mem - print the registers values and names
 - exit - exit from the Interpreter
 
-# Instructions
-### Available Instructions:
+# Opcodes
+### Available Opcodes:
 ```
 MOV, ADD, SUB, MUL, DIV, INC
 DEC, OR, AND, XOR, NOT, NOP
@@ -21,5 +21,8 @@ SHL, SHR, ROL, ROR
 # Registers
 ### Available Registers:
 ```
-EAX, EBX, ECX, EDX
+EAX, AX, AL,
+EBX, BX, BL,
+ECX, CX, CL,
+EDX, DX, DL
 ```
