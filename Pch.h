@@ -6,7 +6,9 @@
 #include <tuple>
 #include <string>
 #include <algorithm>
+#include<tuple>
 
+using std::tuple;
 using std::string;
 using std::cin;
 using std::vector;
@@ -33,3 +35,13 @@ using std::stoi;
 #define EBX "ebx" 
 #define ECX "ecx"
 #define EDX "edx"
+
+#define AX "ax"
+#define BX "bx"
+#define CX "cx"
+#define DX "dx"
+
+#define AL "al"
+#define BL "bl"
+#define CL "cl"
+#define DL "dl"

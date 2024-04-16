@@ -15,5 +15,5 @@ public:
 
 	void printMemory();
 private:
-	map<string, int> _registers;
+	map<tuple<string, string, string>, int> _registers;
 };
