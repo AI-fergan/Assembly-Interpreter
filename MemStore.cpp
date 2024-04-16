@@ -12,6 +12,7 @@ MemStore::MemStore() {
 	_registers[make_tuple(ESP, ESP, ESP)] = 0xFFFFFFFF;
 	_registers[make_tuple(EBP, EBP, EBP)] = 0;
 
+	cleanFlags();
 }
 
 /*
@@ -116,8 +117,14 @@ bool MemStore::isRegister(string reg) {
 * Output: NULL.
 */
 void MemStore::push(int value) {
-	_stack.push_back(value);
-	_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) - sizeof(char[2]);
+	if (getRegister(ESP) != 0) {
+		_stack.push_back(value);
+		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) - sizeof(char[2]);
+	}
+	else {
+		_flags.OF = true;
+		throw StackError("MemoryError - Stack overflow");
+	}
 }
 
 /*
@@ -136,8 +143,20 @@ int MemStore::pop() {
 	}
 	//error when the stack is empty
 	else {
+		_flags.OF = true;
 		throw StackError("MemoryError - Stack underflow");
 	}
+}
+
+void MemStore::cleanFlags() {
+	_flags.AF = false;
+	_flags.CF = false;
+	_flags.DF = false;
+	_flags.IF = false;
+	_flags.OF = false;
+	_flags.PF = false;
+	_flags.SF = false;
+	_flags.ZF = false;
 }
 
 /*
@@ -147,29 +166,42 @@ int MemStore::pop() {
 void MemStore::printMemory(){
 	stringstream reg_1, reg_2;
 
+	//set the value type to hex
 	reg_1 << hex;
 	reg_2 << hex;
 
 	//loop over all the registers
 	int i = 0xffff;
+	cout << " Registers:" << endl;
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
 		//check if there is more registers access part
 		if (std::get<0>(start->first) != std::get<1>(start->first)) {
-			reg_1 << std::get<0>(start->first) << ": 0x" << setw(8) << setfill('0') << _registers[start->first];
-			reg_1 << " | " << std::get<1>(start->first) << ": 0x" << setw(8) << setfill('0') << _registers[start->first];
-			reg_1 << " | " << std::get<2>(start->first) << ": 0x" << setw(8) << setfill('0') << _registers[start->first] << endl;
+			reg_1 << "| " << std::get<0>(start->first) << ": 0x" << setw(8) << setfill('0') << _registers[start->first];
+			reg_1 << " | " << std::get<1>(start->first) << ": 0x" << setw(4) << setfill('0') << _registers[start->first];
+			reg_1 << " | " << std::get<2>(start->first) << ": 0x" << setw(2) << setfill('0') << _registers[start->first] << "|" << endl;
 		}
 		else {
-			reg_2 << std::get<0>(start->first) << ": 0x" << setw(8) << setfill('0') << _registers[start->first] << endl;
+			reg_2 << "|" << std::get<0>(start->first) << ": 0x" << setw(8) << setfill('0') << _registers[start->first] << "|" << endl;
 		}
 	}
 
 	//print the registers names and values to the screen
-	cout << reg_1.str() << reg_2.str();
+	cout << " ----------------------------------------" << endl;
+	cout << reg_1.str();
+	cout << " ----------------------------------------" << endl;
+
+	cout << " ---------------" << endl;
+	cout << reg_2.str();
+	cout << " ---------------" << endl;
+
+	//print the flag register
+	cout << " ---------------------------------------" << endl;
+	cout << "|AF " << _flags.AF << "|CF " << _flags.CF << "|DF " <<_flags.DF << "|IF " << _flags.IF << "|OF " << _flags.OF << "|PF " << _flags.PF << "|SF " << _flags.SF << "|ZF " << _flags.ZF << "|" << endl;
+	cout << " ---------------------------------------" << endl;
 
 	//print the stack frame
 	if (!_stack.empty()) {
-		cout << endl << "Stack frame:" << endl << " ----------" << endl;
+		cout << endl << " Stack frame:" << endl << " ----------" << endl;
 		//loop over all the stack elements
 		for (int element : _stack) {
 			printf("|0x%08x| -> 0x%04x\n", element, i);

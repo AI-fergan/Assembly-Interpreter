@@ -1,3 +1,5 @@
-﻿  MemStore.cpp
+﻿  Source.cpp
 C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Utilities.h(68,2): warning C4091: 'static ': ignored on left of 'Utilities' when no variable is declared
+  StackError.cpp
+  Generating Code...
   Assembly-Interpreter.vcxproj -> C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\x64\Debug\Assembly-Interpreter.exe

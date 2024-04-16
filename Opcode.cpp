@@ -78,6 +78,8 @@ void Opcode::Mov() {
 	//check if the user enter the correct syntax of the opcode
 	if(Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);		
+		if (value->handler() == 0)
+			_mem->_flags.ZF = 1;
 		_mem->setRegister(Utilities::getParam(_opcode, 0), value->handler());
 	}
 	else {
@@ -109,6 +111,8 @@ void Opcode::Sub() {
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		if (old_value - value->handler() == 0)
+			_mem->_flags.ZF = 1;
 		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value - value->handler());
 
 	}
@@ -125,6 +129,8 @@ void Opcode::Mul() {
 	if (Utilities::validOperators(_opcode, 1)) {
 		old_value = _mem->getRegister(EAX);
 		ValuesHandler* value = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+		if (value->handler() == 0)
+			_mem->_flags.ZF = 1;
 		_mem->setRegister(EAX, old_value * value->handler());
 
 	}
@@ -141,6 +147,8 @@ void Opcode::Div() {
 	if (Utilities::validOperators(_opcode, 1)) {
 		old_value = _mem->getRegister(EAX);
 		ValuesHandler* value = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+		if (old_value % value->handler() != 0)
+			_mem->setRegister(EDX, old_value % value->handler());
 		_mem->setRegister(EAX, old_value / value->handler());
 
 	}
@@ -166,6 +174,8 @@ void Opcode::Dec() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
+		if (_mem->getRegister(_opcode->getBranches()[0]->getData()) - 1 == 0)
+			_mem->_flags.ZF = 1;
 		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->getRegister(_opcode->getBranches()[0]->getData()) - 1);
 	}
 	else {
@@ -197,6 +207,8 @@ void Opcode::And() {
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		if ((old_value & value->handler()) == 0)
+			_mem->_flags.ZF = 1;
 		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value & value->handler());
 
 	}
@@ -213,6 +225,8 @@ void Opcode::Xor() {
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		if ((old_value ^ value->handler()) == 0)
+			_mem->_flags.ZF = 1;
 		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value ^ value->handler());
 
 	}
@@ -249,6 +263,8 @@ void Opcode::Shl() {
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		if ((old_value << value->handler()) == 0)
+			_mem->_flags.ZF = 1;
 		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value << value->handler());
 
 	}
@@ -265,6 +281,8 @@ void Opcode::Shr() {
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		if ((old_value >> value->handler()) == 0)
+			_mem->_flags.ZF = 1;
 		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value >> value->handler());
 
 	}
@@ -281,6 +299,8 @@ void Opcode::Rol() {
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		if ((old_value << value->handler()) == 0)
+			_mem->_flags.ZF = 1;
 		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value << value->handler());
 
 	}
@@ -297,6 +317,8 @@ void Opcode::Ror() {
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		if ((old_value >> value->handler()) == 0)
+			_mem->_flags.ZF = 1;
 		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value >> value->handler());
 
 	}

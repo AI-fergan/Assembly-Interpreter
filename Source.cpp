@@ -13,7 +13,7 @@ int main() {
 	Commands* commands = new Commands(memory);
 
 	cout << " ----------------------------" << endl;
-	cout << "|   Noam Afergan |  V1.0.0   |" << endl;
+	cout << "|   Noam Afergan |  V2.0.0   |" << endl;
 	cout << "|----------------------------|" << endl;
 	cout << "|    Assembly-Interpreter    |" << endl;
 	cout << " ----------------------------" << endl << endl;
@@ -36,9 +36,12 @@ int main() {
 		lexer = new Lexer(input);
 
 		try {
+			//clean the flags register
+			memory->cleanFlags();
+
 			//run Parser after Lexer
 			parser = new AstParser(lexer->getTokens());
-
+			
 			//run the Opcode
 			Opcode* opcode = new Opcode(parser->getBranches()[0], memory);
 			

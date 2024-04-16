@@ -6,8 +6,7 @@
 * error - the error message.
 */
 StackError::StackError(string error) : Exceptions(error)
-{ /**/
-}
+{ /**/ }
 
 /*
 * This function return the stack error message.
