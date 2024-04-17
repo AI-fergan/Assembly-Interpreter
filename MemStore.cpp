@@ -22,7 +22,7 @@ MemStore::MemStore() {
 * value - the value to set into the register.
 * Output: NULL.
 */
-void MemStore::setRegister(string reg, int value) {
+void MemStore::setRegister(string reg, unsigned int value) {
 	Utilities::toLower(reg);
 
 
@@ -40,12 +40,12 @@ void MemStore::setRegister(string reg, int value) {
 		}
 		//32 bit register
 		else if (reg == std::get<1>(start->first)) {
-			_registers[start->first] = (_registers[start->first] ^ (_registers[start->first] & 0xFF)) + (0xFF & value);
+			_registers[start->first] = (_registers[start->first] ^ (_registers[start->first] & 0xFFFF)) + (0xFFFF & value);
 			return;
 		}
 		//16 bit register
 		else if (reg == std::get<2>(start->first)) {
-			_registers[start->first] = (_registers[start->first] ^ (_registers[start->first] & 0xF)) + (0xF & value);
+			_registers[start->first] = (_registers[start->first] ^ (_registers[start->first] & 0xFF)) + (0xFF & value);
 			return;
 		}
 	}
@@ -70,11 +70,11 @@ int MemStore::getRegister(string reg) {
 		}
 		//16 bit register
 		else if (reg == std::get<1>(start->first)) {
-			return _registers[start->first] & 0xFF;		
+			return _registers[start->first] & 0xFFFF;		
 		}
 		//8 bit register
 		else if (reg == std::get<2>(start->first)) {
-			return _registers[start->first] & 0xF;			
+			return _registers[start->first] & 0xFF;			
 		}
 	}
 
@@ -116,10 +116,10 @@ bool MemStore::isRegister(string reg) {
 * value - the value to push.
 * Output: NULL.
 */
-void MemStore::push(int value) {
+void MemStore::push(unsigned int value) {
 	if (getRegister(ESP) != 0) {
 		_stack.push_back(value);
-		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) - sizeof(char[2]);
+		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) - sizeof(unsigned int);
 	}
 	else {
 		_flags.OF = true;
@@ -131,13 +131,13 @@ void MemStore::push(int value) {
 * This function used to pop values from the stack.
 * Output: the last value that push into the stack.
 */
-int MemStore::pop() {
+unsigned int MemStore::pop() {
 
 	//check if the stack has values to pop
 	if (!_stack.empty()) {
-		int value = _stack.back();
+		unsigned int value = _stack.back();
 		_stack.pop_back();
-		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) + sizeof(char[2]);
+		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) + sizeof(unsigned int);
 
 		return value;
 	}
@@ -165,23 +165,27 @@ void MemStore::cleanFlags() {
 */
 void MemStore::printMemory(){
 	stringstream reg_1, reg_2;
+	vector<unsigned int> stack = _stack;
+
+	//get the stack elements from the last to the first
+	reverse(stack.begin(), stack.end());
 
 	//set the value type to hex
 	reg_1 << hex;
 	reg_2 << hex;
 
 	//loop over all the registers
-	int i = 0xffff;
+	unsigned int i = sizeof(unsigned int);
 	cout << " Registers:" << endl;
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
 		//check if there is more registers access part
 		if (std::get<0>(start->first) != std::get<1>(start->first)) {
-			reg_1 << "| " << std::get<0>(start->first) << ": 0x" << setw(8) << setfill('0') << _registers[start->first];
-			reg_1 << " | " << std::get<1>(start->first) << ": 0x" << setw(4) << setfill('0') << _registers[start->first];
-			reg_1 << " | " << std::get<2>(start->first) << ": 0x" << setw(2) << setfill('0') << _registers[start->first] << "|" << endl;
+			reg_1 << "| " << get<0>(start->first) << ": 0x" << setw(8) << setfill('0') << getRegister(get<0>(start->first));
+			reg_1 << " | " << get<1>(start->first) << ": 0x" << setw(4) << setfill('0') << getRegister(get<1>(start->first));
+			reg_1 << " | " << get<2>(start->first) << ": 0x" << setw(2) << setfill('0') << getRegister(get<2>(start->first)) << "|" << endl;
 		}
 		else {
-			reg_2 << "|" << std::get<0>(start->first) << ": 0x" << setw(8) << setfill('0') << _registers[start->first] << "|" << endl;
+			reg_2 << "|" << get<0>(start->first) << ": 0x" << setw(8) << setfill('0') << getRegister(get<0>(start->first)) << "|" << endl;
 		}
 	}
 
@@ -203,10 +207,10 @@ void MemStore::printMemory(){
 	if (!_stack.empty()) {
 		cout << endl << " Stack frame:" << endl << " ----------" << endl;
 		//loop over all the stack elements
-		for (int element : _stack) {
-			printf("|0x%08x| -> 0x%04x\n", element, i);
+		for (int element : stack) {
+			printf("|0x%08x| -> 0x%04x\n", element, getRegister(ESP) + i);
 			cout << " ----------" << endl;
-			i -= sizeof(char[2]);
+			i += sizeof(unsigned int);
 		}
 	}
 	

@@ -72,8 +72,7 @@ bool Utilities::isOperator(char ch) {
 * op - the char to check.
 * Output: if its could be ignored char.
 */
-bool Utilities::isIgnored(char ch)
-{
+bool Utilities::isIgnored(char ch) {
     //loop over all the ignored chars map
     for (const auto entry : IgnoredChars) {
         if (entry.first == ch) {
@@ -90,8 +89,7 @@ bool Utilities::isIgnored(char ch)
 * op - the opcode string.
 * Output: the opcode.
 */
-Opcodes Utilities::getOpcode(string op)
-{
+Opcodes Utilities::getOpcode(string op) {
     //check if the opcode exists
     if(isOpcode(op))
         return (*OpcodesChars.find(op)).second;
@@ -104,8 +102,7 @@ Opcodes Utilities::getOpcode(string op)
 * op - the operator string.
 * Output: the operator.
 */
-Operators Utilities::getOperator(char ch)
-{
+Operators Utilities::getOperator(char ch) {
     //check if the operator exists
     if (isOperator(ch))
         return (*OperatorsChars.find(ch)).second;
@@ -119,9 +116,8 @@ Operators Utilities::getOperator(char ch)
 * num - the number in string foramt.
 * Output: the number in decimal format
 */
-int Utilities::StringToDec(string num)
-{
-    return stoi(num);
+unsigned int Utilities::StringToDec(string num) {
+    return stoul(num);
 }
 
 /*
@@ -130,9 +126,8 @@ int Utilities::StringToDec(string num)
 * num - the number in Hex string foramt.
 * Output: the number in decimal format
 */
-int Utilities::HexStringToDec(string num)
-{
-    return stoi(num, nullptr, 16);
+unsigned int Utilities::HexStringToDec(string num) {
+    return stoul(num, nullptr, 16);
 }
 
 /*
@@ -141,9 +136,8 @@ int Utilities::HexStringToDec(string num)
 * num - the number in Binary string foramt.
 * Output: the number in decimal format
 */
-int Utilities::BinStringToDec(string num)
-{
-    return stoi(num, nullptr, 2);
+unsigned int Utilities::BinStringToDec(string num) {
+    return stoul(num, nullptr, 2);
 }
 
 /*
@@ -152,9 +146,8 @@ int Utilities::BinStringToDec(string num)
 * num - the number in Octal string foramt.
 * Output: the number in decimal format
 */
-int Utilities::OctStringToDec(string num)
-{
-    return stoi(num, nullptr, 8);
+unsigned int Utilities::OctStringToDec(string num) {
+    return stoul(num, nullptr, 8);
 }
 
 /*
@@ -163,8 +156,7 @@ int Utilities::OctStringToDec(string num)
 * str - the string to clean from space chars.
 * Output: NULL.
 */
-void Utilities::cleanString(string& str)
-{
+void Utilities::cleanString(string& str) {
     string clean = "";
     for (char ch : str) {
         if (ch != ' ') {

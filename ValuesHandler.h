@@ -9,7 +9,7 @@
 class ValuesHandler {
 public:
 	ValuesHandler(string value, MemStore* mem);
-	int handler();
+	unsigned int handler();
 
 private:
 	string _value;

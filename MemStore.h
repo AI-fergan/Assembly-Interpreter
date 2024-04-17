@@ -22,11 +22,11 @@ struct Flags {
 class MemStore {
 public:
 	MemStore();
-	void setRegister(string reg, int value);
+	void setRegister(string reg, unsigned int value);
 	int getRegister(string reg);
 	bool isRegister(string reg);
-	void push(int value);
-	int pop();
+	void push(unsigned int value);
+	unsigned int pop();
 	void cleanFlags();
 
 	void printMemory();
@@ -34,7 +34,7 @@ public:
 	struct Flags _flags;
 
 private:
-	map<tuple<string, string, string>, int> _registers;
-	vector<int> _stack;
+	map<tuple<string, string, string>, unsigned int> _registers;
+	vector<unsigned int> _stack;
 	
 };
