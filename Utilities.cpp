@@ -117,7 +117,7 @@ Operators Utilities::getOperator(char ch) {
 * Output: the number in decimal format
 */
 unsigned int Utilities::StringToDec(string num) {
-    return stoul(num);
+    return stoul(num);    
 }
 
 /*

@@ -34,18 +34,104 @@ void MemStore::setRegister(string reg, unsigned int value) {
 	//check if the register exists
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
 		if (reg == std::get<0>(start->first)){
+
+			//set AF flag
+			if (((value & 0xF) ^ (_registers[start->first] & 0xF)) == 0xF)
+				_flags.AF = true;
+			else
+				_flags.AF = false;
+
 			//32 bit register
 			_registers[start->first] = value;
+
+			//set ZF flag
+			if (value == 0)
+				_flags.ZF = true;
+			else
+				_flags.ZF = false;
+
+			//set SF flag
+			if ((value & 0x80000000) != 0)
+				_flags.SF = true;
+			else
+				_flags.SF = false;
+
+			//set PF flag
+			if ((value & 0x1) == 0)
+				_flags.PF = true;
+			else
+				_flags.PF = false;
+
 			return;
 		}
 		//32 bit register
 		else if (reg == std::get<1>(start->first)) {
-			_registers[start->first] = (_registers[start->first] ^ (_registers[start->first] & 0xFFFF)) + (0xFFFF & value);
+			//check if the size of the value is valid
+			if (value != (0xFFFF & value)) {
+				throw ValueError("SizeError - Invalid value size.");
+			}			
+
+			//set AF flag
+			if (((value & 0xF) ^ (_registers[start->first] & 0xF)) == 0xF)
+				_flags.AF = true;
+			else
+				_flags.AF = false;
+
+			_registers[start->first] = (_registers[start->first] ^ (_registers[start->first] & 0xFFFF)) + value;
+
+			//set ZF flag
+			if (value == 0)
+				_flags.ZF = true;
+			else
+				_flags.ZF = false;
+
+			//set SF flag
+			if ((value & 0x8000) != 0)
+				_flags.SF = true;
+			else
+				_flags.SF = false;
+
+			//set PF flag
+			if ((value & 0x1) == 0)
+				_flags.PF = true;
+			else
+				_flags.PF = false;
+
 			return;
 		}
 		//16 bit register
 		else if (reg == std::get<2>(start->first)) {
-			_registers[start->first] = (_registers[start->first] ^ (_registers[start->first] & 0xFF)) + (0xFF & value);
+			//check if the size of the value is valid
+			if (value != (0xFF & value)) {
+				throw ValueError("SizeError - Invalid value size.");
+			}
+
+			//set AF flag
+			if (((value & 0xF) ^ (_registers[start->first] & 0xF)) == 0xF)
+				_flags.AF = true;
+			else
+				_flags.AF = false;
+
+			_registers[start->first] = (_registers[start->first] ^ (_registers[start->first] & 0xFF)) + value;
+
+			//set ZF flag
+			if (value == 0)
+				_flags.ZF = true;
+			else
+				_flags.ZF = false;
+
+			//set SF flag
+			if ((value & 0x80) != 0)
+				_flags.SF = true;
+			else
+				_flags.SF = false;
+
+			//set PF flag
+			if ((value & 0x1) == 0)
+				_flags.PF = true;
+			else
+				_flags.PF = false;
+
 			return;
 		}
 	}
@@ -59,7 +145,7 @@ void MemStore::setRegister(string reg, unsigned int value) {
 * reg - the register name.
 * Output: the register value.
 */
-int MemStore::getRegister(string reg) {
+unsigned int MemStore::getRegister(string reg){
 	Utilities::toLower(reg);
 
 	//get the value of the registers by loop over on the registers map
@@ -81,6 +167,34 @@ int MemStore::getRegister(string reg) {
 	throw RegisterError("MemoryError - Register not found");
 
 	return 0;
+}
+
+/*
+* This function get register name and return the size in Bytes of that register.
+* Input:
+* reg - the register name.
+* Output: the size of the register in bytes.
+*/
+int MemStore::getRegisterSize(string reg){
+	Utilities::toLower(reg);
+
+	//check if the register exists
+	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
+		//32 bit register
+		if (reg == std::get<0>(start->first)) {			
+			return 4;
+		}
+		//16 bit register
+		else if (reg == std::get<1>(start->first)) {			
+			return 2;
+		}
+		//8 bit register
+		else if (reg == std::get<2>(start->first)) {
+			return 1;
+		}
+	}
+
+	throw RegisterError("MemoryError - Register not found");
 }
 
 /*
@@ -148,6 +262,10 @@ unsigned int MemStore::pop() {
 	}
 }
 
+/*
+* This function clean all the flags values and set them to false.
+* Output: NULL.
+*/
 void MemStore::cleanFlags() {
 	_flags.AF = false;
 	_flags.CF = false;

@@ -55,7 +55,7 @@ bool ValuesHandler::isHex()
     //check if the format syntax is valid
     if (syntax) {
         istringstream iss(_value);
-        unsigned int value;
+        unsigned long long int value;
         iss >> hex >> value;
         return !iss.fail() && iss.eof();
     }

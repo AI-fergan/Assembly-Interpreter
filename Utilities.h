@@ -2,8 +2,11 @@
 #include "Pch.h"
 #include <unordered_map>
 #include "AstNode.h"
+#include "ValueError.h"
+#include "MemStore.h"
 
 class AstNode;
+class MemStore;
 
 enum class Opcodes {
 	None = -1,

@@ -23,7 +23,8 @@ class MemStore {
 public:
 	MemStore();
 	void setRegister(string reg, unsigned int value);
-	int getRegister(string reg);
+	unsigned int getRegister(string reg);
+	int getRegisterSize(string reg);
 	bool isRegister(string reg);
 	void push(unsigned int value);
 	unsigned int pop();
