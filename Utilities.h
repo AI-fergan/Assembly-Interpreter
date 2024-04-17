@@ -2,8 +2,11 @@
 #include "Pch.h"
 #include <unordered_map>
 #include "AstNode.h"
+#include "ValueError.h"
+#include "MemStore.h"
 
 class AstNode;
+class MemStore;
 
 enum class Opcodes {
 	None = -1,
@@ -49,10 +52,10 @@ public:
 	static Opcodes getOpcode(string op);
 	static Operators getOperator(char ch);
 
-	static int StringToDec(string num);
-	static int HexStringToDec(string num);
-	static int BinStringToDec(string num);
-	static int OctStringToDec(string num);
+	static unsigned int StringToDec(string num);
+	static unsigned int HexStringToDec(string num);
+	static unsigned int BinStringToDec(string num);
+	static unsigned int OctStringToDec(string num);
 	static void cleanString(string& str);
 
 	static bool validparams(AstNode* opcode, int params);

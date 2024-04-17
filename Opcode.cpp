@@ -81,35 +81,60 @@ void Opcode::Mov() {
 		_mem->setRegister(Utilities::getParam(_opcode, 0), value->handler());
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
 /* ADD opcode */
 void Opcode::Add() {
-	int old_value = 0;
+	unsigned int old_value = 0, num = 0;
+	unsigned int size = 0, max = 0;
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
-		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value + value->handler());
+		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		size = _mem->getRegisterSize(Utilities::getParam(_opcode, 0));
+		num = value->handler() + old_value;
+		max = static_cast<uint64_t>(pow(2, 8 * size)) - 1;
+		//check if the value is out of range
+		if ((max < num && (value->handler() - 1) < max) || num == 0) {
+			num = max & num;
+			_mem->_flags.CF = true;
+		}
+		else {
+			_mem->_flags.CF = false;
+		}
+		_mem->setRegister(Utilities::getParam(_opcode, 0), num);
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
 /* SUB opcode */
 void Opcode::Sub() {
-	int old_value = 0;
+	unsigned int old_value = 0, num = 0;
+	unsigned int size, max;
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value - value->handler());
+		size = _mem->getRegisterSize(Utilities::getParam(_opcode, 0));
+		num = old_value - value->handler();
+		max = static_cast<uint64_t>(pow(2, 8 * size)) - 1;
+		//check if the value is out of range
+		if (max < num || num == max) {
+			num = max & num;
+			_mem->_flags.CF = true;
+		}
+		else {
+			_mem->_flags.CF = false;
+		}
+
+		_mem->setRegister(Utilities::getParam(_opcode, 0), num);
 
 	}
 	else {
@@ -141,6 +166,8 @@ void Opcode::Div() {
 	if (Utilities::validOperators(_opcode, 1)) {
 		old_value = _mem->getRegister(EAX);
 		ValuesHandler* value = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+		if (old_value % value->handler() != 0)
+			_mem->setRegister(EDX, old_value % value->handler());
 		_mem->setRegister(EAX, old_value / value->handler());
 
 	}
@@ -305,6 +332,7 @@ void Opcode::Ror() {
 	}
 }
 
+/* PUSH opcode */
 void Opcode::Push() {
 
 	//check if the user enter the correct syntax of the opcode
@@ -317,6 +345,7 @@ void Opcode::Push() {
 	}
 }
 
+/* POP opcode */
 void Opcode::Pop() {
 
 	//check if the user enter the correct syntax of the opcode

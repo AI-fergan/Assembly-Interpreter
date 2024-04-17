@@ -15,7 +15,7 @@ ValuesHandler::ValuesHandler(string value, MemStore* mem) {
 * This function check what is the format of the value and return the value in decimal format.
 * Output: the value in decimal format.
 */
-int ValuesHandler::handler() {
+unsigned int ValuesHandler::handler() {
     if (isHex())
         return Utilities::HexStringToDec(_value);
     else if (isDec())
@@ -41,26 +41,23 @@ bool ValuesHandler::isHex()
     bool syntax = false;
 
     //first type of hex format
-    if (_value[_value.size() - 1] == 'h') {
-        _value[_value.size() - 1] = 0;
+    if (_value.back() == 'h') {
+        _value = "0x" + _value;
+        _value.pop_back();
         syntax = true;
     }
 
     //second type of hex format
-    if (_value.size() > 2 && _value[0] == '0' && _value[1] == 'x'){
-        _value[0] = '0';
-        _value[1] = '0';
+    if (_value.size() > 2 && _value.front() == '0' && _value[1] == 'x') {
         syntax = true;
     }
 
     //check if the format syntax is valid
     if (syntax) {
-        //loop over all the hex numbers
-        for (int i = 0; _value[i] != 0; i++)
-            if (!isxdigit(_value[i]) && !isdigit(_value[i]))
-                return false;    
-
-        return true;
+        istringstream iss(_value);
+        unsigned long long int value;
+        iss >> hex >> value;
+        return !iss.fail() && iss.eof();
     }
        
     return false;
@@ -87,13 +84,17 @@ bool ValuesHandler::isDec()
 bool ValuesHandler::isOct()
 {
     //octal format
-    if (_value[_value.size() - 1] == 'o') {
-        _value[_value.size() - 1] = 0;
-        //loop over all the octal numbers
-        for (int i = 0; _value[i] != 0; i++)
-            if (!isdigit(_value[i]) || _value[i] > '7')
-                return false;
-        return true;
+    if (_value.back() == 'o') {
+        _value.pop_back();
+        
+        //check if the number is octal
+        istringstream iss(_value);
+        unsigned int value;
+        iss >> oct >> value;
+
+        _value.push_back('o');
+
+        return !iss.fail() && iss.eof();
     }
 
     return false;
@@ -106,11 +107,16 @@ bool ValuesHandler::isOct()
 bool ValuesHandler::isBin()
 {
     //binary format
-    if (_value[_value.size() - 1] == 'b') {
-        _value[_value.size() - 1] = 0;
+    if (_value.back() == 'b') {
+        _value.pop_back();
+        //loop over all the Bits
         for (int i = 0; _value[i] != 0; i++)
-            if (_value[i] != '0' && _value[i] != '1')
+            //check if the Bit value is valid
+            if (_value[i] != '0' && _value[i] != '1') {
+                _value.push_back('b');
                 return false;
+            }
+        _value.push_back('b');
         return true;
     }
 

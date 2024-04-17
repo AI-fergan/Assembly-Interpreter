@@ -1,7 +1,10 @@
 # Assembly-Interpreter
-### Version 1.0.0
+### Version 2.0.0
 This project is an assembly language interpreter in a 32-bit version,
 The interpreter is very friendly and suitable for beginners who want to feel assembly language and understand the meaning of registers and the work of the processor.
+
+### Additional Features:
+Stack, Flags register.
 
 # Commands 
 ### Available commands:
@@ -15,7 +18,7 @@ The interpreter is very friendly and suitable for beginners who want to feel ass
 ```
 MOV, ADD, SUB, MUL, DIV, INC
 DEC, OR, AND, XOR, NOT, NOP
-SHL, SHR, ROL, ROR
+SHL, SHR, ROL, ROR, PUSH, POP
 ```
 
 # Registers
@@ -25,4 +28,11 @@ EAX, AX, AL,
 EBX, BX, BL,
 ECX, CX, CL,
 EDX, DX, DL
+ESP, EBP
+```
+# Flag Register
+### Available Flags:
+```
+CF, ZF, SF, OF,
+PF, AF, IF, DF
 ```

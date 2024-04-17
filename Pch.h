@@ -12,6 +12,10 @@
 #include <sstream>
 #include <iomanip>
 
+using std::oct;
+using std::istringstream;
+using std::reverse;
+using std::stoul;
 using std::setw;
 using std::setfill;
 using std::hex;
