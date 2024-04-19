@@ -11,13 +11,10 @@ int main() {
 	AstParser* parser = nullptr;
 	MemStore* memory = new MemStore("storage.bin");
 	Commands* commands = new Commands(memory);
-	
-	cout << " ----------------------------" << endl;
-	cout << "|   Noam Afergan |  V2.0.0   |" << endl;
-	cout << "|----------------------------|" << endl;
-	cout << "|    Assembly-Interpreter    |" << endl;
-	cout << " ----------------------------" << endl << endl;
-	
+
+	//print open message and clean the screen
+	commands->commandsHandler("cls");
+
 	while (true) {
 		cout << ">>>";
 

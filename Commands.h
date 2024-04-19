@@ -15,6 +15,7 @@ public:
 	void opcodesHelp();
 	void printHistory();
 	void JMP();
+	void cls();
 
 private:
 	MemStore* _mem;

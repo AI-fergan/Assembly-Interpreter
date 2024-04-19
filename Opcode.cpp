@@ -107,6 +107,12 @@ void Opcode::run()
 		break;
 	case Opcodes::JP:
 		JP();
+		break;	
+	case Opcodes::JAE:
+		JAE();
+		break;
+	case Opcodes::JBE:
+		JBE();
 		break;
 >>>>>>> cd973e5 (Added JNP & JP opcodes)
 	}
@@ -413,6 +419,14 @@ void Opcode::CMP() {
 		else{
 			_mem->_flags.ZF = false;
 		}
+		//check if the numbers are equal
+		if (value_1 < value_2->handler()) {
+			_mem->_flags.SF = true;
+		}
+		else {
+			_mem->_flags.SF = false;
+		}
+
 	}
 	else {
 		throw SyntaxError("Opcode Error - opcode syntax not valid.");
@@ -557,6 +571,7 @@ void Opcode::JNO() {
 	}
 }
 
+/* JP opcode */
 void Opcode::JP() {
 
 	//check if the user enter the correct syntax of the opcode
@@ -573,6 +588,7 @@ void Opcode::JP() {
 	}
 }
 
+/* JNP opcode */
 void Opcode::JNP() {
 
 	//check if the user enter the correct syntax of the opcode
@@ -588,4 +604,41 @@ void Opcode::JNP() {
 		throw SyntaxError("Opcode Error - opcode syntax not valid.");
 	}
 }
+<<<<<<< HEAD
 >>>>>>> cd973e5 (Added JNP & JP opcodes)
+=======
+
+/* JAE opcode */
+void Opcode::JAE() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag PF is 0 or the ZF set to 1
+		if (!_mem->_flags.SF || _mem->_flags.ZF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JBE opcode */
+void Opcode::JBE() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag PF is 1 or the ZF set to 1
+		if (_mem->_flags.SF || _mem->_flags.ZF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+>>>>>>> c1cc2cd (Added JAE & JBE opcodes and cls command)
