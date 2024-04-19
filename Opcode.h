@@ -13,6 +13,7 @@ class Opcode
 {
 public:
 	Opcode(AstNode* opcode, MemStore* mem);
+	void run();
 
 private:
 	AstNode* _opcode;

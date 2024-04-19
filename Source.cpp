@@ -9,9 +9,9 @@ int main() {
 	string input;
 	Lexer* lexer = nullptr;
 	AstParser* parser = nullptr;
-	MemStore* memory = new MemStore();
+	MemStore* memory = new MemStore("storage.bin");
 	Commands* commands = new Commands(memory);
-
+	
 	cout << " ----------------------------" << endl;
 	cout << "|   Noam Afergan |  V2.0.0   |" << endl;
 	cout << "|----------------------------|" << endl;
@@ -44,7 +44,7 @@ int main() {
 			
 			//run the Opcode
 			Opcode* opcode = new Opcode(parser->getBranches()[0], memory);
-			
+			opcode->run();
 			//clean
 			delete parser;
 			delete opcode;

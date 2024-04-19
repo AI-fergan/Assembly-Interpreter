@@ -1,6 +1,6 @@
 #Folders
-/.vs/
-/x64/
+.vs/*
+x64/*
 
 # Prerequisites
 *.d
@@ -10,6 +10,7 @@
 *.lo
 *.o
 *.obj
+*.ipch
 
 # Precompiled Headers
 *.gch

@@ -3,6 +3,7 @@
 #include "Utilities.h"
 #include "RegisterError.h"
 #include "StackError.h"
+#include "Opcode.h"
 
 //Flags register settings
 struct Flags {
@@ -21,7 +22,7 @@ struct Flags {
 */
 class MemStore {
 public:
-	MemStore();
+	MemStore(string path);
 	void setRegister(string reg, unsigned int value);
 	unsigned int getRegister(string reg);
 	int getRegisterSize(string reg);
@@ -29,7 +30,10 @@ public:
 	void push(unsigned int value);
 	unsigned int pop();
 	void cleanFlags();
-
+	
+	void addToHistory(Opcode* opcode);
+	Opcode* getFromHistory(unsigned int place);
+	void incEIP();
 	void printMemory();
 
 	struct Flags _flags;
@@ -37,5 +41,5 @@ public:
 private:
 	map<tuple<string, string, string>, unsigned int> _registers;
 	vector<unsigned int> _stack;
-	
+	vector<Opcode*> _history;
 };

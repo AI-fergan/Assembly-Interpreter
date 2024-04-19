@@ -36,8 +36,7 @@ unsigned int ValuesHandler::handler() {
 * This function check if the value is in Hexdecimal format.
 * Output: if the value is in Hexdecimal format.
 */
-bool ValuesHandler::isHex()
-{
+bool ValuesHandler::isHex() {
     bool syntax = false;
 
     //first type of hex format

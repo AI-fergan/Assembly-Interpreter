@@ -3,7 +3,7 @@
 /*
 * This c'tor init all the memory configs.
 */
-MemStore::MemStore() {
+MemStore::MemStore(string path) {
 	//create the registers memory spaces
 	_registers[make_tuple(EAX, AX, AL)] = 0;
 	_registers[make_tuple(EBX, BX, BL)] = 0;
@@ -11,6 +11,7 @@ MemStore::MemStore() {
 	_registers[make_tuple(EDX, DX, DL)] = 0;
 	_registers[make_tuple(ESP, ESP, ESP)] = 0xFFFFFFFF;
 	_registers[make_tuple(EBP, EBP, EBP)] = 0;
+	_registers[make_tuple(EIP, EIP, EIP)] = 0;
 
 	cleanFlags();
 }
@@ -28,6 +29,9 @@ void MemStore::setRegister(string reg, unsigned int value) {
 
 	if (reg == ESP) {
 		push(value);
+		throw RegisterError("MemoryError - Cannot access that register");
+	}
+	else if (reg == EIP) {
 		throw RegisterError("MemoryError - Cannot access that register");
 	}
 
@@ -275,6 +279,41 @@ void MemStore::cleanFlags() {
 	_flags.PF = false;
 	_flags.SF = false;
 	_flags.ZF = false;
+}
+
+/*
+* This function add opcode to the opcodes history.
+* Input:
+* opcode - the opcode that added to the history
+* Output: NULL.
+*/
+void MemStore::addToHistory(Opcode* opcode) {
+	_history.push_back(opcode);
+
+	//increase the EIP register which count the opcodes
+	incEIP();
+}
+
+/*
+* This function use to get opcode from the history by its place.
+* Input:
+* place - the place of the opcode in the history
+* Output: the opcode Object.
+*/
+Opcode* MemStore::getFromHistory(unsigned int place) {
+	//check if the opcode is exist in the history
+	if (getRegister(EIP) < place) 
+		throw;
+	
+	return _history[place];
+}
+
+/*
+* This function increase the EIP register which count the opcodes.
+* Output: NULL.
+*/
+void MemStore::incEIP(){
+	_registers[make_tuple(EIP, EIP, EIP)] = getRegister(EIP) + 1;
 }
 
 /*

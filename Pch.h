@@ -11,7 +11,11 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <fstream>
+#include <filesystem>
 
+using std::filesystem::file_size;
+using std::fstream;
 using std::oct;
 using std::istringstream;
 using std::reverse;
@@ -63,3 +67,5 @@ using std::get;
 
 #define ESP "esp"
 #define EBP "ebp"
+
+#define EIP "eip"
