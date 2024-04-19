@@ -1,27 +1,29 @@
 #include "Utilities.h"
 
 map<string, Opcodes> Utilities::OpcodesChars = {
-    {"mov", Opcodes::Mov},
-    {"sub", Opcodes::Sub},
-    {"add", Opcodes::Add},
-    {"mul", Opcodes::Mul},
-    {"div", Opcodes::Div},
-    {"inc", Opcodes::Inc},
-    {"dec", Opcodes::Dec},
-    {"or", Opcodes::Or},
-    {"and", Opcodes::And},
-    {"xor", Opcodes::Xor},
-    {"not", Opcodes::Not},
-    {"nop", Opcodes::Nop},
-    {"shl", Opcodes::Shl},
-    {"shr", Opcodes::Shr},
-    {"rol", Opcodes::Rol},
-    {"ror", Opcodes::Ror},
-    {"pop", Opcodes::Pop},
-    {"push", Opcodes::Push},
-    {"cmp", Opcodes::Cmp},
-    {"jnz", Opcodes::Jnz},
-    {"jz", Opcodes::Jz},
+    {"mov", Opcodes::MOV},
+    {"sub", Opcodes::SUB},
+    {"add", Opcodes::ADD},
+    {"mul", Opcodes::MUL},
+    {"div", Opcodes::DIV},
+    {"inc", Opcodes::INC},
+    {"dec", Opcodes::DEC},
+    {"or", Opcodes::OR},
+    {"and", Opcodes::AND},
+    {"xor", Opcodes::XOR},
+    {"not", Opcodes::NOT},
+    {"nop", Opcodes::NOP},
+    {"shl", Opcodes::SHL},
+    {"shr", Opcodes::SHR},
+    {"rol", Opcodes::ROL},
+    {"ror", Opcodes::ROR},
+    {"pop", Opcodes::POP},
+    {"push", Opcodes::PUSH},
+    {"cmp", Opcodes::CMP},
+    {"jnz", Opcodes::JNZ},
+    {"jz", Opcodes::JZ},
+    {"jne", Opcodes::JNE},
+    {"je", Opcodes::JE}
 };
 
 map<char, Operators> Utilities::OperatorsChars = {
@@ -96,7 +98,7 @@ Opcodes Utilities::getOpcode(string op) {
     //check if the opcode exists
     if(isOpcode(op))
         return (*OpcodesChars.find(op)).second;
-    return Opcodes::None;
+    return Opcodes::NONE;
 }
 
 /*

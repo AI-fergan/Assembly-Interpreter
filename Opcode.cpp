@@ -19,74 +19,80 @@ void Opcode::run()
 {
 	//check to which opcode the Node match
 	switch (Utilities::getOpcode(_opcode->getData())) {
-	case Opcodes::Mov:
-		Mov();
+	case Opcodes::MOV:
+		MOV();
 		break;
-	case Opcodes::Sub:
-		Sub();
+	case Opcodes::SUB:
+		SUB();
 		break;
-	case Opcodes::Add:
-		Add();
+	case Opcodes::ADD:
+		ADD();
 		break;
-	case Opcodes::Mul:
-		Mul();
+	case Opcodes::MUL:
+		MUL();
 		break;
-	case Opcodes::Div:
-		Div();
+	case Opcodes::DIV:
+		DIV();
 		break;
-	case Opcodes::Inc:
-		Inc();
+	case Opcodes::INC:
+		INC();
 		break;
-	case Opcodes::Dec:
-		Dec();
+	case Opcodes::DEC:
+		DEC();
 		break;
-	case Opcodes::Or:
-		Or();
+	case Opcodes::OR:
+		OR();
 		break;
-	case Opcodes::And:
-		And();
+	case Opcodes::AND:
+		AND();
 		break;
-	case Opcodes::Xor:
-		Xor();
+	case Opcodes::XOR:
+		XOR();
 		break;
-	case Opcodes::Not:
-		Not();
+	case Opcodes::NOT:
+		NOT();
 		break;
-	case Opcodes::Nop:
-		Nop();
+	case Opcodes::NOP:
+		NOP();
 		break;
-	case Opcodes::Shl:
-		Shl();
+	case Opcodes::SHL:
+		SHL();
 		break;
-	case Opcodes::Shr:
-		Shr();
+	case Opcodes::SHR:
+		SHR();
 		break;
-	case Opcodes::Rol:
-		Rol();
+	case Opcodes::ROL:
+		ROL();
 		break;
-	case Opcodes::Ror:
-		Ror();
+	case Opcodes::ROR:
+		ROR();
 		break;
-	case Opcodes::Pop:
-		Pop();
+	case Opcodes::POP:
+		POP();
 		break;
-	case Opcodes::Push:
-		Push();
+	case Opcodes::PUSH:
+		PUSH();
 		break;
-	case Opcodes::Cmp:
-		Cmp();
+	case Opcodes::CMP:
+		CMP();
 		break;
-	case Opcodes::Jnz:
-		Jnz();
+	case Opcodes::JNZ:
+		JNZ();
 		break;
-	case Opcodes::Jz:
-		Jz();
+	case Opcodes::JZ:
+		JZ();
+		break;
+	case Opcodes::JNE:
+		JNE();
+		break;
+	case Opcodes::JE:
+		JE();
 		break;
 	}
 }
 
 /* MOV opcode */
-void Opcode::Mov() {
+void Opcode::MOV() {
 	//check if the user enter the correct syntax of the opcode
 	if(Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);		
@@ -98,7 +104,7 @@ void Opcode::Mov() {
 }
 
 /* ADD opcode */
-void Opcode::Add() {
+void Opcode::ADD() {
 	unsigned int old_value = 0, num = 0;
 	unsigned int size = 0, max = 0;
 
@@ -126,7 +132,7 @@ void Opcode::Add() {
 }
 
 /* SUB opcode */
-void Opcode::Sub() {
+void Opcode::SUB() {
 	unsigned int old_value = 0, num = 0;
 	unsigned int size, max;
 
@@ -156,7 +162,7 @@ void Opcode::Sub() {
 }
 
 /* MUL opcode */
-void Opcode::Mul() {
+void Opcode::MUL() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -172,7 +178,7 @@ void Opcode::Mul() {
 }
 
 /* DIV opcode */
-void Opcode::Div() {
+void Opcode::DIV() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -190,7 +196,7 @@ void Opcode::Div() {
 }
 
 /* INC opcode */
-void Opcode::Inc() {
+void Opcode::INC() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {		
@@ -202,7 +208,7 @@ void Opcode::Inc() {
 }
 
 /* DEC opcode */
-void Opcode::Dec() {
+void Opcode::DEC() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
@@ -214,7 +220,7 @@ void Opcode::Dec() {
 }
 
 /* OR opcode */
-void Opcode::Or(){
+void Opcode::OR(){
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -230,7 +236,7 @@ void Opcode::Or(){
 }
 
 /* AND opcode */
-void Opcode::And() {
+void Opcode::AND() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -246,7 +252,7 @@ void Opcode::And() {
 }
 
 /* XOR opcode */
-void Opcode::Xor() {
+void Opcode::XOR() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -262,7 +268,7 @@ void Opcode::Xor() {
 }
 
 /* NOT opcode */
-void Opcode::Not() {
+void Opcode::NOT() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
@@ -274,7 +280,7 @@ void Opcode::Not() {
 }
 
 /* NOP opcode */
-void Opcode::Nop() {
+void Opcode::NOP() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (!Utilities::validOperators(_opcode, 0))
@@ -282,7 +288,7 @@ void Opcode::Nop() {
 }
 
 /* SHL opcode */
-void Opcode::Shl() {
+void Opcode::SHL() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -298,7 +304,7 @@ void Opcode::Shl() {
 }
 
 /* SHR opcode */
-void Opcode::Shr() {
+void Opcode::SHR() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -314,7 +320,7 @@ void Opcode::Shr() {
 }
 
 /* ROR opcode */
-void Opcode::Rol() {
+void Opcode::ROL() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -330,7 +336,7 @@ void Opcode::Rol() {
 }
 
 /* ROR opcode */
-void Opcode::Ror() {
+void Opcode::ROR() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -346,7 +352,7 @@ void Opcode::Ror() {
 }
 
 /* PUSH opcode */
-void Opcode::Push() {
+void Opcode::PUSH() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
@@ -359,7 +365,7 @@ void Opcode::Push() {
 }
 
 /* POP opcode */
-void Opcode::Pop() {
+void Opcode::POP() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
@@ -371,7 +377,7 @@ void Opcode::Pop() {
 }
 
 /* CMP opcode */
-void Opcode::Cmp() {
+void Opcode::CMP() {
 	int value_1 = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -393,7 +399,7 @@ void Opcode::Cmp() {
 }
 
 /* JNZ opcode */
-void Opcode::Jnz() {
+void Opcode::JNZ() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
@@ -410,7 +416,7 @@ void Opcode::Jnz() {
 }
 
 /* JZ opcode */
-void Opcode::Jz() {
+void Opcode::JZ() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
@@ -418,6 +424,40 @@ void Opcode::Jz() {
 
 		//check if the flag ZF is 1
 		if (_mem->_flags.ZF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JE opcode */
+void Opcode::JE() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag ZF is 1
+		if (_mem->_flags.ZF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JNE opcode */
+void Opcode::JNE() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag ZF is 0
+		if (!_mem->_flags.ZF) {
 			_mem->jmp(place->handler());
 		}
 	}
