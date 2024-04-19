@@ -44,13 +44,18 @@ int main() {
 			
 			//run the Opcode
 			Opcode* opcode = new Opcode(parser->getBranches()[0], memory);
+
+			//added the opcode to the opcodes history
+			memory->addToHistory(opcode, input);
+
+			//run the opcode
 			opcode->run();
+			
+			
 			//clean
 			delete parser;
-			delete opcode;
 		}
-		catch (Exceptions& e)
-		{
+		catch (Exceptions& e) {
 			//print the exception
 			cout << e.what() << e.getError() << endl;
 		}

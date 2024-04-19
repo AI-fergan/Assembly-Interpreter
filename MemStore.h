@@ -5,6 +5,8 @@
 #include "StackError.h"
 #include "Opcode.h"
 
+class Opcode;
+
 //Flags register settings
 struct Flags {
 	bool CF;
@@ -31,15 +33,19 @@ public:
 	unsigned int pop();
 	void cleanFlags();
 	
-	void addToHistory(Opcode* opcode);
+	void addToHistory(Opcode* opcode, string line);
 	Opcode* getFromHistory(unsigned int place);
 	void incEIP();
+
 	void printMemory();
+	void printHistory();
+	void jmp(unsigned int place);
 
 	struct Flags _flags;
 
 private:
 	map<tuple<string, string, string>, unsigned int> _registers;
 	vector<unsigned int> _stack;
-	vector<Opcode*> _history;
+	vector<tuple<Opcode*, string>> _history;
+
 };

@@ -31,6 +31,10 @@ bool Commands::commandsHandler(string command) {
 		printMemory();
 		return true;
 	}
+	else if (command == "history") {
+		printHistory();
+		return true;
+	}
 
 	return false;
 		
@@ -64,5 +68,9 @@ s in the Interpreter.
 void Commands::opcodesHelp() {
 	cout << "MOV, SUB, MUL, DIV, INC, DEC, OR, AND," << endl;
 	cout << "XOR, NOT, NOP, SHL, SHR, ROL, ROR" << endl;
+}
+
+void Commands::printHistory() {
+	_mem->printHistory();
 }
 

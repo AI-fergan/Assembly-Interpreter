@@ -3,6 +3,8 @@
 #include "MemStore.h"
 #include "ValueError.h"
 
+class MemStore;
+
 /*
 * This class used to handle every value format that the user input.
 */

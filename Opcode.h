@@ -6,6 +6,8 @@
 #include "MemStore.h"
 #include "ValuesHandler.h"
 
+class MemStore;
+class AstNode;
 /*
 * This class used to run opcde by given Ast Node.
 */
@@ -37,4 +39,5 @@ private:
 	void Ror();
 	void Push();
 	void Pop();
+	void Jmp();
 };

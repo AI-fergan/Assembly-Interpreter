@@ -1,6 +1,5 @@
 #pragma once
 #include "Pch.h"
-#include <unordered_map>
 #include "AstNode.h"
 #include "ValueError.h"
 #include "MemStore.h"
@@ -27,7 +26,8 @@ enum class Opcodes {
 	Rol,
 	Ror,
 	Push,
-	Pop
+	Pop,
+	Jmp
 
 };
 
@@ -43,7 +43,7 @@ enum class Operators {
 /*
 * This class help us to make the Interpreter code more clean and easy to read and write.
 */
-static class Utilities {
+class Utilities {
 public:	
 	static bool isOpcode(string op);
 	static bool isOperator(char ch);

@@ -185,15 +185,15 @@ int MemStore::getRegisterSize(string reg){
 	//check if the register exists
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
 		//32 bit register
-		if (reg == std::get<0>(start->first)) {			
+		if (reg == get<0>(start->first)) {			
 			return 4;
 		}
 		//16 bit register
-		else if (reg == std::get<1>(start->first)) {			
+		else if (reg == get<1>(start->first)) {			
 			return 2;
 		}
 		//8 bit register
-		else if (reg == std::get<2>(start->first)) {
+		else if (reg == get<2>(start->first)) {
 			return 1;
 		}
 	}
@@ -287,8 +287,8 @@ void MemStore::cleanFlags() {
 * opcode - the opcode that added to the history
 * Output: NULL.
 */
-void MemStore::addToHistory(Opcode* opcode) {
-	_history.push_back(opcode);
+void MemStore::addToHistory(Opcode* opcode, string line) {
+	_history.push_back(make_tuple(opcode, line));
 
 	//increase the EIP register which count the opcodes
 	incEIP();
@@ -300,12 +300,8 @@ void MemStore::addToHistory(Opcode* opcode) {
 * place - the place of the opcode in the history
 * Output: the opcode Object.
 */
-Opcode* MemStore::getFromHistory(unsigned int place) {
-	//check if the opcode is exist in the history
-	if (getRegister(EIP) < place) 
-		throw;
-	
-	return _history[place];
+Opcode* MemStore::getFromHistory(unsigned int place) {	
+	return get<0>(_history[place]);
 }
 
 /*
@@ -371,4 +367,28 @@ void MemStore::printMemory(){
 		}
 	}
 	
+}
+
+void MemStore::printHistory() {
+	cout << "History:" << endl;
+	for (tuple<Opcode*, string> opcode : _history) {
+		cout << get<1>(opcode) << endl;
+	}
+}
+
+void MemStore::jmp(unsigned int place) {	
+	//check if the opcode is exist in the history
+	if (getRegister(EIP) < place)
+		throw;
+
+	while (place < getRegister(EIP)) {
+		try {
+			getFromHistory(place)->run();
+		} catch (Exceptions& e)
+		{
+			//print the exception
+			cout << e.what() << e.getError() << endl;
+		}
+		place++;
+	}
 }
