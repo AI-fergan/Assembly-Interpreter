@@ -46,8 +46,13 @@ enum class Opcodes {
 =======
 	JP,
 	JAE,
+<<<<<<< HEAD
 	JBE
 >>>>>>> c1cc2cd (Added JAE & JBE opcodes and cls command)
+=======
+	JBE,
+	LOOP
+>>>>>>> c20cc11 (Added LOOP opcode)
 };
 
 enum class Operators {

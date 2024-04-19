@@ -114,7 +114,13 @@ void Opcode::run()
 	case Opcodes::JBE:
 		JBE();
 		break;
+<<<<<<< HEAD
 >>>>>>> cd973e5 (Added JNP & JP opcodes)
+=======
+	case Opcodes::LOOP:
+		LOOP();
+		break;
+>>>>>>> c20cc11 (Added LOOP opcode)
 	}
 }
 
@@ -641,4 +647,25 @@ void Opcode::JBE() {
 		throw SyntaxError("Opcode Error - opcode syntax not valid.");
 	}
 }
+<<<<<<< HEAD
 >>>>>>> c1cc2cd (Added JAE & JBE opcodes and cls command)
+=======
+
+/* LOOP opcode */
+void Opcode::LOOP() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the ECX register equals to 0
+		if (_mem->getRegister(ECX) != 0) {
+			_mem->setRegister(ECX, _mem->getRegister(ECX) - 1);
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+>>>>>>> c20cc11 (Added LOOP opcode)

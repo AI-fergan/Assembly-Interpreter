@@ -38,8 +38,13 @@ map<string, Opcodes> Utilities::OpcodesChars = {
 =======
     {"JP", Opcodes::JP},
     {"JAE", Opcodes::JAE},
+<<<<<<< HEAD
     {"JBE", Opcodes::JBE}
 >>>>>>> c1cc2cd (Added JAE & JBE opcodes and cls command)
+=======
+    {"JBE", Opcodes::JBE},
+    {"LOOP", Opcodes::LOOP}
+>>>>>>> c20cc11 (Added LOOP opcode)
 };
 
 map<char, Operators> Utilities::OperatorsChars = {

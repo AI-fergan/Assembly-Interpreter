@@ -54,6 +54,7 @@ private:
 	void JNP();
 	void JAE();
 	void JBE();
+	void LOOP();
 
 <<<<<<< HEAD
 >>>>>>> c6cdae8 (Added jump = JMP command)
