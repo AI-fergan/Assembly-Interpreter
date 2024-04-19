@@ -1,29 +1,31 @@
 #include "Utilities.h"
 
 map<string, Opcodes> Utilities::OpcodesChars = {
-    {"mov", Opcodes::MOV},
-    {"sub", Opcodes::SUB},
-    {"add", Opcodes::ADD},
-    {"mul", Opcodes::MUL},
-    {"div", Opcodes::DIV},
-    {"inc", Opcodes::INC},
-    {"dec", Opcodes::DEC},
-    {"or", Opcodes::OR},
-    {"and", Opcodes::AND},
-    {"xor", Opcodes::XOR},
-    {"not", Opcodes::NOT},
-    {"nop", Opcodes::NOP},
-    {"shl", Opcodes::SHL},
-    {"shr", Opcodes::SHR},
-    {"rol", Opcodes::ROL},
-    {"ror", Opcodes::ROR},
-    {"pop", Opcodes::POP},
-    {"push", Opcodes::PUSH},
-    {"cmp", Opcodes::CMP},
-    {"jnz", Opcodes::JNZ},
-    {"jz", Opcodes::JZ},
-    {"jne", Opcodes::JNE},
-    {"je", Opcodes::JE}
+    {"MOV", Opcodes::MOV},
+    {"SUB", Opcodes::SUB},
+    {"ADD", Opcodes::ADD},
+    {"MUL", Opcodes::MUL},
+    {"DIV", Opcodes::DIV},
+    {"INC", Opcodes::INC},
+    {"DEC", Opcodes::DEC},
+    {"OR", Opcodes::OR},
+    {"AND", Opcodes::AND},
+    {"XOR", Opcodes::XOR},
+    {"NOT", Opcodes::NOT},
+    {"NOP", Opcodes::NOP},
+    {"SHL", Opcodes::SHL},
+    {"SHR", Opcodes::SHR},
+    {"ROL", Opcodes::ROL},
+    {"ROR", Opcodes::ROR},
+    {"POP", Opcodes::POP},
+    {"PUSH", Opcodes::PUSH},
+    {"CMP", Opcodes::CMP},
+    {"JNZ", Opcodes::JNZ},
+    {"JZ", Opcodes::JZ},
+    {"JNE", Opcodes::JNE},
+    {"JE", Opcodes::JE},
+    {"JNS", Opcodes::JNS},
+    {"JS", Opcodes::JS}
 };
 
 map<char, Operators> Utilities::OperatorsChars = {
@@ -223,6 +225,23 @@ void Utilities::toLower(string& str) {
     //loop over all the string chars
     for (char ch : str) {
         result += tolower(ch);
+    }
+
+    str = result;
+}
+
+/*
+* This function get string and set all the letters in the string to upper case format.
+* Input:
+* str - the string to edit.
+* Output: NULL.
+*/
+void Utilities::toUpper(string& str) {
+    string result = "";
+
+    //loop over all the string chars
+    for (char ch : str) {
+        result += toupper(ch);
     }
 
     str = result;

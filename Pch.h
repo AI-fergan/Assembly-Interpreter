@@ -50,22 +50,22 @@ using std::get;
 #define OPCODE 1
 #define OPERATOR 2
 
-#define EAX "eax"
-#define EBX "ebx" 
-#define ECX "ecx"
-#define EDX "edx"
+#define EAX "EAX"
+#define EBX "EBX" 
+#define ECX "ECX"
+#define EDX "EDX"
 
-#define AX "ax"
-#define BX "bx"
-#define CX "cx"
-#define DX "dx"
+#define AX "AX"
+#define BX "BX"
+#define CX "CX"
+#define DX "DX"
 
-#define AL "al"
-#define BL "bl"
-#define CL "cl"
-#define DL "dl"
+#define AL "AL"
+#define BL "BL"
+#define CL "CL"
+#define DL "DL"
 
-#define ESP "esp"
-#define EBP "ebp"
+#define ESP "ESP"
+#define EBP "EBP"
 
-#define EIP "eip"
+#define EIP "EIP"

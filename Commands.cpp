@@ -16,6 +16,8 @@ Commands::Commands(MemStore* mem) {
 * Output: if the command is exists.
 */
 bool Commands::commandsHandler(string command) {
+	Utilities::toLower(command);
+
 	//Help command
 	if (command == "help") {
 		CommandsHelp();

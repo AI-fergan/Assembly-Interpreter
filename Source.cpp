@@ -23,6 +23,7 @@ int main() {
 
 		//input code line from the user
 		getline(cin, input);
+		Utilities::toUpper(input);
 
 		//new line
 		if (!input.size())

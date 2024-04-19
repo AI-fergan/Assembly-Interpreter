@@ -44,4 +44,6 @@ private:
 	void JZ();
 	void JE();
 	void JNE();
+	void JS();
+	void JNS();
 };

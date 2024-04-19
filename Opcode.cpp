@@ -88,6 +88,12 @@ void Opcode::run()
 	case Opcodes::JE:
 		JE();
 		break;
+	case Opcodes::JNS:
+		JNS();
+		break;
+	case Opcodes::JS:
+		JS();
+		break;
 	}
 }
 
@@ -458,6 +464,40 @@ void Opcode::JNE() {
 
 		//check if the flag ZF is 0
 		if (!_mem->_flags.ZF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JS opcode */
+void Opcode::JS() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag SF is 1
+		if (_mem->_flags.SF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JNS opcode */
+void Opcode::JNS() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag SF is 0
+		if (!_mem->_flags.SF) {
 			_mem->jmp(place->handler());
 		}
 	}

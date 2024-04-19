@@ -47,7 +47,8 @@ bool ValuesHandler::isHex() {
     }
 
     //second type of hex format
-    if (_value.size() > 2 && _value.front() == '0' && _value[1] == 'x') {
+    if (_value.size() > 2 && _value.front() == '0' && _value[1] == 'X') {
+        _value[1] = 'x';
         syntax = true;
     }
 

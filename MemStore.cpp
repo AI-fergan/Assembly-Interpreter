@@ -24,13 +24,13 @@ MemStore::MemStore(string path) {
 * Output: NULL.
 */
 void MemStore::setRegister(string reg, unsigned int value) {
-	Utilities::toLower(reg);
 
-
+	//cannot edit the ESP register
 	if (reg == ESP) {
 		push(value);
 		throw RegisterError("MemoryError - Cannot access that register");
 	}
+	//cannot edit the EIP register
 	else if (reg == EIP) {
 		throw RegisterError("MemoryError - Cannot access that register");
 	}
@@ -150,7 +150,6 @@ void MemStore::setRegister(string reg, unsigned int value) {
 * Output: the register value.
 */
 unsigned int MemStore::getRegister(string reg){
-	Utilities::toLower(reg);
 
 	//get the value of the registers by loop over on the registers map
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
@@ -180,7 +179,6 @@ unsigned int MemStore::getRegister(string reg){
 * Output: the size of the register in bytes.
 */
 int MemStore::getRegisterSize(string reg){
-	Utilities::toLower(reg);
 
 	//check if the register exists
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
@@ -208,7 +206,6 @@ int MemStore::getRegisterSize(string reg){
 * output: if the register name exists.
 */
 bool MemStore::isRegister(string reg) {
-	Utilities::toLower(reg);
 
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
 		//32 bit register

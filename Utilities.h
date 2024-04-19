@@ -31,8 +31,9 @@ enum class Opcodes {
 	JNZ,
 	JZ,
 	JNE,
-	JE
-
+	JE,
+	JNS,
+	JS
 };
 
 enum class Operators {
@@ -67,6 +68,7 @@ public:
 	static string getParam(AstNode* opcode, int param);
 
 	static void toLower(string& str);
+	static void toUpper(string& str);
 
 
 	static map<string, Opcodes> OpcodesChars;
