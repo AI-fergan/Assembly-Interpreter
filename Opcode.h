@@ -50,6 +50,8 @@ private:
 =======
 	void JO();
 	void JNO();
+	void JP();
+	void JNP();
 
 <<<<<<< HEAD
 >>>>>>> c6cdae8 (Added jump = JMP command)

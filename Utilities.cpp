@@ -25,7 +25,15 @@ map<string, Opcodes> Utilities::OpcodesChars = {
     {"JNE", Opcodes::JNE},
     {"JE", Opcodes::JE},
     {"JNS", Opcodes::JNS},
+<<<<<<< HEAD
     {"JS", Opcodes::JS}
+=======
+    {"JS", Opcodes::JS},
+    {"JNO", Opcodes::JNO},
+    {"JO", Opcodes::JO},
+    {"JNP", Opcodes::JNP},
+    {"JP", Opcodes::JP}
+>>>>>>> cd973e5 (Added JNP & JP opcodes)
 };
 
 map<char, Operators> Utilities::OperatorsChars = {

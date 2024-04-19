@@ -94,6 +94,21 @@ void Opcode::run()
 	case Opcodes::JS:
 		JS();
 		break;
+<<<<<<< HEAD
+=======
+	case Opcodes::JNO:
+		JNO();
+		break;
+	case Opcodes::JO:
+		JO();
+		break;
+	case Opcodes::JNP:
+		JNP();
+		break;
+	case Opcodes::JP:
+		JP();
+		break;
+>>>>>>> cd973e5 (Added JNP & JP opcodes)
 	}
 }
 
@@ -505,3 +520,72 @@ void Opcode::JNS() {
 		throw SyntaxError("Opcode Error - opcode syntax not valid.");
 	}
 }
+<<<<<<< HEAD
+=======
+
+/* JO opcode */
+void Opcode::JO() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag OF is 1
+		if (_mem->_flags.OF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JNO opcode */
+void Opcode::JNO() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag OF is 0
+		if (!_mem->_flags.OF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+void Opcode::JP() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag PF is 1
+		if (_mem->_flags.PF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+void Opcode::JNP() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag PF is 0
+		if (!_mem->_flags.PF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+>>>>>>> cd973e5 (Added JNP & JP opcodes)

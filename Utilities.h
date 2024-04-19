@@ -33,7 +33,15 @@ enum class Opcodes {
 	JNE,
 	JE,
 	JNS,
+<<<<<<< HEAD
 	JS
+=======
+	JS,
+	JNO,
+	JO,
+	JNP,
+	JP
+>>>>>>> cd973e5 (Added JNP & JP opcodes)
 };
 
 enum class Operators {
