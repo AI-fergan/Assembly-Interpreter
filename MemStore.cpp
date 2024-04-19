@@ -381,7 +381,8 @@ void MemStore::printHistory() {
 	
 	//loop over all the opcodes in the history
 	for (tuple<Opcode*, string> opcode : _history) {
-		cout << get<1>(opcode) << endl;
+		cout << i << ": " << get<1>(opcode) << endl;
+		i++;
 	}
 }
 

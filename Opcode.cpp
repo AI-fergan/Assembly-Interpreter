@@ -73,8 +73,14 @@ void Opcode::run()
 	case Opcodes::Push:
 		Push();
 		break;
+	case Opcodes::Cmp:
+		Cmp();
+		break;
 	case Opcodes::Jnz:
 		Jnz();
+		break;
+	case Opcodes::Jz:
+		Jz();
 		break;
 	}
 }
@@ -131,6 +137,7 @@ void Opcode::Sub() {
 		size = _mem->getRegisterSize(Utilities::getParam(_opcode, 0));
 		num = old_value - value->handler();
 		max = static_cast<uint64_t>(pow(2, 8 * size)) - 1;
+
 		//check if the value is out of range
 		if (max < num || num == max) {
 			num = max & num;
@@ -363,12 +370,54 @@ void Opcode::Pop() {
 	}
 }
 
+/* CMP opcode */
+void Opcode::Cmp() {
+	int value_1 = 0;
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		value_1 = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		ValuesHandler* value_2 = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+
+		//check if the numbers are equal
+		if (value_1 == value_2->handler()) {
+			_mem->_flags.ZF = true;
+		}
+		else{
+			_mem->_flags.ZF = false;
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JNZ opcode */
 void Opcode::Jnz() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
 		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag ZF is 0
 		if (!_mem->_flags.ZF){
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JZ opcode */
+void Opcode::Jz() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag ZF is 1
+		if (_mem->_flags.ZF) {
 			_mem->jmp(place->handler());
 		}
 	}

@@ -39,5 +39,7 @@ private:
 	void Ror();
 	void Push();
 	void Pop();
+	void Cmp();
 	void Jnz();
+	void Jz();
 };

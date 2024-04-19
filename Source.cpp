@@ -40,9 +40,6 @@ int main() {
 		lexer = new Lexer(input);
 
 		try {
-			//clean the flags register
-			//memory->cleanFlags();
-
 			//run Parser after Lexer
 			parser = new AstParser(lexer->getTokens());
 			
