@@ -47,7 +47,7 @@ int main() {
 			//run the Opcode
 			Opcode* opcode = new Opcode(parser->getBranches()[0], memory);
 
-			//added the opcode to the opcodes history
+			//added the opcode to the opcodes history			
 			memory->addToHistory(opcode, input);
 
 			//run the opcode

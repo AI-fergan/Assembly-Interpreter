@@ -37,6 +37,10 @@ bool Commands::commandsHandler(string command) {
 		printHistory();
 		return true;
 	}
+	else if (command == "jmp") {
+		JMP();
+		return true;
+	}
 
 	return false;
 		
@@ -56,7 +60,11 @@ void Commands::printMemory() {
 */
 void Commands::CommandsHelp() {
 	cout << "Commands:" << endl;
+<<<<<<< HEAD
 	cout << "help, opc \ opcodes, mem, exit" << endl;
+=======
+	cout << "help, opc \ opcodes, mem \ memory, h \ history, JMP, exit" << endl;
+>>>>>>> c6cdae8 (Added jump = JMP command)
 }
 
 /*
@@ -81,5 +89,21 @@ void Commands::opcodesHelp() {
 */
 void Commands::printHistory() {
 	_mem->printHistory();
+}
+
+/*
+* This function jump to given place from the opcodes history.
+* Output: NULL.
+*/
+void Commands::JMP() {
+	unsigned int place;
+
+	//get place
+	cout << "Where: ";
+	cin >> place;
+	getchar();
+
+	//runall the opcodes from this place
+	_mem->jmp(place);
 }
 
