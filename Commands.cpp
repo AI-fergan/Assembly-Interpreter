@@ -61,7 +61,11 @@ void Commands::printMemory() {
 void Commands::CommandsHelp() {
 	cout << "Commands:" << endl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	cout << "help, opc \ opcodes, mem, exit" << endl;
+=======
+	cout << "help, opc \ opcodes, mem \ memory, h \ history, JMP, exit" << endl;
+>>>>>>> c6cdae8 (Added jump = JMP command)
 =======
 	cout << "help, opc \ opcodes, mem \ memory, h \ history, JMP, exit" << endl;
 >>>>>>> c6cdae8 (Added jump = JMP command)
