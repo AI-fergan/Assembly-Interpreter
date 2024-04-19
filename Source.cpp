@@ -24,6 +24,10 @@ int main() {
 		//input code line from the user
 		getline(cin, input);
 
+		//new line
+		if (!input.size())
+			continue;
+
 		//check if the user want to enter command
 		if (commands->commandsHandler(input))
 			continue;		
@@ -37,7 +41,7 @@ int main() {
 
 		try {
 			//clean the flags register
-			memory->cleanFlags();
+			//memory->cleanFlags();
 
 			//run Parser after Lexer
 			parser = new AstParser(lexer->getTokens());

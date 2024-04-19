@@ -27,7 +27,7 @@ enum class Opcodes {
 	Ror,
 	Push,
 	Pop,
-	Jmp
+	Jnz
 
 };
 

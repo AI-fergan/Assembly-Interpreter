@@ -369,25 +369,39 @@ void MemStore::printMemory(){
 	
 }
 
+/*
+* This function print th opcodes history.
+* Output: NULL.
+*/
 void MemStore::printHistory() {
+	int i = 0;
+
+	//history title
 	cout << "History:" << endl;
+	
+	//loop over all the opcodes in the history
 	for (tuple<Opcode*, string> opcode : _history) {
 		cout << get<1>(opcode) << endl;
 	}
 }
 
-void MemStore::jmp(unsigned int place) {	
+/*
+* This function used to jump to another opcodes and run them.
+* Input:
+* place - where shold the function start run opcodes.
+* Output: NULL.
+*/
+void MemStore::jmp(unsigned int place){
 	//check if the opcode is exist in the history
 	if (getRegister(EIP) < place)
 		throw;
 
+	//loop over all the opcodes in the history
 	while (place < getRegister(EIP)) {
 		try {
+			//get opcode from the history and run it
 			getFromHistory(place)->run();
-		} catch (Exceptions& e)
-		{
-			//print the exception
-			cout << e.what() << e.getError() << endl;
+		} catch (Exceptions& e) {
 		}
 		place++;
 	}

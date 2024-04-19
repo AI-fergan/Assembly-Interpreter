@@ -73,8 +73,8 @@ void Opcode::run()
 	case Opcodes::Push:
 		Push();
 		break;
-	case Opcodes::Jmp:
-		Jmp();
+	case Opcodes::Jnz:
+		Jnz();
 		break;
 	}
 }
@@ -363,12 +363,14 @@ void Opcode::Pop() {
 	}
 }
 
-void Opcode::Jmp() {
+void Opcode::Jnz() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
 		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
-		_mem->jmp(place->handler());
+		if (!_mem->_flags.ZF){
+			_mem->jmp(place->handler());
+		}
 	}
 	else {
 		throw SyntaxError("Opcode Error - opcode syntax not valid.");

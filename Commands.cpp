@@ -58,18 +58,25 @@ void Commands::CommandsHelp() {
 }
 
 /*
-* This function print all the exists 
-
-
-
-s in the Interpreter.
+* This function print all the exists opcodes in the Interpreter.
 * Output: NULL.
 */
 void Commands::opcodesHelp() {
-	cout << "MOV, SUB, MUL, DIV, INC, DEC, OR, AND," << endl;
-	cout << "XOR, NOT, NOP, SHL, SHR, ROL, ROR" << endl;
+	int i = 1;
+	for (const auto opcode : Utilities::OpcodesChars) {
+		cout << opcode.first << " ";
+		if (i % 7 == 0) {
+			cout << endl;
+		}
+		i++;
+	}
+	cout << endl;
 }
 
+/*
+* This function print the opcodes history.
+* Output: NULL.
+*/
 void Commands::printHistory() {
 	_mem->printHistory();
 }
