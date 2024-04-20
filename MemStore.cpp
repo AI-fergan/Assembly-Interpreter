@@ -273,7 +273,7 @@ void MemStore::cleanFlags() {
 	_flags.AF = false;
 	_flags.CF = false;
 	_flags.DF = false;
-	_flags.IF = false;
+	_flags.IF = true;
 	_flags.OF = false;
 	_flags.PF = false;
 	_flags.SF = false;
