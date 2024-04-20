@@ -1,3 +1,0 @@
-C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\Assembly-Interpreter\x64\Debug\Assembly-Interpreter.exe
-C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\tmp\Assembly-Interpreter\x64\Debug\Assembly-Interpreter.exe
-C:\Users\test0\OneDrive\שולחן העבודה\My_projects\Assembly-Interpreter\x64\Debug\Assembly-Interpreter.exe

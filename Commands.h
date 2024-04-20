@@ -13,6 +13,9 @@ public:
 	void printMemory();
 	void CommandsHelp();
 	void opcodesHelp();
+	void printHistory();
+	void JMP();
+	void cls();
 
 private:
 	MemStore* _mem;

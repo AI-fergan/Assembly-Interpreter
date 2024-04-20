@@ -1,24 +1,38 @@
 #include "Utilities.h"
 
 map<string, Opcodes> Utilities::OpcodesChars = {
-    {"mov", Opcodes::Mov},
-    {"sub", Opcodes::Sub},
-    {"add", Opcodes::Add},
-    {"mul", Opcodes::Mul},
-    {"div", Opcodes::Div},
-    {"inc", Opcodes::Inc},
-    {"dec", Opcodes::Dec},
-    {"or", Opcodes::Or},
-    {"and", Opcodes::And},
-    {"xor", Opcodes::Xor},
-    {"not", Opcodes::Not},
-    {"nop", Opcodes::Nop},
-    {"shl", Opcodes::Shl},
-    {"shr", Opcodes::Shr},
-    {"rol", Opcodes::Rol},
-    {"ror", Opcodes::Ror},
-    {"pop", Opcodes::Pop},
-    {"push", Opcodes::Push}
+    {"MOV", Opcodes::MOV},
+    {"SUB", Opcodes::SUB},
+    {"ADD", Opcodes::ADD},
+    {"MUL", Opcodes::MUL},
+    {"DIV", Opcodes::DIV},
+    {"INC", Opcodes::INC},
+    {"DEC", Opcodes::DEC},
+    {"OR", Opcodes::OR},
+    {"AND", Opcodes::AND},
+    {"XOR", Opcodes::XOR},
+    {"NOT", Opcodes::NOT},
+    {"NOP", Opcodes::NOP},
+    {"SHL", Opcodes::SHL},
+    {"SHR", Opcodes::SHR},
+    {"ROL", Opcodes::ROL},
+    {"ROR", Opcodes::ROR},
+    {"POP", Opcodes::POP},
+    {"PUSH", Opcodes::PUSH},
+    {"CMP", Opcodes::CMP},
+    {"JNZ", Opcodes::JNZ},
+    {"JZ", Opcodes::JZ},
+    {"JNE", Opcodes::JNE},
+    {"JE", Opcodes::JE},
+    {"JNS", Opcodes::JNS},
+    {"JS", Opcodes::JS},
+    {"JNO", Opcodes::JNO},
+    {"JO", Opcodes::JO},
+    {"JNP", Opcodes::JNP},
+    {"JP", Opcodes::JP},
+    {"JAE", Opcodes::JAE},
+    {"JBE", Opcodes::JBE},
+    {"LOOP", Opcodes::LOOP}
 };
 
 map<char, Operators> Utilities::OperatorsChars = {
@@ -93,7 +107,7 @@ Opcodes Utilities::getOpcode(string op) {
     //check if the opcode exists
     if(isOpcode(op))
         return (*OpcodesChars.find(op)).second;
-    return Opcodes::None;
+    return Opcodes::NONE;
 }
 
 /*
@@ -218,6 +232,23 @@ void Utilities::toLower(string& str) {
     //loop over all the string chars
     for (char ch : str) {
         result += tolower(ch);
+    }
+
+    str = result;
+}
+
+/*
+* This function get string and set all the letters in the string to upper case format.
+* Input:
+* str - the string to edit.
+* Output: NULL.
+*/
+void Utilities::toUpper(string& str) {
+    string result = "";
+
+    //loop over all the string chars
+    for (char ch : str) {
+        result += toupper(ch);
     }
 
     str = result;

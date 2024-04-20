@@ -1,7 +1,7 @@
 #include "Opcode.h"
 
 /*
-* This c'tor checks to which opcode the Node match and run that opcode.
+* This c'tor init the opcode settings;
 * Input:
 * opcode - the opcode Node.
 * mem - the memory area to run the opcode.
@@ -9,72 +9,117 @@
 Opcode::Opcode(AstNode* opcode, MemStore* mem) {
 	this->_opcode = opcode;
 	this->_mem = mem;
+}
 
+/*
+* This function checks to which opcode the Node match and run that opcode.
+* Output: NULL.
+*/
+void Opcode::run()
+{
 	//check to which opcode the Node match
-	switch (Utilities::getOpcode(opcode->getData())) {
-	case Opcodes::Mov:
-		Mov();
+	switch (Utilities::getOpcode(_opcode->getData())) {
+	case Opcodes::MOV:
+		MOV();
 		break;
-	case Opcodes::Sub:
-		Sub();
+	case Opcodes::SUB:
+		SUB();
 		break;
-	case Opcodes::Add:
-		Add();
+	case Opcodes::ADD:
+		ADD();
 		break;
-	case Opcodes::Mul:
-		Mul();
+	case Opcodes::MUL:
+		MUL();
 		break;
-	case Opcodes::Div:
-		Div();
+	case Opcodes::DIV:
+		DIV();
 		break;
-	case Opcodes::Inc:
-		Inc();
+	case Opcodes::INC:
+		INC();
 		break;
-	case Opcodes::Dec:
-		Dec();
+	case Opcodes::DEC:
+		DEC();
 		break;
-	case Opcodes::Or:
-		Or();
+	case Opcodes::OR:
+		OR();
 		break;
-	case Opcodes::And:
-		And();
+	case Opcodes::AND:
+		AND();
 		break;
-	case Opcodes::Xor:
-		Xor();
+	case Opcodes::XOR:
+		XOR();
 		break;
-	case Opcodes::Not:
-		Not();
+	case Opcodes::NOT:
+		NOT();
 		break;
-	case Opcodes::Nop:
-		Nop();
+	case Opcodes::NOP:
+		NOP();
 		break;
-	case Opcodes::Shl:
-		Shl();
+	case Opcodes::SHL:
+		SHL();
 		break;
-	case Opcodes::Shr:
-		Shr();
+	case Opcodes::SHR:
+		SHR();
 		break;
-	case Opcodes::Rol:
-		Rol();
+	case Opcodes::ROL:
+		ROL();
 		break;
-	case Opcodes::Ror:
-		Ror();
+	case Opcodes::ROR:
+		ROR();
 		break;
-	case Opcodes::Pop:
-		Pop();
+	case Opcodes::POP:
+		POP();
 		break;
-	case Opcodes::Push:
-		Push();
+	case Opcodes::PUSH:
+		PUSH();
 		break;
-
-	default:
-		cerr << "ERROR";
+	case Opcodes::CMP:
+		CMP();
+		break;
+	case Opcodes::JNZ:
+		JNZ();
+		break;
+	case Opcodes::JZ:
+		JZ();
+		break;
+	case Opcodes::JNE:
+		JNE();
+		break;
+	case Opcodes::JE:
+		JE();
+		break;
+	case Opcodes::JNS:
+		JNS();
+		break;
+	case Opcodes::JS:
+		JS();
+		break;
+	case Opcodes::JNO:
+		JNO();
+		break;
+	case Opcodes::JO:
+		JO();
+		break;
+	case Opcodes::JNP:
+		JNP();
+		break;
+	case Opcodes::JP:
+		JP();
+		break;	
+	case Opcodes::JAE:
+		JAE();
+		break;
+	case Opcodes::JBE:
+		JBE();
+		break;
+	case Opcodes::LOOP:
+		LOOP();
 		break;
 	}
 }
 
 /* MOV opcode */
-void Opcode::Mov() {
+void Opcode::MOV() {
 	//check if the user enter the correct syntax of the opcode
 	if(Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);		
@@ -86,7 +131,7 @@ void Opcode::Mov() {
 }
 
 /* ADD opcode */
-void Opcode::Add() {
+void Opcode::ADD() {
 	unsigned int old_value = 0, num = 0;
 	unsigned int size = 0, max = 0;
 
@@ -114,7 +159,7 @@ void Opcode::Add() {
 }
 
 /* SUB opcode */
-void Opcode::Sub() {
+void Opcode::SUB() {
 	unsigned int old_value = 0, num = 0;
 	unsigned int size, max;
 
@@ -125,6 +170,7 @@ void Opcode::Sub() {
 		size = _mem->getRegisterSize(Utilities::getParam(_opcode, 0));
 		num = old_value - value->handler();
 		max = static_cast<uint64_t>(pow(2, 8 * size)) - 1;
+
 		//check if the value is out of range
 		if (max < num || num == max) {
 			num = max & num;
@@ -143,7 +189,7 @@ void Opcode::Sub() {
 }
 
 /* MUL opcode */
-void Opcode::Mul() {
+void Opcode::MUL() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -159,7 +205,7 @@ void Opcode::Mul() {
 }
 
 /* DIV opcode */
-void Opcode::Div() {
+void Opcode::DIV() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -177,7 +223,7 @@ void Opcode::Div() {
 }
 
 /* INC opcode */
-void Opcode::Inc() {
+void Opcode::INC() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {		
@@ -189,7 +235,7 @@ void Opcode::Inc() {
 }
 
 /* DEC opcode */
-void Opcode::Dec() {
+void Opcode::DEC() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
@@ -201,7 +247,7 @@ void Opcode::Dec() {
 }
 
 /* OR opcode */
-void Opcode::Or(){
+void Opcode::OR(){
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -217,7 +263,7 @@ void Opcode::Or(){
 }
 
 /* AND opcode */
-void Opcode::And() {
+void Opcode::AND() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -233,7 +279,7 @@ void Opcode::And() {
 }
 
 /* XOR opcode */
-void Opcode::Xor() {
+void Opcode::XOR() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -249,7 +295,7 @@ void Opcode::Xor() {
 }
 
 /* NOT opcode */
-void Opcode::Not() {
+void Opcode::NOT() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
@@ -261,7 +307,7 @@ void Opcode::Not() {
 }
 
 /* NOP opcode */
-void Opcode::Nop() {
+void Opcode::NOP() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (!Utilities::validOperators(_opcode, 0))
@@ -269,7 +315,7 @@ void Opcode::Nop() {
 }
 
 /* SHL opcode */
-void Opcode::Shl() {
+void Opcode::SHL() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -285,7 +331,7 @@ void Opcode::Shl() {
 }
 
 /* SHR opcode */
-void Opcode::Shr() {
+void Opcode::SHR() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -301,7 +347,7 @@ void Opcode::Shr() {
 }
 
 /* ROR opcode */
-void Opcode::Rol() {
+void Opcode::ROL() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -317,7 +363,7 @@ void Opcode::Rol() {
 }
 
 /* ROR opcode */
-void Opcode::Ror() {
+void Opcode::ROR() {
 	int old_value = 0;
 
 	//check if the user enter the correct syntax of the opcode
@@ -333,7 +379,7 @@ void Opcode::Ror() {
 }
 
 /* PUSH opcode */
-void Opcode::Push() {
+void Opcode::PUSH() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
@@ -346,11 +392,263 @@ void Opcode::Push() {
 }
 
 /* POP opcode */
-void Opcode::Pop() {
+void Opcode::POP() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
 		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->pop());
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* CMP opcode */
+void Opcode::CMP() {
+	int value_1 = 0;
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		value_1 = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		ValuesHandler* value_2 = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+
+		//check if the numbers are equal
+		if (value_1 == value_2->handler()) {
+			_mem->_flags.ZF = true;
+		}
+		else{
+			_mem->_flags.ZF = false;
+		}
+		//check if the numbers are equal
+		if (value_1 < value_2->handler()) {
+			_mem->_flags.SF = true;
+		}
+		else {
+			_mem->_flags.SF = false;
+		}
+
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JNZ opcode */
+void Opcode::JNZ() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag ZF is 0
+		if (!_mem->_flags.ZF){
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JZ opcode */
+void Opcode::JZ() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag ZF is 1
+		if (_mem->_flags.ZF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JE opcode */
+void Opcode::JE() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag ZF is 1
+		if (_mem->_flags.ZF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JNE opcode */
+void Opcode::JNE() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag ZF is 0
+		if (!_mem->_flags.ZF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JS opcode */
+void Opcode::JS() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag SF is 1
+		if (_mem->_flags.SF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JNS opcode */
+void Opcode::JNS() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag SF is 0
+		if (!_mem->_flags.SF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JO opcode */
+void Opcode::JO() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag OF is 1
+		if (_mem->_flags.OF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JNO opcode */
+void Opcode::JNO() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag OF is 0
+		if (!_mem->_flags.OF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JP opcode */
+void Opcode::JP() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag PF is 1
+		if (_mem->_flags.PF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JNP opcode */
+void Opcode::JNP() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag PF is 0
+		if (!_mem->_flags.PF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JAE opcode */
+void Opcode::JAE() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag PF is 0 or the ZF set to 1
+		if (!_mem->_flags.SF || _mem->_flags.ZF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* JBE opcode */
+void Opcode::JBE() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the flag PF is 1 or the ZF set to 1
+		if (_mem->_flags.SF || _mem->_flags.ZF) {
+			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+	}
+}
+
+/* LOOP opcode */
+void Opcode::LOOP() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the ECX register equals to 0
+		if (_mem->getRegister(ECX) != 0) {
+			_mem->setRegister(ECX, _mem->getRegister(ECX) - 1);
+			_mem->jmp(place->handler());
+		}
 	}
 	else {
 		throw SyntaxError("Opcode Error - opcode syntax not valid.");

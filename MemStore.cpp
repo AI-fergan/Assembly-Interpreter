@@ -11,6 +11,7 @@ MemStore::MemStore() {
 	_registers[make_tuple(EDX, DX, DL)] = 0;
 	_registers[make_tuple(ESP, ESP, ESP)] = 0xFFFFFFFF;
 	_registers[make_tuple(EBP, EBP, EBP)] = 0;
+	_registers[make_tuple(EIP, EIP, EIP)] = 0;
 
 	cleanFlags();
 }
@@ -23,11 +24,14 @@ MemStore::MemStore() {
 * Output: NULL.
 */
 void MemStore::setRegister(string reg, unsigned int value) {
-	Utilities::toLower(reg);
 
-
+	//cannot edit the ESP register
 	if (reg == ESP) {
 		push(value);
+		throw RegisterError("MemoryError - Cannot access that register");
+	}
+	//cannot edit the EIP register
+	else if (reg == EIP) {
 		throw RegisterError("MemoryError - Cannot access that register");
 	}
 
@@ -146,7 +150,6 @@ void MemStore::setRegister(string reg, unsigned int value) {
 * Output: the register value.
 */
 unsigned int MemStore::getRegister(string reg){
-	Utilities::toLower(reg);
 
 	//get the value of the registers by loop over on the registers map
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
@@ -176,20 +179,19 @@ unsigned int MemStore::getRegister(string reg){
 * Output: the size of the register in bytes.
 */
 int MemStore::getRegisterSize(string reg){
-	Utilities::toLower(reg);
 
 	//check if the register exists
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
 		//32 bit register
-		if (reg == std::get<0>(start->first)) {			
+		if (reg == get<0>(start->first)) {			
 			return 4;
 		}
 		//16 bit register
-		else if (reg == std::get<1>(start->first)) {			
+		else if (reg == get<1>(start->first)) {			
 			return 2;
 		}
 		//8 bit register
-		else if (reg == std::get<2>(start->first)) {
+		else if (reg == get<2>(start->first)) {
 			return 1;
 		}
 	}
@@ -204,7 +206,6 @@ int MemStore::getRegisterSize(string reg){
 * output: if the register name exists.
 */
 bool MemStore::isRegister(string reg) {
-	Utilities::toLower(reg);
 
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
 		//32 bit register
@@ -234,6 +235,7 @@ void MemStore::push(unsigned int value) {
 	if (getRegister(ESP) != 0) {
 		_stack.push_back(value);
 		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) - sizeof(unsigned int);
+		_flags.OF = false;
 	}
 	else {
 		_flags.OF = true;
@@ -252,6 +254,7 @@ unsigned int MemStore::pop() {
 		unsigned int value = _stack.back();
 		_stack.pop_back();
 		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) + sizeof(unsigned int);
+		_flags.OF = false;
 
 		return value;
 	}
@@ -275,6 +278,37 @@ void MemStore::cleanFlags() {
 	_flags.PF = false;
 	_flags.SF = false;
 	_flags.ZF = false;
+}
+
+/*
+* This function add opcode to the opcodes history.
+* Input:
+* opcode - the opcode that added to the history
+* Output: NULL.
+*/
+void MemStore::addToHistory(Opcode* opcode, string line) {
+	_history.push_back(make_tuple(opcode, line));
+
+	//increase the EIP register which count the opcodes
+	incEIP();
+}
+
+/*
+* This function use to get opcode from the history by its place.
+* Input:
+* place - the place of the opcode in the history
+* Output: the opcode Object.
+*/
+Opcode* MemStore::getFromHistory(unsigned int place) {	
+	return get<0>(_history[place]);
+}
+
+/*
+* This function increase the EIP register which count the opcodes.
+* Output: NULL.
+*/
+void MemStore::incEIP(){
+	_registers[make_tuple(EIP, EIP, EIP)] = getRegister(EIP) + 1;
 }
 
 /*
@@ -332,4 +366,43 @@ void MemStore::printMemory(){
 		}
 	}
 	
+}
+
+/*
+* This function print th opcodes history.
+* Output: NULL.
+*/
+void MemStore::printHistory() {
+	int i = 0;
+
+	//history title
+	cout << "History:" << endl;
+	
+	//loop over all the opcodes in the history
+	for (tuple<Opcode*, string> opcode : _history) {
+		cout << i << ": " << get<1>(opcode) << endl;
+		i++;
+	}
+}
+
+/*
+* This function used to jump to another opcodes and run them.
+* Input:
+* place - where shold the function start run opcodes.
+* Output: NULL.
+*/
+void MemStore::jmp(unsigned int place){
+	//check if the opcode is exist in the history
+	if (getRegister(EIP) < place)
+		throw;
+
+	//loop over all the opcodes in the history
+	while (place < getRegister(EIP)) {
+		try {
+			//get opcode from the history and run it
+			getFromHistory(place)->run();
+		} catch (Exceptions& e) {
+		}
+		place++;
+	}
 }

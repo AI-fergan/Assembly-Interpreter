@@ -12,17 +12,19 @@ int main() {
 	MemStore* memory = new MemStore();
 	Commands* commands = new Commands(memory);
 
-	cout << " ----------------------------" << endl;
-	cout << "|   Noam Afergan |  V2.0.0   |" << endl;
-	cout << "|----------------------------|" << endl;
-	cout << "|    Assembly-Interpreter    |" << endl;
-	cout << " ----------------------------" << endl << endl;
-	
+	//print open message and clean the screen
+	commands->commandsHandler("cls");
+
 	while (true) {
 		cout << ">>>";
 
 		//input code line from the user
 		getline(cin, input);
+		Utilities::toUpper(input);
+
+		//new line
+		if (!input.size())
+			continue;
 
 		//check if the user want to enter command
 		if (commands->commandsHandler(input))
@@ -36,21 +38,23 @@ int main() {
 		lexer = new Lexer(input);
 
 		try {
-			//clean the flags register
-			memory->cleanFlags();
-
 			//run Parser after Lexer
 			parser = new AstParser(lexer->getTokens());
 			
 			//run the Opcode
 			Opcode* opcode = new Opcode(parser->getBranches()[0], memory);
+
+			//added the opcode to the opcodes history			
+			memory->addToHistory(opcode, input);
+
+			//run the opcode
+			opcode->run();
+			
 			
 			//clean
 			delete parser;
-			delete opcode;
 		}
-		catch (Exceptions& e)
-		{
+		catch (Exceptions& e) {
 			//print the exception
 			cout << e.what() << e.getError() << endl;
 		}

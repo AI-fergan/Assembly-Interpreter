@@ -1,6 +1,5 @@
 #pragma once
 #include "Pch.h"
-#include <unordered_map>
 #include "AstNode.h"
 #include "ValueError.h"
 #include "MemStore.h"
@@ -9,26 +8,39 @@ class AstNode;
 class MemStore;
 
 enum class Opcodes {
-	None = -1,
-	Mov = OPCODES,
-	Sub,
-	Add,
-	Mul,
-	Div,
-	Inc,
-	Dec,
-	Or,
-	And,
-	Xor,
-	Not,
-	Nop,
-	Shl,
-	Shr,
-	Rol,
-	Ror,
-	Push,
-	Pop
-
+	NONE = -1,
+	MOV = OPCODES,
+	SUB,
+	ADD,
+	MUL,
+	DIV,
+	INC,
+	DEC,
+	OR,
+	AND,
+	XOR,
+	NOT,
+	NOP,
+	SHL,
+	SHR,
+	ROL,
+	ROR,
+	PUSH,
+	POP,
+	CMP,
+	JNZ,
+	JZ,
+	JNE,
+	JE,
+	JNS,
+	JS,
+	JNO,
+	JO,
+	JNP,
+	JP,
+	JAE,
+	JBE,
+	LOOP
 };
 
 enum class Operators {
@@ -43,7 +55,7 @@ enum class Operators {
 /*
 * This class help us to make the Interpreter code more clean and easy to read and write.
 */
-static class Utilities {
+class Utilities {
 public:	
 	static bool isOpcode(string op);
 	static bool isOperator(char ch);
@@ -63,6 +75,7 @@ public:
 	static string getParam(AstNode* opcode, int param);
 
 	static void toLower(string& str);
+	static void toUpper(string& str);
 
 
 	static map<string, Opcodes> OpcodesChars;

@@ -13,5 +13,5 @@ SyntaxError::SyntaxError(string error) : Exceptions(error)
 * Output: the error message.
 */
 const char* SyntaxError::what() {
-	return "Syntax Error: ";
+	return "SyntaxError: ";
 }

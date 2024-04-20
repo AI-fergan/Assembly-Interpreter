@@ -16,6 +16,8 @@ Commands::Commands(MemStore* mem) {
 * Output: if the command is exists.
 */
 bool Commands::commandsHandler(string command) {
+	Utilities::toLower(command);
+
 	//Help command
 	if (command == "help") {
 		CommandsHelp();
@@ -27,8 +29,23 @@ bool Commands::commandsHandler(string command) {
 		return true;
 	}
 	//Print the memory data
-	else if (command == "mem") {
+	else if (command == "mem" || command == "memory") {
 		printMemory();
+		return true;
+	}
+	//Print the opcodes history
+	else if (command == "history" || command == "h") {
+		printHistory();
+		return true;
+	}
+	//Jump to opcode from the history
+	else if (command == "jmp") {
+		JMP();
+		return true;
+	}
+	//Clean screen
+	else if (command == "cls") {
+		cls();
 		return true;
 	}
 
@@ -50,19 +67,58 @@ void Commands::printMemory() {
 */
 void Commands::CommandsHelp() {
 	cout << "Commands:" << endl;
-	cout << "help, opc \ opcodes, mem, exit" << endl;
+	cout << "help, opc / opcodes, mem / memory, h / history, JMP, cls, exit" << endl;
 }
 
 /*
-* This function print all the exists 
-
-
-
-s in the Interpreter.
+* This function print all the exists opcodes in the Interpreter.
 * Output: NULL.
 */
 void Commands::opcodesHelp() {
-	cout << "MOV, SUB, MUL, DIV, INC, DEC, OR, AND," << endl;
-	cout << "XOR, NOT, NOP, SHL, SHR, ROL, ROR" << endl;
+	int i = 1;
+	for (const auto opcode : Utilities::OpcodesChars) {
+		cout << opcode.first << " ";
+		if (i % 7 == 0) {
+			cout << endl;
+		}
+		i++;
+	}
+	cout << endl;
+}
+
+/*
+* This function print the opcodes history.
+* Output: NULL.
+*/
+void Commands::printHistory() {
+	_mem->printHistory();
+}
+
+/*
+* This function jump to given place from the opcodes history.
+* Output: NULL.
+*/
+void Commands::JMP() {
+	unsigned int place;
+
+	//get place
+	cout << "Where: ";
+	cin >> place;
+	getchar();
+
+	//runall the opcodes from this place
+	_mem->jmp(place);
+}
+
+/*
+* This function clean the screen and print the open message.
+*/
+void Commands::cls() {
+	system("cls");
+	cout << " ----------------------------" << endl;
+	cout << "|   Noam Afergan |  V3.0.0   |" << endl;
+	cout << "|----------------------------|" << endl;
+	cout << "|    Assembly-Interpreter    |" << endl;
+	cout << " ----------------------------" << endl << endl;
 }
 
