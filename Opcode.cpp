@@ -94,8 +94,6 @@ void Opcode::run()
 	case Opcodes::JS:
 		JS();
 		break;
-<<<<<<< HEAD
-=======
 	case Opcodes::JNO:
 		JNO();
 		break;
@@ -114,13 +112,9 @@ void Opcode::run()
 	case Opcodes::JBE:
 		JBE();
 		break;
-<<<<<<< HEAD
->>>>>>> cd973e5 (Added JNP & JP opcodes)
-=======
 	case Opcodes::LOOP:
 		LOOP();
 		break;
->>>>>>> c20cc11 (Added LOOP opcode)
 	}
 }
 
@@ -540,8 +534,6 @@ void Opcode::JNS() {
 		throw SyntaxError("Opcode Error - opcode syntax not valid.");
 	}
 }
-<<<<<<< HEAD
-=======
 
 /* JO opcode */
 void Opcode::JO() {
@@ -610,9 +602,6 @@ void Opcode::JNP() {
 		throw SyntaxError("Opcode Error - opcode syntax not valid.");
 	}
 }
-<<<<<<< HEAD
->>>>>>> cd973e5 (Added JNP & JP opcodes)
-=======
 
 /* JAE opcode */
 void Opcode::JAE() {
@@ -647,9 +636,6 @@ void Opcode::JBE() {
 		throw SyntaxError("Opcode Error - opcode syntax not valid.");
 	}
 }
-<<<<<<< HEAD
->>>>>>> c1cc2cd (Added JAE & JBE opcodes and cls command)
-=======
 
 /* LOOP opcode */
 void Opcode::LOOP() {
@@ -668,4 +654,3 @@ void Opcode::LOOP() {
 		throw SyntaxError("Opcode Error - opcode syntax not valid.");
 	}
 }
->>>>>>> c20cc11 (Added LOOP opcode)

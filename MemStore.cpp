@@ -3,7 +3,7 @@
 /*
 * This c'tor init all the memory configs.
 */
-MemStore::MemStore(string path) {
+MemStore::MemStore() {
 	//create the registers memory spaces
 	_registers[make_tuple(EAX, AX, AL)] = 0;
 	_registers[make_tuple(EBX, BX, BL)] = 0;
@@ -235,6 +235,7 @@ void MemStore::push(unsigned int value) {
 	if (getRegister(ESP) != 0) {
 		_stack.push_back(value);
 		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) - sizeof(unsigned int);
+		_flags.OF = false;
 	}
 	else {
 		_flags.OF = true;
@@ -253,6 +254,7 @@ unsigned int MemStore::pop() {
 		unsigned int value = _stack.back();
 		_stack.pop_back();
 		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) + sizeof(unsigned int);
+		_flags.OF = false;
 
 		return value;
 	}

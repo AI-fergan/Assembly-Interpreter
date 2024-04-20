@@ -46,8 +46,6 @@ private:
 	void JNE();
 	void JS();
 	void JNS();
-<<<<<<< HEAD
-=======
 	void JO();
 	void JNO();
 	void JP();
@@ -56,8 +54,4 @@ private:
 	void JBE();
 	void LOOP();
 
-<<<<<<< HEAD
->>>>>>> c6cdae8 (Added jump = JMP command)
-=======
->>>>>>> c6cdae8 (Added jump = JMP command)
 };

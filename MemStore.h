@@ -24,7 +24,7 @@ struct Flags {
 */
 class MemStore {
 public:
-	MemStore(string path);
+	MemStore();
 	void setRegister(string reg, unsigned int value);
 	unsigned int getRegister(string reg);
 	int getRegisterSize(string reg);

@@ -25,26 +25,14 @@ map<string, Opcodes> Utilities::OpcodesChars = {
     {"JNE", Opcodes::JNE},
     {"JE", Opcodes::JE},
     {"JNS", Opcodes::JNS},
-<<<<<<< HEAD
-    {"JS", Opcodes::JS}
-=======
     {"JS", Opcodes::JS},
     {"JNO", Opcodes::JNO},
     {"JO", Opcodes::JO},
     {"JNP", Opcodes::JNP},
-<<<<<<< HEAD
-    {"JP", Opcodes::JP}
->>>>>>> cd973e5 (Added JNP & JP opcodes)
-=======
     {"JP", Opcodes::JP},
     {"JAE", Opcodes::JAE},
-<<<<<<< HEAD
-    {"JBE", Opcodes::JBE}
->>>>>>> c1cc2cd (Added JAE & JBE opcodes and cls command)
-=======
     {"JBE", Opcodes::JBE},
     {"LOOP", Opcodes::LOOP}
->>>>>>> c20cc11 (Added LOOP opcode)
 };
 
 map<char, Operators> Utilities::OperatorsChars = {

@@ -29,16 +29,12 @@ bool Commands::commandsHandler(string command) {
 		return true;
 	}
 	//Print the memory data
-	else if (command == "mem") {
+	else if (command == "mem" || command == "memory") {
 		printMemory();
 		return true;
 	}
-<<<<<<< HEAD
-	else if (command == "history") {
-=======
 	//Print the opcodes history
 	else if (command == "history" || command == "h") {
->>>>>>> c1cc2cd (Added JAE & JBE opcodes and cls command)
 		printHistory();
 		return true;
 	}
@@ -71,19 +67,7 @@ void Commands::printMemory() {
 */
 void Commands::CommandsHelp() {
 	cout << "Commands:" << endl;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cout << "help, opc \ opcodes, mem, exit" << endl;
-=======
-	cout << "help, opc \ opcodes, mem \ memory, h \ history, JMP, exit" << endl;
->>>>>>> c6cdae8 (Added jump = JMP command)
-=======
-	cout << "help, opc \ opcodes, mem \ memory, h \ history, JMP, exit" << endl;
->>>>>>> c6cdae8 (Added jump = JMP command)
-=======
 	cout << "help, opc / opcodes, mem / memory, h / history, JMP, cls, exit" << endl;
->>>>>>> c1cc2cd (Added JAE & JBE opcodes and cls command)
 }
 
 /*
@@ -132,7 +116,7 @@ void Commands::JMP() {
 void Commands::cls() {
 	system("cls");
 	cout << " ----------------------------" << endl;
-	cout << "|   Noam Afergan |  V2.0.0   |" << endl;
+	cout << "|   Noam Afergan |  V3.0.0   |" << endl;
 	cout << "|----------------------------|" << endl;
 	cout << "|    Assembly-Interpreter    |" << endl;
 	cout << " ----------------------------" << endl << endl;

@@ -9,7 +9,7 @@ int main() {
 	string input;
 	Lexer* lexer = nullptr;
 	AstParser* parser = nullptr;
-	MemStore* memory = new MemStore("storage.bin");
+	MemStore* memory = new MemStore();
 	Commands* commands = new Commands(memory);
 
 	//print open message and clean the screen
