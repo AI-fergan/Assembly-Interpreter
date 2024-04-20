@@ -5,6 +5,7 @@
 #include "SyntaxError.h"
 #include "MemStore.h"
 #include "ValuesHandler.h"
+#include "Interrupts.h"
 
 class MemStore;
 class AstNode;

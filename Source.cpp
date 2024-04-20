@@ -17,7 +17,7 @@ int main() {
 
 	while (true) {
 		cout << ">>>";
-
+		
 		//input code line from the user
 		getline(cin, input);
 		Utilities::toUpper(input);

@@ -11,11 +11,8 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include <fstream>
-#include <filesystem>
+#include <conio.h>
 
-using std::filesystem::file_size;
-using std::fstream;
 using std::oct;
 using std::istringstream;
 using std::reverse;

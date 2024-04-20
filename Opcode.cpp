@@ -212,6 +212,11 @@ void Opcode::DIV() {
 	if (Utilities::validOperators(_opcode, 1)) {
 		old_value = _mem->getRegister(EAX);
 		ValuesHandler* value = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+
+		//check if the division is valid
+		if (value->handler() == 0)
+			Interrupts::INT_0(_mem);
+
 		if (old_value % value->handler() != 0)
 			_mem->setRegister(EDX, old_value % value->handler());
 		_mem->setRegister(EAX, old_value / value->handler());
