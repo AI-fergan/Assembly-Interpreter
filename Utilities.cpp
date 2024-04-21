@@ -32,7 +32,8 @@ map<string, Opcodes> Utilities::OpcodesChars = {
     {"JP", Opcodes::JP},
     {"JAE", Opcodes::JAE},
     {"JBE", Opcodes::JBE},
-    {"LOOP", Opcodes::LOOP}
+    {"LOOP", Opcodes::LOOP},
+    {"INT", Opcodes::INT}
 };
 
 map<char, Operators> Utilities::OperatorsChars = {

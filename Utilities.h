@@ -40,7 +40,8 @@ enum class Opcodes {
 	JP,
 	JAE,
 	JBE,
-	LOOP
+	LOOP,
+	INT
 };
 
 enum class Operators {

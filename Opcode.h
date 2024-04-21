@@ -55,4 +55,5 @@ private:
 	void JBE();
 	void LOOP();
 
+	void INT();
 };

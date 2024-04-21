@@ -115,6 +115,9 @@ void Opcode::run()
 	case Opcodes::LOOP:
 		LOOP();
 		break;
+	case Opcodes::INT:
+		INT();
+		break;
 	}
 }
 
@@ -184,7 +187,7 @@ void Opcode::SUB() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -200,7 +203,7 @@ void Opcode::MUL() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -223,7 +226,7 @@ void Opcode::DIV() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -235,7 +238,7 @@ void Opcode::INC() {
 		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->getRegister(_opcode->getBranches()[0]->getData()) + 1);
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -247,7 +250,7 @@ void Opcode::DEC() {
 		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->getRegister(_opcode->getBranches()[0]->getData()) - 1);
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -263,7 +266,7 @@ void Opcode::OR(){
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -279,7 +282,7 @@ void Opcode::AND() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -295,7 +298,7 @@ void Opcode::XOR() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -307,7 +310,7 @@ void Opcode::NOT() {
 		_mem->setRegister(_opcode->getBranches()[0]->getData(), ~_mem->getRegister(_opcode->getBranches()[0]->getData()));
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -316,7 +319,7 @@ void Opcode::NOP() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (!Utilities::validOperators(_opcode, 0))
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");	
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");	
 }
 
 /* SHL opcode */
@@ -331,7 +334,7 @@ void Opcode::SHL() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -347,7 +350,7 @@ void Opcode::SHR() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -363,7 +366,7 @@ void Opcode::ROL() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -379,7 +382,7 @@ void Opcode::ROR() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -392,7 +395,7 @@ void Opcode::PUSH() {
 		_mem->push(value->handler());
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -404,7 +407,7 @@ void Opcode::POP() {
 		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->pop());
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -434,7 +437,7 @@ void Opcode::CMP() {
 
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -451,7 +454,7 @@ void Opcode::JNZ() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -468,7 +471,7 @@ void Opcode::JZ() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -485,7 +488,7 @@ void Opcode::JE() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -502,7 +505,7 @@ void Opcode::JNE() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -519,7 +522,7 @@ void Opcode::JS() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -536,7 +539,7 @@ void Opcode::JNS() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -553,7 +556,7 @@ void Opcode::JO() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -570,7 +573,7 @@ void Opcode::JNO() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -587,7 +590,7 @@ void Opcode::JP() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -604,7 +607,7 @@ void Opcode::JNP() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -621,7 +624,7 @@ void Opcode::JAE() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -638,7 +641,7 @@ void Opcode::JBE() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 
@@ -656,6 +659,21 @@ void Opcode::LOOP() {
 		}
 	}
 	else {
-		throw SyntaxError("Opcode Error - opcode syntax not valid.");
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
+	}
+}
+
+/* Main Interrupts Syntax */
+void Opcode::INT() {
+
+	//check if the user enter the correct syntax of the interrupts
+	if (Utilities::validOperators(_opcode, 1)) {
+		ValuesHandler* place = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
+		Interrupts* interrupts = new Interrupts(_mem);
+
+		interrupts->interruptsHandler(place->handler());
+	}
+	else {
+		throw SyntaxError("IntError - Interrupt syntax not valid.");
 	}
 }
