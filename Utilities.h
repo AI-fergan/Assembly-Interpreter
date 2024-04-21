@@ -54,7 +54,10 @@ enum class Operators {
 	mul,
 	comma,
 	space,
-	colon
+	colon,
+	DB,
+	DW,
+	DD
 };
 
 /*
@@ -65,6 +68,7 @@ public:
 	static bool isOpcode(string op);
 	static bool isOperator(char ch);
 	static bool isIgnored(char ch);
+	static bool isSizeSign(string ss);
 
 	static Opcodes getOpcode(string op);
 	static Operators getOperator(char ch);
@@ -79,11 +83,14 @@ public:
 	static bool validOperators(AstNode* opcode, int operators);
 	static string getParam(AstNode* opcode, int param);
 
+	static int getSignSize(string sign);
+
 	static void toLower(string& str);
 	static void toUpper(string& str);
 
 
 	static map<string, Opcodes> OpcodesChars;
+	static map<string, Operators> SizeSigns;
 	static map<char, Operators> OperatorsChars;
 	static map<char, Operators> IgnoredChars;
 };

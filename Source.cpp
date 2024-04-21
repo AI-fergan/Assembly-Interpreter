@@ -38,10 +38,6 @@ int main() {
 			continue;			
 		}
 
-		//exit
-		if (input == "exit")
-			return 0;
-
 		//run Lexer the line
 		lexer = new Lexer(input);
 

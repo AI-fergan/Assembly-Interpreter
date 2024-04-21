@@ -10,24 +10,17 @@ AstParser::AstParser(queue<string> tokens) {
 	int i = 0;
 	AstNode* tmp = nullptr;
 
-	//check if the first token is opcode
-	//if (Utilities::isOpcode(tokens.front())) {
 	AstNode* node = new AstNode(tokens.front(), OPCODE);
 	this->_branches.push_back(node);
 	tokens.pop();
-	//}
-//	else {
-		//if the first token isnt opcode the line is not valid and the parser throw exception
-	//	throw SyntaxError("Parser ERROR - Opcode not found");
-	//}
 	
 	//loop over all the tokens
 	while (!tokens.empty()) {
 		//check if the token is operator
-		if (Utilities::isOperator(tokens.front()[0])) {
+		if (Utilities::isOperator(tokens.front()[0]) || Utilities::isSizeSign(tokens.front())) {
 			AstNode* node = new AstNode(tokens.front(), OPERATOR);
 			this->_branches[0]->add(node);
-		}
+		}		
 		//if it isnt oprtator it continue the flow to see where the token should be save, 
 		//and what is the type of the token
 		else {
@@ -35,7 +28,7 @@ AstParser::AstParser(queue<string> tokens) {
 			//checks if the token isnt the first token in the line after the opcode
 			if (this->_branches[0]->getBranches().size() > 0) {
 				//check if there is operator in the opcode branches
-				if (Utilities::isOperator(this->_branches[0]->getBranches()[0]->getData()[0])) {					
+				if (Utilities::isOperator(this->_branches[0]->getBranches()[0]->getData()[0]) || Utilities::isSizeSign(this->_branches[0]->getBranches()[0]->getData())) {
 					//check if there is any token that saved to later
 					if (tmp) {
 						//push the saved token to the first operator in the first opcode branches

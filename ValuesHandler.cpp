@@ -26,8 +26,10 @@ unsigned int ValuesHandler::handler(bool jump) {
         return Utilities::BinStringToDec(_value);
     else if (isReg())
         return _mem->getRegister(_value);
-    else if (jump)
-        return _mem->getIdentifier(_value);
+    else if (isVar())
+        return get<1>(_mem->getVar(_value));
+    else if (jump && isID())
+        return _mem->getIdentifier(_value);    
 
     throw ValueError("TypeError - Value type not valid.");
 
@@ -131,4 +133,20 @@ bool ValuesHandler::isBin()
 */
 bool ValuesHandler::isReg() {
     return _mem->isRegister(_value);
+}
+
+/*
+* This function check if the value is name of Var.
+* Output: if the value is name of var.
+*/
+bool ValuesHandler::isVar() {
+    return _mem->isVar(_value);
+}
+
+/*
+* This function check if the value is name of ID.
+* Output: if the value is name of ID.
+*/
+bool ValuesHandler::isID() {    
+    return _mem->isID(_value);
 }

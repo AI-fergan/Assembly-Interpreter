@@ -37,6 +37,10 @@ public:
 	void removeFromHistory();
 	Opcode* getFromHistory(unsigned int place);
 	void incEIP();
+	void editValue(string name, unsigned int value);
+	unsigned int getValue(string name);
+	int getValueSize(string name);
+	void checkSize(string name_1, string name_2);
 
 	void printMemory();
 	void printHistory();
@@ -44,6 +48,14 @@ public:
 
 	void addIdentifier(string name, unsigned int value);
 	unsigned int getIdentifier(string name);
+	bool isID(string name);
+
+	void addVar(string name, unsigned int value, int size);
+	tuple<int, unsigned int> getVar(string name);
+	void setVar(string name, unsigned int value);
+	int getVarSize(string name);
+
+	bool isVar(string name);
 
 	struct Flags _flags;
 
@@ -52,5 +64,6 @@ private:
 	vector<unsigned int> _stack;
 	vector<tuple<Opcode*, string>> _history;
 	map<string, unsigned int> _identifiers;
+	map<string, tuple<int, unsigned int>> _variables;
 
 };

@@ -364,6 +364,88 @@ void MemStore::incEIP(){
 	_registers[make_tuple(EIP, EIP, EIP, EIP)] = getRegister(EIP) + 1;
 }
 
+
+/*
+* This function can edit vars & registers.
+* Input:
+* name - var \ register name.
+* value - the value to set the var \ register.
+* Output: NULL.
+*/
+void MemStore::editValue(string name, unsigned int value) {
+	//check if the name is register name
+	if (isRegister(name)) {
+		setRegister(name, value);
+		return;
+	}
+	//check if the name is var name
+	else if (isVar(name)) {
+		setVar(name, value);
+		return;
+	}
+
+	throw ValueError("MemoryError - Value type not found");
+}
+
+/*
+* This function get var \ register name and return its value.
+* Input - var \ register name.
+* Output: the var \ register value.
+*/
+unsigned int MemStore::getValue(string name) {
+	//check if the name is register name
+	if (isRegister(name)) 
+		return getRegister(name);		
+	//check if the name is var name
+	else if (isVar(name)) 
+		return get<1>(getVar(name));
+
+	throw ValueError("MemoryError - Value type not found");
+
+	return 0;
+}
+
+/*
+* This function get name of register \ var and return its size.
+* Input:
+* name - the var \ register name.
+* Output: the size of the var \ register.
+*/
+int MemStore::getValueSize(string name) {
+	//check if the name is register name
+	if (isRegister(name))
+		return getRegisterSize(name);
+	//check if the name is var name
+	else if (isVar(name))
+		return getVarSize(name);
+
+	throw ValueError("MemoryError - Value type not found");
+
+	return 0;
+}
+
+/*
+* This function check if the two parameters has the same size.
+* Input:
+* name_1 - the name of the first parameter.
+* name_2 - the name of the second parameter.
+* Output: NULL.
+*/
+void MemStore::checkSize(string name_1, string name_2) {
+	//check if the first parameter is var \ register
+	if (!isRegister(name_1) && !isVar(name_1))
+		return;
+	//check if the second parameter is var \ register
+	if (!isRegister(name_2) && !isVar(name_2))
+		return;
+
+	//check if both of the parameters has the same size
+	if (getValueSize(name_1) == getValueSize(name_2))
+		return;
+
+	throw ValueError("SizeError - Opcode parameters must be in the same size.");
+}
+
 /*
 * This function print the memory to the screen.
 * Output: NULL.
@@ -380,7 +462,7 @@ void MemStore::printMemory(){
 	reg_2 << hex;
 
 	//loop over all the registers
-	unsigned int i = sizeof(unsigned int);
+	unsigned int i = 1;
 	cout << " Registers:" << endl;
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
 		//check if there is more registers access part
@@ -397,9 +479,9 @@ void MemStore::printMemory(){
 	}
 
 	//print the registers names and values to the screen
-	cout << " ----------------------------------------------------" << endl;
+	cout << " ---------------------------------------------------" << endl;
 	cout << reg_1.str();
-	cout << " ----------------------------------------------------" << endl;
+	cout << " ---------------------------------------------------" << endl;
 
 	cout << " ---------------" << endl;
 	cout << reg_2.str();
@@ -409,6 +491,17 @@ void MemStore::printMemory(){
 	cout << " ---------------------------------------" << endl;
 	cout << "|AF " << _flags.AF << "|CF " << _flags.CF << "|DF " <<_flags.DF << "|IF " << _flags.IF << "|OF " << _flags.OF << "|PF " << _flags.PF << "|SF " << _flags.SF << "|ZF " << _flags.ZF << "|" << endl;
 	cout << " ---------------------------------------" << endl;	
+
+	if (_variables.size()) {
+		cout << endl << " Variables:" << endl << "-----------" << endl;
+		//loop over all the vars
+		for (auto element : _variables) {
+			cout << i << ". " << element.first << " " << get<0>(element.second) << "-Bytes " << get<1>(element.second) << endl;
+			i++;
+		}
+	}
+
+	i = sizeof(unsigned int);
 
 	//print the stack frame
 	if (!_stack.empty()) {
@@ -477,11 +570,95 @@ void MemStore::addIdentifier(string name, unsigned int value) {
 	_identifiers[name] = value;
 }
 
+/*
+* This function return Identifiers by their names.
+* Input:
+* name - the ID name.
+* Output: the identifiers values.
+*/
 unsigned int MemStore::getIdentifier(string name){
 	Utilities::toUpper(name);
 
-	//check if the ID already exists
+	//check if the ID exists
 	if (_identifiers.find(name) == _identifiers.end())
 		throw ValueError("IdentifierError - Id not found.");
 	return _identifiers[name];
+}
+
+/*
+* This function check if the name is name of ID.
+* Input:
+* name - the name to check.
+* Output: if the name is ID name.
+*/
+bool MemStore::isID(string name) {
+	Utilities::toUpper(name);
+
+	//check if the name exists in the ID's map
+	if (_identifiers.find(name) != _identifiers.end())
+		return true;
+	return false;
+}
+
+/*
+* This function Add Var to the Vars map.
+* Input:
+* name - the var name.
+* value - the var value.
+* size - the var size
+* Output: NULL.
+*/
+void MemStore::addVar(string name, unsigned int value, int size) {
+	//check if the var name already exists
+	if (_variables.find(name) != _variables.end())
+		throw ValueError("VariablesError - Var name already exists.");
+
+	_variables[name] = make_tuple(size, value);
+}
+
+/*
+* This function return Vars by their names.
+* Input:
+* name - the var name.
+* Output: tuple of the var value & size.
+*/
+tuple<int, unsigned int> MemStore::getVar(string name) {
+	Utilities::toUpper(name);
+
+	//check if the var name exists
+	if (_variables.find(name) == _variables.end())
+		throw ValueError("VariablesError - Var not found.");
+
+	return _variables[name];
+}
+
+/*
+* This function change vars values.
+* Input:
+* name - the var name.
+* value - new value to set into var.
+* Output: NULL.
+*/
+void MemStore::setVar(string name, unsigned int value) {
+	tuple<int, unsigned int> var = make_tuple(get<0>(getVar(name)), value);
+	_variables[name] = var;
+}
+
+int MemStore::getVarSize(string name) {
+	return get<0>(_variables[name]);
+}
+
+/*
+* This function check if the name is name of Var.
+* Input:
+* name - the name to check.
+* Output: if the name is Var name.
+*/
+bool MemStore::isVar(string name) {
+	Utilities::toUpper(name);
+
+	//check if the name is in the Var's map
+	if (_variables.find(name) != _variables.end())
+		return true;
+	return false;
 }

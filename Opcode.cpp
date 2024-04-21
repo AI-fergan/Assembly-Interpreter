@@ -129,19 +129,37 @@ void Opcode::run()
 		break;
 
 	default:
-		LABLE();
+		//check if the user enter correct lable syntax
+		if (_opcode->getBranches().size() == 1 && _opcode->getBranches()[0]->getBranches().size() == 0) {
+			LABLE();
+		}
+		//check if the user enter correct lable syntax
+		else if (_opcode->getBranches().size() == 1 && _opcode->getBranches()[0]->getBranches().size() == 1) {
+			VARS();
+		}
 		break;
 	}
 }
 
+/* LABLES */
 void Opcode::LABLE() {
-
-	//check if the user enter the correct syntax of the opcode
-	if (_opcode->getBranches().size() == 1 && _opcode->getBranches()[0]->getData() == ":" && _opcode->getBranches()[0]->getBranches().size() == 0) {
+	//check if the lable syntax is valid
+	if (_opcode->getBranches()[0]->getData() == ":")
+		//add new lable
 		_mem->addIdentifier(_opcode->getData(), _mem->getRegister(EIP));
+	else
+		throw SyntaxError("LableError - Invalid syntax");
+}
+
+/* VARS */
+void Opcode::VARS() {
+	//check if the var syntax is valid
+	if (_opcode->getBranches()[0]->getBranches()[0]->getBranches().size() == 0) {
+		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 0), _mem);
+		_mem->addVar(_opcode->getData(), value->handler(false), Utilities::getSignSize(_opcode->getBranches()[0]->getData()));
 	}
 	else {
-		throw SyntaxError("OpcodeError - opcode syntax not valid.");
+		throw SyntaxError("VarError - Invalid syntax");
 	}
 }
 
@@ -149,8 +167,9 @@ void Opcode::LABLE() {
 void Opcode::MOV() {
 	//check if the user enter the correct syntax of the opcode
 	if(Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);		
-		_mem->setRegister(Utilities::getParam(_opcode, 0), value->handler(false));
+		_mem->editValue(Utilities::getParam(_opcode, 0), value->handler(false));
 	}
 	else {
 		throw SyntaxError("OpcodeError - opcode syntax not valid.");
@@ -164,9 +183,10 @@ void Opcode::ADD() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
-		size = _mem->getRegisterSize(Utilities::getParam(_opcode, 0));
+		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
+		size = _mem->getValueSize(Utilities::getParam(_opcode, 0));
 		num = value->handler(false) + old_value;
 		max = static_cast<uint64_t>(pow(2, 8 * size)) - 1;
 		//check if the value is out of range
@@ -177,7 +197,7 @@ void Opcode::ADD() {
 		else {
 			_mem->_flags.CF = false;
 		}
-		_mem->setRegister(Utilities::getParam(_opcode, 0), num);
+		_mem->editValue(Utilities::getParam(_opcode, 0), num);
 
 	}
 	else {
@@ -192,9 +212,10 @@ void Opcode::SUB() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		size = _mem->getRegisterSize(Utilities::getParam(_opcode, 0));
+		size = _mem->getValueSize(Utilities::getParam(_opcode, 0));
 		num = old_value - value->handler(false);
 		max = static_cast<uint64_t>(pow(2, 8 * size)) - 1;
 
@@ -207,7 +228,7 @@ void Opcode::SUB() {
 			_mem->_flags.CF = false;
 		}
 
-		_mem->setRegister(Utilities::getParam(_opcode, 0), num);
+		_mem->editValue(Utilities::getParam(_opcode, 0), num);
 
 	}
 	else {
@@ -223,7 +244,7 @@ void Opcode::MUL() {
 	if (Utilities::validOperators(_opcode, 1)) {
 		old_value = _mem->getRegister(EAX);
 		ValuesHandler* value = new ValuesHandler(_opcode->getBranches()[0]->getData(), _mem);
-		_mem->setRegister(EAX, old_value * value->handler(false));
+		_mem->editValue(EAX, old_value * value->handler(false));
 
 	}
 	else {
@@ -259,7 +280,7 @@ void Opcode::INC() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {		
-		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->getRegister(_opcode->getBranches()[0]->getData()) + 1);
+		_mem->editValue(_opcode->getBranches()[0]->getData(), _mem->getValue(_opcode->getBranches()[0]->getData()) + 1);
 	}
 	else {
 		throw SyntaxError("OpcodeError - opcode syntax not valid.");
@@ -271,7 +292,7 @@ void Opcode::DEC() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
-		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->getRegister(_opcode->getBranches()[0]->getData()) - 1);
+		_mem->editValue(_opcode->getBranches()[0]->getData(), _mem->getValue(_opcode->getBranches()[0]->getData()) - 1);
 	}
 	else {
 		throw SyntaxError("OpcodeError - opcode syntax not valid.");
@@ -284,9 +305,10 @@ void Opcode::OR(){
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
-		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
+		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value | value->handler(false));
+		_mem->editValue(Utilities::getParam(_opcode, 0), old_value | value->handler(false));
 
 	}
 	else {
@@ -300,9 +322,10 @@ void Opcode::AND() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
-		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
+		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value & value->handler(false));
+		_mem->editValue(Utilities::getParam(_opcode, 0), old_value & value->handler(false));
 
 	}
 	else {
@@ -316,9 +339,10 @@ void Opcode::XOR() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
-		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
+		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value ^ value->handler(false));
+		_mem->editValue(Utilities::getParam(_opcode, 0), old_value ^ value->handler(false));
 
 	}
 	else {
@@ -331,7 +355,7 @@ void Opcode::NOT() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
-		_mem->setRegister(_opcode->getBranches()[0]->getData(), ~_mem->getRegister(_opcode->getBranches()[0]->getData()));
+		_mem->editValue(_opcode->getBranches()[0]->getData(), ~_mem->getValue(_opcode->getBranches()[0]->getData()));
 	}
 	else {
 		throw SyntaxError("OpcodeError - opcode syntax not valid.");
@@ -352,9 +376,9 @@ void Opcode::SHL() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
-		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value << value->handler(false));
+		_mem->editValue(Utilities::getParam(_opcode, 0), old_value << value->handler(false));
 
 	}
 	else {
@@ -368,9 +392,9 @@ void Opcode::SHR() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
-		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value >> value->handler(false));
+		_mem->editValue(Utilities::getParam(_opcode, 0), old_value >> value->handler(false));
 
 	}
 	else {
@@ -384,9 +408,9 @@ void Opcode::ROL() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
-		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value << value->handler(false));
+		_mem->editValue(Utilities::getParam(_opcode, 0), old_value << value->handler(false));
 
 	}
 	else {
@@ -400,9 +424,9 @@ void Opcode::ROR() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
-		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		_mem->setRegister(Utilities::getParam(_opcode, 0), old_value >> value->handler(false));
+		_mem->editValue(Utilities::getParam(_opcode, 0), old_value >> value->handler(false));
 
 	}
 	else {
@@ -428,7 +452,7 @@ void Opcode::POP() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1)) {
-		_mem->setRegister(_opcode->getBranches()[0]->getData(), _mem->pop());
+		_mem->editValue(_opcode->getBranches()[0]->getData(), _mem->pop());
 	}
 	else {
 		throw SyntaxError("OpcodeError - opcode syntax not valid.");
@@ -441,7 +465,8 @@ void Opcode::CMP() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
-		value_1 = _mem->getRegister(Utilities::getParam(_opcode, 0));
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
+		value_1 = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value_2 = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
 
 		//check if the numbers are equal
@@ -721,16 +746,13 @@ void Opcode::XCHG() {
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		//check if the registers has the same size
-		if (_mem->getRegisterSize(Utilities::getParam(_opcode, 0)) == _mem->getRegisterSize(Utilities::getParam(_opcode, 1))) {
-			ValuesHandler* reg_1 = new ValuesHandler(Utilities::getParam(_opcode, 0), _mem);
-			ValuesHandler* reg_2 = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-			tmp = reg_1->handler(false);
-			_mem->setRegister(Utilities::getParam(_opcode, 0), reg_2->handler(false));
-			_mem->setRegister(Utilities::getParam(_opcode, 1), tmp);
-		}
-		else {
-			throw RegisterError("SizeError - Invalid registers size");
-		}
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
+		ValuesHandler* reg_1 = new ValuesHandler(Utilities::getParam(_opcode, 0), _mem);
+		ValuesHandler* reg_2 = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		tmp = reg_1->handler(false);
+		_mem->setRegister(Utilities::getParam(_opcode, 0), reg_2->handler(false));
+		_mem->setRegister(Utilities::getParam(_opcode, 1), tmp);
+
 	}
 	else {
 		throw SyntaxError("OpcodeError - opcode syntax not valid.");
