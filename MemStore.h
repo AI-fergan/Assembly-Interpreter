@@ -38,6 +38,8 @@ public:
 	Opcode* getFromHistory(unsigned int place);
 	void incEIP();
 	void editValue(string name, unsigned int value);
+	unsigned int getValue(string name);
+
 
 	void printMemory();
 	void printHistory();
@@ -50,6 +52,7 @@ public:
 	void addVar(string name, unsigned int value, int size);
 	tuple<int, unsigned int> getVar(string name);
 	void setVar(string name, unsigned int value);
+	int getVarSize(string name);
 
 	bool isVar(string name);
 

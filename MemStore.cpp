@@ -377,6 +377,19 @@ void MemStore::editValue(string name, unsigned int value) {
 	throw;
 }
 
+unsigned int MemStore::getValue(string name) {
+	if (isRegister(name)) {
+		getRegister(name);
+		return;
+	}
+	else if (isVar(name)) {
+		getVar(name);
+		return;
+	}
+
+	throw;
+}
+
 /*
 * This function print the memory to the screen.
 * Output: NULL.
@@ -410,9 +423,9 @@ void MemStore::printMemory(){
 	}
 
 	//print the registers names and values to the screen
-	cout << " ----------------------------------------------------" << endl;
+	cout << " ---------------------------------------------------" << endl;
 	cout << reg_1.str();
-	cout << " ----------------------------------------------------" << endl;
+	cout << " ---------------------------------------------------" << endl;
 
 	cout << " ---------------" << endl;
 	cout << reg_2.str();
