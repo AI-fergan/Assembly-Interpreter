@@ -40,6 +40,8 @@ enum class Opcodes {
 	JP,
 	JAE,
 	JBE,
+	CLI,
+	STI,
 	LOOP,
 	XCHG,
 	INT

@@ -12,6 +12,8 @@ public:
 	static void INT_1(MemStore* mem);
 	static void INT_3(MemStore* mem);
 	static void INT_4(MemStore* mem);
+	static void INT_6(MemStore* mem);
+	static void INT_12(MemStore* mem);
 	static void INT_22(MemStore* mem);
 
 private:

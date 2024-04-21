@@ -32,6 +32,8 @@ map<string, Opcodes> Utilities::OpcodesChars = {
     {"JP", Opcodes::JP},
     {"JAE", Opcodes::JAE},
     {"JBE", Opcodes::JBE},
+    {"CLI", Opcodes::CLI},
+    {"STI", Opcodes::STI},
     {"LOOP", Opcodes::LOOP},
     {"XCHG", Opcodes::XCHG},
     {"INT", Opcodes::INT}

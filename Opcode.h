@@ -53,6 +53,8 @@ private:
 	void JNP();
 	void JAE();
 	void JBE();
+	void CLI();
+	void STI();
 	void LOOP();
 	void XCHG();
 

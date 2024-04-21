@@ -112,6 +112,12 @@ void Opcode::run()
 	case Opcodes::JBE:
 		JBE();
 		break;
+	case Opcodes::CLI:
+		CLI();
+		break;
+	case Opcodes::STI:
+		STI();
+		break;
 	case Opcodes::LOOP:
 		LOOP();
 		break;
@@ -642,6 +648,33 @@ void Opcode::JBE() {
 		if (_mem->_flags.SF || _mem->_flags.ZF) {
 			_mem->jmp(place->handler());
 		}
+	}
+	else {
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
+	}
+}
+
+/* CLI opcode */
+void Opcode::CLI() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 0)) {
+
+		//set the IF flag to 0
+		_mem->_flags.IF = false;
+	}
+	else {
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
+	}	
+}
+
+void Opcode::STI() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 0)) {
+
+		//set the IF flag to 1
+		_mem->_flags.IF = true;
 	}
 	else {
 		throw SyntaxError("OpcodeError - opcode syntax not valid.");

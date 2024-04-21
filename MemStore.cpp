@@ -307,8 +307,7 @@ unsigned int MemStore::pop() {
 	}
 	//error when the stack is empty
 	else {
-		_flags.OF = true;
-		throw StackError("MemoryError - Stack underflow");
+		Interrupts::INT_12(this);
 	}
 }
 
