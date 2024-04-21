@@ -5,13 +5,13 @@
 */
 MemStore::MemStore() {
 	//create the registers memory spaces
-	_registers[make_tuple(EAX, AX, AL)] = 0;
-	_registers[make_tuple(EBX, BX, BL)] = 0;
-	_registers[make_tuple(ECX, CX, CL)] = 0;
-	_registers[make_tuple(EDX, DX, DL)] = 0;
-	_registers[make_tuple(ESP, ESP, ESP)] = 0xFFFFFFFF;
-	_registers[make_tuple(EBP, EBP, EBP)] = 0;
-	_registers[make_tuple(EIP, EIP, EIP)] = 0;
+	_registers[make_tuple(EAX, AX, AH, AL)] = 0;
+	_registers[make_tuple(EBX, BX, BH, BL)] = 0;
+	_registers[make_tuple(ECX, CX, CH, CL)] = 0;
+	_registers[make_tuple(EDX, DX, DH, DL)] = 0;
+	_registers[make_tuple(ESP, ESP, ESP, ESP)] = 0xFFFFFFFF;
+	_registers[make_tuple(EBP, EBP, EBP, EBP)] = 0;
+	_registers[make_tuple(EIP, EIP, EIP, EIP)] = 0;
 
 	cleanFlags();
 }
@@ -37,6 +37,7 @@ void MemStore::setRegister(string reg, unsigned int value) {
 
 	//check if the register exists
 	for (auto start = _registers.begin(); start != _registers.end(); ++start) {
+		//32 bit register
 		if (reg == std::get<0>(start->first)){
 
 			//set AF flag
@@ -68,7 +69,7 @@ void MemStore::setRegister(string reg, unsigned int value) {
 
 			return;
 		}
-		//32 bit register
+		//16 bit register
 		else if (reg == std::get<1>(start->first)) {
 			//check if the size of the value is valid
 			if (value != (0xFFFF & value)) {
@@ -103,8 +104,43 @@ void MemStore::setRegister(string reg, unsigned int value) {
 
 			return;
 		}
-		//16 bit register
+		//8 bit register
 		else if (reg == std::get<2>(start->first)) {
+			//check if the size of the value is valid
+			if (value != (0xFF & value)) {
+				throw ValueError("SizeError - Invalid value size.");
+			}
+
+			//set AF flag
+			if (((value & 0xF) ^ ((_registers[start->first] >> 8) & 0xF)) == 0xF)
+				_flags.AF = true;
+			else
+				_flags.AF = false;
+
+			_registers[start->first] = (_registers[start->first] ^ (_registers[start->first] & 0xFF00)) + ((value & 0xFF) << 8);
+
+			//set ZF flag
+			if (value == 0)
+				_flags.ZF = true;
+			else
+				_flags.ZF = false;
+
+			//set SF flag
+			if ((value & 0x80) != 0)
+				_flags.SF = true;
+			else
+				_flags.SF = false;
+
+			//set PF flag
+			if ((value & 0x1) == 0)
+				_flags.PF = true;
+			else
+				_flags.PF = false;
+
+			return;
+		}
+		//8 bit register
+		else if (reg == std::get<3>(start->first)) {
 			//check if the size of the value is valid
 			if (value != (0xFF & value)) {
 				throw ValueError("SizeError - Invalid value size.");
@@ -163,7 +199,11 @@ unsigned int MemStore::getRegister(string reg){
 		}
 		//8 bit register
 		else if (reg == std::get<2>(start->first)) {
-			return _registers[start->first] & 0xFF;			
+			return (_registers[start->first] >> 8) & 0xFF;			
+		}
+		//8 bit register
+		else if (reg == std::get<3>(start->first)) {
+			return _registers[start->first] & 0xFF;
 		}
 	}
 
@@ -194,6 +234,10 @@ int MemStore::getRegisterSize(string reg){
 		else if (reg == get<2>(start->first)) {
 			return 1;
 		}
+		//8 bit register
+		else if (reg == get<3>(start->first)) {
+			return 1;
+		}
 	}
 
 	throw RegisterError("MemoryError - Register not found");
@@ -220,6 +264,10 @@ bool MemStore::isRegister(string reg) {
 		else if (reg == std::get<2>(start->first)) {
 			return true;
 		}
+		//8 bit register
+		else if (reg == std::get<3>(start->first)) {
+			return true;
+		}
 	}
 
 	return false;
@@ -234,12 +282,11 @@ bool MemStore::isRegister(string reg) {
 void MemStore::push(unsigned int value) {
 	if (getRegister(ESP) != 0) {
 		_stack.push_back(value);
-		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) - sizeof(unsigned int);
+		_registers[make_tuple(ESP, ESP, ESP, ESP)] = getRegister(ESP) - sizeof(unsigned int);
 		_flags.OF = false;
 	}
 	else {
-		_flags.OF = true;
-		throw StackError("MemoryError - Stack overflow");
+		Interrupts::INT_4(this);
 	}
 }
 
@@ -253,15 +300,14 @@ unsigned int MemStore::pop() {
 	if (!_stack.empty()) {
 		unsigned int value = _stack.back();
 		_stack.pop_back();
-		_registers[make_tuple(ESP, ESP, ESP)] = getRegister(ESP) + sizeof(unsigned int);
+		_registers[make_tuple(ESP, ESP, ESP, ESP)] = getRegister(ESP) + sizeof(unsigned int);
 		_flags.OF = false;
 
 		return value;
 	}
 	//error when the stack is empty
 	else {
-		_flags.OF = true;
-		throw StackError("MemoryError - Stack underflow");
+		Interrupts::INT_12(this);
 	}
 }
 
@@ -273,7 +319,7 @@ void MemStore::cleanFlags() {
 	_flags.AF = false;
 	_flags.CF = false;
 	_flags.DF = false;
-	_flags.IF = false;
+	_flags.IF = true;
 	_flags.OF = false;
 	_flags.PF = false;
 	_flags.SF = false;
@@ -288,9 +334,16 @@ void MemStore::cleanFlags() {
 */
 void MemStore::addToHistory(Opcode* opcode, string line) {
 	_history.push_back(make_tuple(opcode, line));
+}
 
-	//increase the EIP register which count the opcodes
-	incEIP();
+/*
+* This function remove the last opcode from the history.
+* Output: NULL.
+*/
+void MemStore::removeFromHistory() {
+	//check if the history not empty
+	if(_history.size())
+		_history.pop_back();
 }
 
 /*
@@ -308,7 +361,7 @@ Opcode* MemStore::getFromHistory(unsigned int place) {
 * Output: NULL.
 */
 void MemStore::incEIP(){
-	_registers[make_tuple(EIP, EIP, EIP)] = getRegister(EIP) + 1;
+	_registers[make_tuple(EIP, EIP, EIP, EIP)] = getRegister(EIP) + 1;
 }
 
 /*
@@ -334,7 +387,9 @@ void MemStore::printMemory(){
 		if (std::get<0>(start->first) != std::get<1>(start->first)) {
 			reg_1 << "| " << get<0>(start->first) << ": 0x" << setw(8) << setfill('0') << getRegister(get<0>(start->first));
 			reg_1 << " | " << get<1>(start->first) << ": 0x" << setw(4) << setfill('0') << getRegister(get<1>(start->first));
-			reg_1 << " | " << get<2>(start->first) << ": 0x" << setw(2) << setfill('0') << getRegister(get<2>(start->first)) << "|" << endl;
+			reg_1 << " | " << get<2>(start->first) << ": 0x" << setw(2) << setfill('0') << getRegister(get<2>(start->first));
+			reg_1 << " | " << get<3>(start->first) << ": 0x" << setw(2) << setfill('0') << getRegister(get<3>(start->first)) << "|" << endl;
+
 		}
 		else {
 			reg_2 << "|" << get<0>(start->first) << ": 0x" << setw(8) << setfill('0') << getRegister(get<0>(start->first)) << "|" << endl;
@@ -342,9 +397,9 @@ void MemStore::printMemory(){
 	}
 
 	//print the registers names and values to the screen
-	cout << " ----------------------------------------" << endl;
+	cout << " ----------------------------------------------------" << endl;
 	cout << reg_1.str();
-	cout << " ----------------------------------------" << endl;
+	cout << " ----------------------------------------------------" << endl;
 
 	cout << " ---------------" << endl;
 	cout << reg_2.str();
@@ -353,7 +408,7 @@ void MemStore::printMemory(){
 	//print the flag register
 	cout << " ---------------------------------------" << endl;
 	cout << "|AF " << _flags.AF << "|CF " << _flags.CF << "|DF " <<_flags.DF << "|IF " << _flags.IF << "|OF " << _flags.OF << "|PF " << _flags.PF << "|SF " << _flags.SF << "|ZF " << _flags.ZF << "|" << endl;
-	cout << " ---------------------------------------" << endl;
+	cout << " ---------------------------------------" << endl;	
 
 	//print the stack frame
 	if (!_stack.empty()) {
@@ -380,7 +435,7 @@ void MemStore::printHistory() {
 	
 	//loop over all the opcodes in the history
 	for (tuple<Opcode*, string> opcode : _history) {
-		cout << i << ": " << get<1>(opcode) << endl;
+		cout << "0x" << setw(4) << setfill('0') << i << ": " << get<1>(opcode) << endl;
 		i++;
 	}
 }
@@ -405,4 +460,28 @@ void MemStore::jmp(unsigned int place){
 		}
 		place++;
 	}
+}
+
+/*
+* This function Add Identifiers to the Identifiers map.
+* Input:
+* name - the ID name.
+* value - the ID value.
+* Output: NULL.
+*/
+void MemStore::addIdentifier(string name, unsigned int value) {
+	//check if the ID already exists
+	if (_identifiers.find(name) != _identifiers.end())
+		throw ValueError("IdentifierError - Id already exists.");
+
+	_identifiers[name] = value;
+}
+
+unsigned int MemStore::getIdentifier(string name){
+	Utilities::toUpper(name);
+
+	//check if the ID already exists
+	if (_identifiers.find(name) == _identifiers.end())
+		throw ValueError("IdentifierError - Id not found.");
+	return _identifiers[name];
 }

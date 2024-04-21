@@ -5,6 +5,7 @@
 #include "SyntaxError.h"
 #include "MemStore.h"
 #include "ValuesHandler.h"
+#include "Interrupts.h"
 
 class MemStore;
 class AstNode;
@@ -20,6 +21,8 @@ public:
 private:
 	AstNode* _opcode;
 	MemStore* _mem;
+
+	void LABLE();
 
 	void MOV();
 	void ADD();
@@ -52,6 +55,10 @@ private:
 	void JNP();
 	void JAE();
 	void JBE();
+	void CLI();
+	void STI();
 	void LOOP();
+	void XCHG();
 
+	void INT();
 };

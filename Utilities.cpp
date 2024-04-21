@@ -32,18 +32,20 @@ map<string, Opcodes> Utilities::OpcodesChars = {
     {"JP", Opcodes::JP},
     {"JAE", Opcodes::JAE},
     {"JBE", Opcodes::JBE},
-    {"LOOP", Opcodes::LOOP}
+    {"CLI", Opcodes::CLI},
+    {"STI", Opcodes::STI},
+    {"LOOP", Opcodes::LOOP},
+    {"XCHG", Opcodes::XCHG},
+    {"INT", Opcodes::INT}
 };
 
 map<char, Operators> Utilities::OperatorsChars = {
-    {'-', Operators::pls},
-    {'+', Operators::mns},
-    {'*', Operators::mul},
-    {',', Operators::comma}
+    {',', Operators::comma},
+    {':', Operators::colon}
 };
 
 map<char, Operators> Utilities::IgnoredChars = {
-    {' ', Operators::space}
+    {' ', Operators::space},
 };
 
 /*
@@ -190,7 +192,7 @@ void Utilities::cleanString(string& str) {
 */
 bool Utilities::validparams(AstNode* opcode, int params) {
     //check if the params number is valid
-    if (opcode->getBranches()[0]->getBranches().size() == params)
+    if (opcode->getBranches()[0]->getData() == "," && opcode->getBranches()[0]->getBranches().size() == params)
         return true;    
     return false;
 }

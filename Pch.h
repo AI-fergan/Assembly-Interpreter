@@ -11,11 +11,8 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include <fstream>
-#include <filesystem>
+#include <conio.h>
 
-using std::filesystem::file_size;
-using std::fstream;
 using std::oct;
 using std::istringstream;
 using std::reverse;
@@ -64,6 +61,12 @@ using std::get;
 #define BL "BL"
 #define CL "CL"
 #define DL "DL"
+
+#define AH "AH"
+#define BH "BH"
+#define CH "CH"
+#define DH "DH"
+
 
 #define ESP "ESP"
 #define EBP "EBP"

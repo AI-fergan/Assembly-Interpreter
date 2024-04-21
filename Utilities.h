@@ -40,7 +40,11 @@ enum class Opcodes {
 	JP,
 	JAE,
 	JBE,
-	LOOP
+	CLI,
+	STI,
+	LOOP,
+	XCHG,
+	INT
 };
 
 enum class Operators {
@@ -49,7 +53,8 @@ enum class Operators {
 	pls,
 	mul,
 	comma,
-	space
+	space,
+	colon
 };
 
 /*

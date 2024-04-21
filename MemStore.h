@@ -34,6 +34,7 @@ public:
 	void cleanFlags();
 	
 	void addToHistory(Opcode* opcode, string line);
+	void removeFromHistory();
 	Opcode* getFromHistory(unsigned int place);
 	void incEIP();
 
@@ -41,11 +42,15 @@ public:
 	void printHistory();
 	void jmp(unsigned int place);
 
+	void addIdentifier(string name, unsigned int value);
+	unsigned int getIdentifier(string name);
+
 	struct Flags _flags;
 
 private:
-	map<tuple<string, string, string>, unsigned int> _registers;
+	map<tuple<string, string, string, string>, unsigned int> _registers;
 	vector<unsigned int> _stack;
 	vector<tuple<Opcode*, string>> _history;
+	map<string, unsigned int> _identifiers;
 
 };

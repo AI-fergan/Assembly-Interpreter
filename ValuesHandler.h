@@ -11,7 +11,7 @@ class MemStore;
 class ValuesHandler {
 public:
 	ValuesHandler(string value, MemStore* mem);
-	unsigned int handler();
+	unsigned int handler(bool jump);
 
 private:
 	string _value;
@@ -21,6 +21,5 @@ private:
 	bool isDec();
 	bool isOct();
 	bool isBin();
-
 	bool isReg();
 };

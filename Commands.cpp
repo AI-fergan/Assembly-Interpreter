@@ -99,15 +99,16 @@ void Commands::printHistory() {
 * Output: NULL.
 */
 void Commands::JMP() {
-	unsigned int place;
+	string place;
 
 	//get place
 	cout << "Where: ";
-	cin >> place;
-	getchar();
+	getline(cin, place);
+
+	ValuesHandler* value = new ValuesHandler(place, _mem);
 
 	//runall the opcodes from this place
-	_mem->jmp(place);
+	_mem->jmp(value->handler(true));
 }
 
 /*

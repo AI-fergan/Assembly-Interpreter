@@ -11,15 +11,15 @@ AstParser::AstParser(queue<string> tokens) {
 	AstNode* tmp = nullptr;
 
 	//check if the first token is opcode
-	if (Utilities::isOpcode(tokens.front())) {
-		AstNode* node = new AstNode(tokens.front(), OPCODE);
-		this->_branches.push_back(node);
-		tokens.pop();
-	}
-	else {
+	//if (Utilities::isOpcode(tokens.front())) {
+	AstNode* node = new AstNode(tokens.front(), OPCODE);
+	this->_branches.push_back(node);
+	tokens.pop();
+	//}
+//	else {
 		//if the first token isnt opcode the line is not valid and the parser throw exception
-		throw SyntaxError("Parser ERROR - Opcode not found");
-	}
+	//	throw SyntaxError("Parser ERROR - Opcode not found");
+	//}
 	
 	//loop over all the tokens
 	while (!tokens.empty()) {
