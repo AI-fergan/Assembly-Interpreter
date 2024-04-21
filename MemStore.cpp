@@ -286,8 +286,7 @@ void MemStore::push(unsigned int value) {
 		_flags.OF = false;
 	}
 	else {
-		_flags.OF = true;
-		throw StackError("MemoryError - Stack overflow");
+		Interrupts::INT_4(this);
 	}
 }
 
