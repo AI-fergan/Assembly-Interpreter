@@ -39,9 +39,15 @@ map<string, Opcodes> Utilities::OpcodesChars = {
     {"INT", Opcodes::INT}
 };
 
+map<string, Operators> Utilities::SizeSigns = {
+    {"DB", Operators::DB},
+    {"DW", Operators::DW}
+};
+
 map<char, Operators> Utilities::OperatorsChars = {
     {',', Operators::comma},
-    {':', Operators::colon}
+    {':', Operators::colon},
+    
 };
 
 map<char, Operators> Utilities::IgnoredChars = {
@@ -92,6 +98,23 @@ bool Utilities::isIgnored(char ch) {
     //loop over all the ignored chars map
     for (const auto entry : IgnoredChars) {
         if (entry.first == ch) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/*
+* This funtion get string of size and return if it could be an valid var size.
+* Input:
+* ss - the size sign.
+* Output: if its could be var size.
+*/
+bool Utilities::isSizeSign(string ss) {
+    //loop over all the size signs map
+    for (const auto entry : SizeSigns) {
+        if (entry.first == ss) {
             return true;
         }
     }
@@ -220,6 +243,33 @@ bool Utilities::validOperators(AstNode* opcode, int operators) {
 */
 string Utilities::getParam(AstNode* opcode, int param) {
     return opcode->getBranches()[0]->getBranches()[param]->getData();
+}
+
+/*
+* This function check if the size of the var is valid and return it.
+* Input:
+* sign - the size sign.
+* Output - the size of that sign.
+*/
+int Utilities::getSignSize(string sign) {
+
+    //loop over all the signs
+    for (auto element : SizeSigns) {
+        //check if the sign find
+        if (element.first == sign) {
+            //check what is the size of that sign
+            switch (element.second) {
+            case Operators::DB:
+                return 1;
+            case Operators::DW:
+                return 2;
+            }
+        }
+    }
+
+    throw SyntaxError("SizeError - Invalid var size");
+
+    return 0;
 }
 
 /*

@@ -23,6 +23,7 @@ private:
 	MemStore* _mem;
 
 	void LABLE();
+	void VARS();
 
 	void MOV();
 	void ADD();

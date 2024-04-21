@@ -22,4 +22,6 @@ private:
 	bool isOct();
 	bool isBin();
 	bool isReg();
+	bool isVar();
+	bool isID();	
 };

@@ -129,19 +129,37 @@ void Opcode::run()
 		break;
 
 	default:
-		LABLE();
+		//check if the user enter correct lable syntax
+		if (_opcode->getBranches().size() == 1 && _opcode->getBranches()[0]->getBranches().size() == 0) {
+			LABLE();
+		}
+		//check if the user enter correct lable syntax
+		else if (_opcode->getBranches().size() == 1 && _opcode->getBranches()[0]->getBranches().size() == 1) {
+			VARS();
+		}
 		break;
 	}
 }
 
+/* LABLES */
 void Opcode::LABLE() {
-
-	//check if the user enter the correct syntax of the opcode
-	if (_opcode->getBranches().size() == 1 && _opcode->getBranches()[0]->getData() == ":" && _opcode->getBranches()[0]->getBranches().size() == 0) {
+	//check if the lable syntax is valid
+	if (_opcode->getBranches()[0]->getData() == ":")
+		//add new lable
 		_mem->addIdentifier(_opcode->getData(), _mem->getRegister(EIP));
+	else
+		throw SyntaxError("LableError - Invalid syntax");
+}
+
+/* VARS */
+void Opcode::VARS() {
+	//check if the var syntax is valid
+	if (_opcode->getBranches()[0]->getBranches()[0]->getBranches().size() == 0) {
+		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 0), _mem);
+		_mem->addVar(_opcode->getData(), value->handler(false), Utilities::getSignSize(_opcode->getBranches()[0]->getData()));
 	}
 	else {
-		throw SyntaxError("OpcodeError - opcode syntax not valid.");
+		throw SyntaxError("VarError - Invalid syntax");
 	}
 }
 

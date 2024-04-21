@@ -44,6 +44,11 @@ public:
 
 	void addIdentifier(string name, unsigned int value);
 	unsigned int getIdentifier(string name);
+	bool isID(string name);
+
+	void addVar(string name, unsigned int value, int size);
+	tuple<int, unsigned int> getVar(string name);
+	bool isVar(string name);
 
 	struct Flags _flags;
 
@@ -52,5 +57,6 @@ private:
 	vector<unsigned int> _stack;
 	vector<tuple<Opcode*, string>> _history;
 	map<string, unsigned int> _identifiers;
+	map<string, tuple<int, unsigned int>> _variables;
 
 };
