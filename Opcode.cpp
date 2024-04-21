@@ -184,7 +184,7 @@ void Opcode::ADD() {
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
 		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
-		size = _mem->getRegisterSize(Utilities::getParam(_opcode, 0));
+		size = _mem->getValueSize(Utilities::getParam(_opcode, 0));
 		num = value->handler(false) + old_value;
 		max = static_cast<uint64_t>(pow(2, 8 * size)) - 1;
 		//check if the value is out of range
@@ -212,7 +212,7 @@ void Opcode::SUB() {
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-		size = _mem->getRegisterSize(Utilities::getParam(_opcode, 0));
+		size = _mem->getValueSize(Utilities::getParam(_opcode, 0));
 		num = old_value - value->handler(false);
 		max = static_cast<uint64_t>(pow(2, 8 * size)) - 1;
 

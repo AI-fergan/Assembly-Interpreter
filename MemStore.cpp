@@ -364,30 +364,76 @@ void MemStore::incEIP(){
 	_registers[make_tuple(EIP, EIP, EIP, EIP)] = getRegister(EIP) + 1;
 }
 
+
+/*
+* This function can edit vars & registers.
+* Input:
+* name - var \ register name.
+* value - the value to set the var \ register.
+* Output: NULL.
+*/
 void MemStore::editValue(string name, unsigned int value) {
+	//check if the name is register name
 	if (isRegister(name)) {
 		setRegister(name, value);
 		return;
 	}
+	//check if the name is var name
 	else if (isVar(name)) {
 		setVar(name, value);
 		return;
 	}
 
-	throw;
+	throw ValueError("MemoryError - Value type not found");
 }
 
+/*
+* This function get var \ register name and return its value.
+* Input - var \ register name.
+* Output: the var \ register value.
+*/
 unsigned int MemStore::getValue(string name) {
-	if (isRegister(name)) {
-		getRegister(name);
-		return;
-	}
-	else if (isVar(name)) {
-		getVar(name);
-		return;
-	}
+	//check if the name is register name
+	if (isRegister(name)) 
+		return getRegister(name);		
+	//check if the name is var name
+	else if (isVar(name)) 
+		return get<1>(getVar(name));
 
-	throw;
+	throw ValueError("MemoryError - Value type not found");
+
+	return 0;
+}
+
+/*
+* This function get name of register \ var and return its size.
+* Input:
+* name - the var \ register name.
+* Output: the size of the var \ register.
+*/
+int MemStore::getValueSize(string name) {
+	//check if the name is register name
+	if (isRegister(name))
+		return getRegisterSize(name);
+	//check if the name is var name
+	else if (isVar(name))
+		return getVarSize(name);
+
+	throw ValueError("MemoryError - Value type not found");
+
+	return 0;
+}
+
+bool MemStore::checkSize(string name_1, string name_2) {
+	if (!isRegister(name_1) && !isVar(name_1))
+		return true;
+	if (!isRegister(name_2) && !isVar(name_2))
+		return true;
+
+	if (getValueSize(name_1) == getValueSize(name_2))
+		return true;
+
+	return false;	
 }
 
 /*
@@ -436,7 +482,7 @@ void MemStore::printMemory(){
 	cout << "|AF " << _flags.AF << "|CF " << _flags.CF << "|DF " <<_flags.DF << "|IF " << _flags.IF << "|OF " << _flags.OF << "|PF " << _flags.PF << "|SF " << _flags.SF << "|ZF " << _flags.ZF << "|" << endl;
 	cout << " ---------------------------------------" << endl;	
 
-	if (!_identifiers.size()) {
+	if (_variables.size()) {
 		cout << endl << " Variables:" << endl << "-----------" << endl;
 		//loop over all the vars
 		for (auto element : _variables) {
@@ -586,6 +632,10 @@ tuple<int, unsigned int> MemStore::getVar(string name) {
 void MemStore::setVar(string name, unsigned int value) {
 	tuple<int, unsigned int> var = make_tuple(get<0>(getVar(name)), value);
 	_variables[name] = var;
+}
+
+int MemStore::getVarSize(string name) {
+	return get<0>(_variables[name]);
 }
 
 /*
