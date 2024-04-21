@@ -27,8 +27,5 @@ void Interrupts::INT_0(MemStore* mem) {
 
 /* Interrupt 22 */
 void Interrupts::INT_22(MemStore* mem) {
-	unsigned int value = mem->getRegister(AX);
-	value &= 0x00FF;
-	value +=  _getch() << 8;
-	mem->setRegister(AX, value);	
+	mem->setRegister(AH, _getch());
 }

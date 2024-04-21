@@ -62,6 +62,12 @@ using std::get;
 #define CL "CL"
 #define DL "DL"
 
+#define AH "AH"
+#define BH "BH"
+#define CH "CH"
+#define DH "DH"
+
+
 #define ESP "ESP"
 #define EBP "EBP"
 

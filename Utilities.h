@@ -41,6 +41,7 @@ enum class Opcodes {
 	JAE,
 	JBE,
 	LOOP,
+	XCHG,
 	INT
 };
 

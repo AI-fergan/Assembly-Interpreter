@@ -54,6 +54,7 @@ private:
 	void JAE();
 	void JBE();
 	void LOOP();
+	void XCHG();
 
 	void INT();
 };

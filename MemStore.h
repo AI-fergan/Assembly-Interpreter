@@ -45,7 +45,7 @@ public:
 	struct Flags _flags;
 
 private:
-	map<tuple<string, string, string>, unsigned int> _registers;
+	map<tuple<string, string, string, string>, unsigned int> _registers;
 	vector<unsigned int> _stack;
 	vector<tuple<Opcode*, string>> _history;
 

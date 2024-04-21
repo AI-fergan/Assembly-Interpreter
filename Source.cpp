@@ -38,6 +38,10 @@ int main() {
 		//run Lexer the line
 		lexer = new Lexer(input);
 
+		//check if there is code line
+		if (!lexer->getTokens().size())
+			continue;
+
 		try {
 			history = false;
 

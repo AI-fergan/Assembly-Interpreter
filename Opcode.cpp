@@ -115,6 +115,9 @@ void Opcode::run()
 	case Opcodes::LOOP:
 		LOOP();
 		break;
+	case Opcodes::XCHG:
+		XCHG();
+		break;
 	case Opcodes::INT:
 		INT();
 		break;
@@ -656,6 +659,28 @@ void Opcode::LOOP() {
 		if (_mem->getRegister(ECX) != 0) {
 			_mem->setRegister(ECX, _mem->getRegister(ECX) - 1);
 			_mem->jmp(place->handler());
+		}
+	}
+	else {
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
+	}
+}
+
+/* XCHG opcode */
+void Opcode::XCHG() {
+	unsigned int tmp = 0;
+
+	//check if the user enter the correct syntax of the opcode
+	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		if (_mem->getRegisterSize(Utilities::getParam(_opcode, 0)) == _mem->getRegisterSize(Utilities::getParam(_opcode, 1))) {
+			ValuesHandler* reg_1 = new ValuesHandler(Utilities::getParam(_opcode, 0), _mem);
+			ValuesHandler* reg_2 = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+			tmp = reg_1->handler();
+			_mem->setRegister(Utilities::getParam(_opcode, 0), reg_2->handler());
+			_mem->setRegister(Utilities::getParam(_opcode, 1), tmp);
+		}
+		else {
+			throw RegisterError("SizeError - Invalid registers size");
 		}
 	}
 	else {

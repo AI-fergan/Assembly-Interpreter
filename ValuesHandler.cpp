@@ -40,7 +40,7 @@ bool ValuesHandler::isHex() {
     bool syntax = false;
 
     //first type of hex format
-    if (_value.back() == 'h') {
+    if (_value.back() == 'h' || _value.back() == 'H') {
         _value = "0x" + _value;
         _value.pop_back();
         syntax = true;
@@ -107,7 +107,7 @@ bool ValuesHandler::isOct()
 bool ValuesHandler::isBin()
 {
     //binary format
-    if (_value.back() == 'b') {
+    if (_value.back() == 'b' || _value.back() == 'B') {
         _value.pop_back();
         //loop over all the Bits
         for (int i = 0; _value[i] != 0; i++)
