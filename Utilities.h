@@ -56,7 +56,8 @@ enum class Operators {
 	space,
 	colon,
 	DB,
-	DW
+	DW,
+	DD
 };
 
 /*

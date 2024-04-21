@@ -443,7 +443,7 @@ void MemStore::checkSize(string name_1, string name_2) {
 	if (getValueSize(name_1) == getValueSize(name_2))
 		return;
 
-	throw ValueError("SizeError - Opcode parameters must to be in the same size.");
+	throw ValueError("SizeError - Opcode parameters must be in the same size.");
 }
 
 /*

@@ -41,7 +41,8 @@ map<string, Opcodes> Utilities::OpcodesChars = {
 
 map<string, Operators> Utilities::SizeSigns = {
     {"DB", Operators::DB},
-    {"DW", Operators::DW}
+    {"DW", Operators::DW},
+    {"DD", Operators::DD }
 };
 
 map<char, Operators> Utilities::OperatorsChars = {
@@ -263,6 +264,8 @@ int Utilities::getSignSize(string sign) {
                 return 1;
             case Operators::DW:
                 return 2;
+            case Operators::DD:
+                return 4;
             }
         }
     }
