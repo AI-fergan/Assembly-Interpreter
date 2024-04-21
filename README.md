@@ -1,10 +1,10 @@
 # Assembly-Interpreter
-### Version 3.0.0
+### Version 4.0.0
 This project is an assembly language interpreter in a 32-bit version,
 The interpreter is very friendly and suitable for beginners who want to feel assembly language and understand the meaning of registers and the work of the processor.
 
 ### Additional Features:
-Stack, Flags register.
+Stack, Flags register, Interrupts, Labels.
 
 # Commands 
 ### Available commands:
@@ -19,8 +19,9 @@ Stack, Flags register.
 MOV, ADD, SUB, MUL, DIV, INC,
 DEC, OR, AND, XOR, NOT, NOP,
 SHL, SHR, ROL, ROR, PUSH, POP,
-CMP, JNZ, JZ, JNE, JE, JNS, JS,
-JNO, JO, JNP, JP, JAE, JBE, LOOP
+CMP, JNZ, JZ, JNE, JE, JNS,
+JS, JNO, JO, JNP, JP, JAE, JBE,
+STI, CLI, XCHG, LOOP
 ```
 
 # Registers
