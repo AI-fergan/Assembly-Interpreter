@@ -37,6 +37,7 @@ public:
 	void removeFromHistory();
 	Opcode* getFromHistory(unsigned int place);
 	void incEIP();
+	void editValue(string name, unsigned int value);
 
 	void printMemory();
 	void printHistory();
@@ -48,6 +49,8 @@ public:
 
 	void addVar(string name, unsigned int value, int size);
 	tuple<int, unsigned int> getVar(string name);
+	void setVar(string name, unsigned int value);
+
 	bool isVar(string name);
 
 	struct Flags _flags;

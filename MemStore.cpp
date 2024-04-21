@@ -364,6 +364,19 @@ void MemStore::incEIP(){
 	_registers[make_tuple(EIP, EIP, EIP, EIP)] = getRegister(EIP) + 1;
 }
 
+void MemStore::editValue(string name, unsigned int value) {
+	if (isRegister(name)) {
+		setRegister(name, value);
+		return;
+	}
+	else if (isVar(name)) {
+		setVar(name, value);
+		return;
+	}
+
+	throw;
+}
+
 /*
 * This function print the memory to the screen.
 * Output: NULL.
@@ -548,6 +561,18 @@ tuple<int, unsigned int> MemStore::getVar(string name) {
 		throw ValueError("VariablesError - Var not found.");
 
 	return _variables[name];
+}
+
+/*
+* This function change vars values.
+* Input:
+* name - the var name.
+* value - new value to set into var.
+* Output: NULL.
+*/
+void MemStore::setVar(string name, unsigned int value) {
+	tuple<int, unsigned int> var = make_tuple(get<0>(getVar(name)), value);
+	_variables[name] = var;
 }
 
 /*
