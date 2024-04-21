@@ -53,7 +53,8 @@ enum class Operators {
 	pls,
 	mul,
 	comma,
-	space
+	space,
+	colon
 };
 
 /*

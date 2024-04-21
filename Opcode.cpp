@@ -127,6 +127,21 @@ void Opcode::run()
 	case Opcodes::INT:
 		INT();
 		break;
+
+	default:
+		LABLE();
+		break;
+	}
+}
+
+void Opcode::LABLE() {
+
+	//check if the user enter the correct syntax of the opcode
+	if (_opcode->getBranches().size() == 1 && _opcode->getBranches()[0]->getData() == ":" && _opcode->getBranches()[0]->getBranches().size() == 0) {
+		_mem->addIdentifier(_opcode->getData(), _mem->getRegister(EIP));
+	}
+	else {
+		throw SyntaxError("OpcodeError - opcode syntax not valid.");
 	}
 }
 

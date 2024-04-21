@@ -42,11 +42,14 @@ public:
 	void printHistory();
 	void jmp(unsigned int place);
 
+	void addIdentifier(string name, unsigned int value);
+
 	struct Flags _flags;
 
 private:
 	map<tuple<string, string, string, string>, unsigned int> _registers;
 	vector<unsigned int> _stack;
 	vector<tuple<Opcode*, string>> _history;
+	map<string, unsigned int> _identifiers;
 
 };

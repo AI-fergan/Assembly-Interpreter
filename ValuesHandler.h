@@ -21,6 +21,5 @@ private:
 	bool isDec();
 	bool isOct();
 	bool isBin();
-
 	bool isReg();
 };

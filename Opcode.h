@@ -22,6 +22,8 @@ private:
 	AstNode* _opcode;
 	MemStore* _mem;
 
+	void LABLE();
+
 	void MOV();
 	void ADD();
 	void SUB();

@@ -411,7 +411,7 @@ void MemStore::printMemory(){
 	//print the flag register
 	cout << " ---------------------------------------" << endl;
 	cout << "|AF " << _flags.AF << "|CF " << _flags.CF << "|DF " <<_flags.DF << "|IF " << _flags.IF << "|OF " << _flags.OF << "|PF " << _flags.PF << "|SF " << _flags.SF << "|ZF " << _flags.ZF << "|" << endl;
-	cout << " ---------------------------------------" << endl;
+	cout << " ---------------------------------------" << endl;	
 
 	//print the stack frame
 	if (!_stack.empty()) {
@@ -463,4 +463,19 @@ void MemStore::jmp(unsigned int place){
 		}
 		place++;
 	}
+}
+
+/*
+* This function Add Identifiers to the Identifiers map.
+* Input:
+* name - the ID name.
+* value - the ID value.
+* Output: NULL.
+*/
+void MemStore::addIdentifier(string name, unsigned int value) {
+	//check if the ID already exists
+	if (_identifiers.find(name) != _identifiers.end())
+		throw ValueError("IdentifierError - Id already exists.");
+
+	_identifiers[name] = value;
 }
