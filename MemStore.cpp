@@ -334,9 +334,6 @@ void MemStore::cleanFlags() {
 */
 void MemStore::addToHistory(Opcode* opcode, string line) {
 	_history.push_back(make_tuple(opcode, line));
-
-	//increase the EIP register which count the opcodes
-	incEIP();
 }
 
 /*
@@ -478,4 +475,13 @@ void MemStore::addIdentifier(string name, unsigned int value) {
 		throw ValueError("IdentifierError - Id already exists.");
 
 	_identifiers[name] = value;
+}
+
+unsigned int MemStore::getIdentifier(string name){
+	Utilities::toUpper(name);
+
+	//check if the ID already exists
+	if (_identifiers.find(name) == _identifiers.end())
+		throw ValueError("IdentifierError - Id not found.");
+	return _identifiers[name];
 }

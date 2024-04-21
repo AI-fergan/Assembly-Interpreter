@@ -43,6 +43,7 @@ public:
 	void jmp(unsigned int place);
 
 	void addIdentifier(string name, unsigned int value);
+	unsigned int getIdentifier(string name);
 
 	struct Flags _flags;
 

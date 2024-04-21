@@ -18,6 +18,7 @@ int main() {
 
 	while (true) {
 		cout << ">>>";
+		cin.clear();
 		
 		//input code line from the user
 		getline(cin, input);
@@ -27,9 +28,15 @@ int main() {
 		if (!input.size())
 			continue;
 
-		//check if the user want to enter command
-		if (commands->commandsHandler(input))
-			continue;		
+		try {
+			//check if the user want to enter command
+			if (commands->commandsHandler(input))
+				continue;
+		} catch (Exceptions& e) {
+			//print the command exception
+			cout << e.what() << e.getError() << endl;
+			continue;			
+		}
 
 		//exit
 		if (input == "exit")
@@ -62,6 +69,9 @@ int main() {
 
 			//run the opcode
 			opcode->run();
+
+			//increase the EIP register which count the opcodes
+			memory->incEIP();
 						
 		}
 		catch (Exceptions& e) {

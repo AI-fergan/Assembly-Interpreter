@@ -15,7 +15,7 @@ ValuesHandler::ValuesHandler(string value, MemStore* mem) {
 * This function check what is the format of the value and return the value in decimal format.
 * Output: the value in decimal format.
 */
-unsigned int ValuesHandler::handler() {
+unsigned int ValuesHandler::handler(bool jump) {
     if (isHex())
         return Utilities::HexStringToDec(_value);
     else if (isDec())
@@ -26,6 +26,8 @@ unsigned int ValuesHandler::handler() {
         return Utilities::BinStringToDec(_value);
     else if (isReg())
         return _mem->getRegister(_value);
+    else if (jump)
+        return _mem->getIdentifier(_value);
 
     throw ValueError("TypeError - Value type not valid.");
 
