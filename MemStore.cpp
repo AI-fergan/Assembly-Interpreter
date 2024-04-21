@@ -424,16 +424,26 @@ int MemStore::getValueSize(string name) {
 	return 0;
 }
 
-bool MemStore::checkSize(string name_1, string name_2) {
+/*
+* This function check if the two parameters has the same size.
+* Input:
+* name_1 - the name of the first parameter.
+* name_2 - the name of the second parameter.
+* Output: NULL.
+*/
+void MemStore::checkSize(string name_1, string name_2) {
+	//check if the first parameter is var \ register
 	if (!isRegister(name_1) && !isVar(name_1))
-		return true;
+		return;
+	//check if the second parameter is var \ register
 	if (!isRegister(name_2) && !isVar(name_2))
-		return true;
+		return;
 
+	//check if both of the parameters has the same size
 	if (getValueSize(name_1) == getValueSize(name_2))
-		return true;
+		return;
 
-	return false;	
+	throw ValueError("SizeError - Opcode parameters must to be in the same size.");
 }
 
 /*

@@ -40,7 +40,7 @@ public:
 	void editValue(string name, unsigned int value);
 	unsigned int getValue(string name);
 	int getValueSize(string name);
-	bool checkSize(string name_1, string name_2);
+	void checkSize(string name_1, string name_2);
 
 	void printMemory();
 	void printHistory();

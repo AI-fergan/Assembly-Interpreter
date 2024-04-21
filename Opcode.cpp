@@ -167,6 +167,7 @@ void Opcode::VARS() {
 void Opcode::MOV() {
 	//check if the user enter the correct syntax of the opcode
 	if(Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);		
 		_mem->editValue(Utilities::getParam(_opcode, 0), value->handler(false));
 	}
@@ -182,6 +183,7 @@ void Opcode::ADD() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
 		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		size = _mem->getValueSize(Utilities::getParam(_opcode, 0));
@@ -210,6 +212,7 @@ void Opcode::SUB() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
 		old_value = _mem->getRegister(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
 		size = _mem->getValueSize(Utilities::getParam(_opcode, 0));
@@ -302,6 +305,7 @@ void Opcode::OR(){
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
 		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
 		_mem->editValue(Utilities::getParam(_opcode, 0), old_value | value->handler(false));
@@ -318,6 +322,7 @@ void Opcode::AND() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
 		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
 		_mem->editValue(Utilities::getParam(_opcode, 0), old_value & value->handler(false));
@@ -334,6 +339,7 @@ void Opcode::XOR() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
 		old_value = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
 		_mem->editValue(Utilities::getParam(_opcode, 0), old_value ^ value->handler(false));
@@ -459,6 +465,7 @@ void Opcode::CMP() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
 		value_1 = _mem->getValue(Utilities::getParam(_opcode, 0));
 		ValuesHandler* value_2 = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
 
@@ -739,16 +746,13 @@ void Opcode::XCHG() {
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
 		//check if the registers has the same size
-		if (_mem->getRegisterSize(Utilities::getParam(_opcode, 0)) == _mem->getRegisterSize(Utilities::getParam(_opcode, 1))) {
-			ValuesHandler* reg_1 = new ValuesHandler(Utilities::getParam(_opcode, 0), _mem);
-			ValuesHandler* reg_2 = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
-			tmp = reg_1->handler(false);
-			_mem->setRegister(Utilities::getParam(_opcode, 0), reg_2->handler(false));
-			_mem->setRegister(Utilities::getParam(_opcode, 1), tmp);
-		}
-		else {
-			throw RegisterError("SizeError - Invalid registers size");
-		}
+		_mem->checkSize(Utilities::getParam(_opcode, 0), Utilities::getParam(_opcode, 1));
+		ValuesHandler* reg_1 = new ValuesHandler(Utilities::getParam(_opcode, 0), _mem);
+		ValuesHandler* reg_2 = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
+		tmp = reg_1->handler(false);
+		_mem->setRegister(Utilities::getParam(_opcode, 0), reg_2->handler(false));
+		_mem->setRegister(Utilities::getParam(_opcode, 1), tmp);
+
 	}
 	else {
 		throw SyntaxError("OpcodeError - opcode syntax not valid.");
