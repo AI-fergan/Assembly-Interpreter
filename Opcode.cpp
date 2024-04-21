@@ -672,6 +672,7 @@ void Opcode::XCHG() {
 
 	//check if the user enter the correct syntax of the opcode
 	if (Utilities::validOperators(_opcode, 1) && Utilities::validparams(_opcode, 2)) {
+		//check if the registers has the same size
 		if (_mem->getRegisterSize(Utilities::getParam(_opcode, 0)) == _mem->getRegisterSize(Utilities::getParam(_opcode, 1))) {
 			ValuesHandler* reg_1 = new ValuesHandler(Utilities::getParam(_opcode, 0), _mem);
 			ValuesHandler* reg_2 = new ValuesHandler(Utilities::getParam(_opcode, 1), _mem);
