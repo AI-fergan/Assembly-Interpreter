@@ -294,6 +294,16 @@ void MemStore::addToHistory(Opcode* opcode, string line) {
 }
 
 /*
+* This function remove the last opcode from the history.
+* Output: NULL.
+*/
+void MemStore::removeFromHistory() {
+	//check if the history not empty
+	if(_history.size())
+		_history.pop_back();
+}
+
+/*
 * This function use to get opcode from the history by its place.
 * Input:
 * place - the place of the opcode in the history

@@ -11,6 +11,7 @@ int main() {
 	AstParser* parser = nullptr;
 	MemStore* memory = new MemStore();
 	Commands* commands = new Commands(memory);
+	bool history = false;
 
 	//print open message and clean the screen
 	commands->commandsHandler("cls");
@@ -38,27 +39,37 @@ int main() {
 		lexer = new Lexer(input);
 
 		try {
+			history = false;
+
 			//run Parser after Lexer
 			parser = new AstParser(lexer->getTokens());
 			
 			//run the Opcode
 			Opcode* opcode = new Opcode(parser->getBranches()[0], memory);
 
+			//clean parser
+			delete parser;
+		
 			//added the opcode to the opcodes history			
 			memory->addToHistory(opcode, input);
 
+			//opcode added to the history
+			history = true;
+
 			//run the opcode
 			opcode->run();
-			
-			
-			//clean
-			delete parser;
+						
 		}
 		catch (Exceptions& e) {
 			//print the exception
 			cout << e.what() << e.getError() << endl;
+
+			//remove opcode from the history
+			if(history)
+				memory->removeFromHistory();
 		}
 
+		//clean lexer
 		delete lexer;		
 	}
 

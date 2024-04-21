@@ -6,8 +6,7 @@
 * error - the error message.
 */
 Error::Error(string error) : Exceptions(error)
-{ /**/
-}
+{ /**/ }
 
 /*
 * This function return the value error message.

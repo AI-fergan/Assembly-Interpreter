@@ -34,6 +34,7 @@ public:
 	void cleanFlags();
 	
 	void addToHistory(Opcode* opcode, string line);
+	void removeFromHistory();
 	Opcode* getFromHistory(unsigned int place);
 	void incEIP();
 
