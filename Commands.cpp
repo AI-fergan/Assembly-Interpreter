@@ -48,6 +48,11 @@ bool Commands::commandsHandler(string command) {
 		cls();
 		return true;
 	}
+	//exit program
+	else if (command == "exit") {
+		exit(0);
+		return true;
+	}
 
 	return false;
 		
@@ -120,6 +125,7 @@ void Commands::cls() {
 	cout << "|   Noam Afergan |  V5.0.0   |" << endl;
 	cout << "|----------------------------|" << endl;
 	cout << "|    Assembly-Interpreter    |" << endl;
-	cout << " ----------------------------" << endl << endl;
+	cout << " ----------------------------" << endl;
+	cout << "(Note: Please start with the help command)" << endl << endl;
 }
 
