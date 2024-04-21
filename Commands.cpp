@@ -117,7 +117,7 @@ void Commands::JMP() {
 void Commands::cls() {
 	system("cls");
 	cout << " ----------------------------" << endl;
-	cout << "|   Noam Afergan |  V3.0.0   |" << endl;
+	cout << "|   Noam Afergan |  V5.0.0   |" << endl;
 	cout << "|----------------------------|" << endl;
 	cout << "|    Assembly-Interpreter    |" << endl;
 	cout << " ----------------------------" << endl << endl;
